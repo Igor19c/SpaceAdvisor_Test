@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 1. Palette (Base Colors) -->
+    <color name="space_purple">#575AD3</color>
+    <color name="space_purple_light">#A0A0FF</color>
+    <color name="space_purple_glow">#3A575AD3</color>
+    <color name="deep_black">#111213</color>
+    <color name="gray_muted">#B0BEC5</color>
+    <color name="gray_light">#CCCCCC</color>
+    <color name="red_muted">#B3261E</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="transparent">#00000000</color>
+
+    <!-- 2. Material 3 Roles (System) -->
+    <color name="colorPrimary">@color/space_purple</color>
+    <color name="colorBackground">@color/deep_black</color>
+    <color name="colorError">@color/red_muted</color>
+
+    <!-- 3. Functional Colors (Your specific UI components) -->
+    <color name="btn_nav_selected">@color/space_purple</color>
+    <color name="btn_nav_unselected">@color/gray_muted</color>
+    <color name="btn_nav_background">@color/deep_black</color>
+    <color name="header_background">@color/deep_black</color>
+
+    <!-- Text colors -->
+    <color name="textPrimary">@color/white</color>
+    <color name="textSecondary">@color/deep_black</color>
+    <color name="textTertiary">@color/space_purple</color>
+    <color name="textQuaternary">@color/gray_light</color>
+
+
+
+    <color name="textTagPrimary">@color/space_purple_light</color>
+    <color name="textTagSecondary">@color/gray_muted</color>
+
+    <color name="btnStrokePrimary">@color/space_purple</color>
+    <color name="btnStrokeSecondary">@color/deep_black</color>
+    <color name="btnStrokeTertiary">@color/white</color>
+    <color name="btnStrokeQuaternary">@color/gray_muted</color>
+
+
+    <color name="btnFillPrimary">@color/space_purple</color>
+    <color name="btnFillSecondary">@color/deep_black</color>
+    <color name="btnTextPrimary">@color/deep_black</color>
+    <color name="btnTextSecondary">@color/white</color>
+
+    <color name="iconPrimary">@color/white</color>
+    <color name="iconSecondary">@color/deep_black</color>
+    <color name="iconTertiary">@color/space_purple</color>
+
+
+
+
+
+    <!-- Glow Effect colors -->
+    <color name="glow_color_start">@color/space_purple_glow</color>
+    <color name="glow_color_end">@android:color/transparent</color>
+
+
+</resources>
+

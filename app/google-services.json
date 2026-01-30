@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "661503873224",
+    "project_id": "spaceadvisor-cc9e5",
+    "storage_bucket": "spaceadvisor-cc9e5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:661503873224:android:5c31d4233b7c5ea6f395fd",
+        "android_client_info": {
+          "package_name": "com.example.spaceadvisor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "661503873224-fkog5b8svqov3jkjiqg7cs98ifijk5s7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.spaceadvisor",
+            "certificate_hash": "f8421c0c8a36b33e8a54cfa25d7c381a714b2e63"
+          }
+        },
+        {
+          "client_id": "661503873224-0isppngkr6e7mvs09eke6jt5jd5bt70n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdNWMEHA0rTU3Xokc78fLciY7btsDuIyk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "661503873224-0isppngkr6e7mvs09eke6jt5jd5bt70n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

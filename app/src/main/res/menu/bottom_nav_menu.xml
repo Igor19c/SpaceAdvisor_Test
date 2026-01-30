@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_explore"
+        android:icon="@drawable/ic_explore"
+        android:title="Explore" />
+    <item
+        android:id="@+id/nav_trips"
+        android:icon="@drawable/ic_trips"
+        android:title="My Trips" />
+    <item
+        android:id="@+id/place_holder"
+        android:title=""
+        android:enabled="false"/>
+    <item
+        android:id="@+id/nav_create_trip"
+        android:icon="@drawable/ic_plus"
+        android:title="New Trip" />
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/ic_profile"
+        android:title="Profile" />
+
+</menu>
