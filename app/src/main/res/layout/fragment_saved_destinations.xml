@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
+
+
+    <LinearLayout
+        android:id="@+id/my_destinations_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp">
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/unsave_all_btn"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="-12dp"
+                android:backgroundTint="@color/transparent"
+                android:text="Unsave all"
+                android:textColor="@color/textPrimary"
+                app:cornerRadius="10dp"
+                app:strokeWidth="0dp" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/empty_state_container"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/empty_state_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="Explore new destinations 🚀\nand save them here"
+                android:textColor="@color/textQuaternary"
+                android:textSize="20sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/explore_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:backgroundTint="@color/btnFillPrimary"
+                android:text="Explore"
+                android:textColor="@color/textPrimary"
+                app:cornerRadius="10dp" />
+
+
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/my_destinations_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_saved_destination" />
+
+    </LinearLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>

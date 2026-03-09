@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:orientation="vertical"
+    android:paddingHorizontal="20dp"
+    android:paddingTop="6dp"
+    android:paddingBottom="20dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/trip_date_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="12dp"
+            android:text="21/02 - 29/02"
+            android:textColor="@color/textQuaternary"
+            android:textSize="16sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/edit_btn"
+            style="@style/Widget.Material3.Button.IconButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:backgroundTint="@color/colorBackground"
+            app:icon="@drawable/ic_edit"
+            app:iconSize="22dp"
+            app:iconTint="@color/iconQuaternary" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <!-- Normal State: Destinations List -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/itinerary_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="12dp"
+            tools:listitem="@layout/item_trip_destination" />
+
+        <!-- Empty State -->
+        <LinearLayout
+            android:id="@+id/trip_empty_state"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="-60dp"
+                android:alpha="0.4"
+                android:src="@drawable/ic_galaxy"
+                app:tint="@color/textQuaternary" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="No stops planned yet"
+                android:textColor="@color/textPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="Your itinerary is looking a bit empty. \nReady to add some star systems to your route?"
+                android:textColor="@color/textQuaternary"
+                android:textSize="14sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/empty_add_destination_btn"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:paddingHorizontal="24dp"
+                android:text="Explore Destinations"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/btn_nav_selected"
+                app:cornerRadius="10dp"
+                app:icon="@drawable/ic_explore"
+                app:iconTint="@color/white" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/btn_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:orientation="vertical">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/add_destination_btn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/white"
+            android:text="Add Destination"
+            android:textColor="@color/deep_black"
+            android:textSize="16sp"
+            app:cornerRadius="10dp" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/confirm_trip_btn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/space_purple"
+            android:text="Confirm Journey"
+            android:textColor="@color/textPrimary"
+            android:textSize="16sp"
+            app:cornerRadius="10dp" />
+    </LinearLayout>
+
+</LinearLayout>

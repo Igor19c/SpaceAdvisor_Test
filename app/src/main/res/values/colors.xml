@@ -3,12 +3,17 @@
 
     <!-- 1. Palette (Base Colors) -->
     <color name="space_purple">#575AD3</color>
+    <color name="space_purple_faded">#50A0A0FF</color>
     <color name="space_purple_light">#A0A0FF</color>
     <color name="space_purple_glow">#3A575AD3</color>
     <color name="deep_black">#111213</color>
     <color name="gray_muted">#B0BEC5</color>
     <color name="gray_light">#CCCCCC</color>
     <color name="red_muted">#B3261E</color>
+    <color name="red_muted_faded">#50B3261E</color>
+    <color name="green_light">#00E676</color>
+    <color name="yellow_accent">#FBC02D</color>
+    <color name="green_light_faded">#5000E676</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00000000</color>
@@ -31,14 +36,13 @@
     <color name="textQuaternary">@color/gray_light</color>
 
 
-
     <color name="textTagPrimary">@color/space_purple_light</color>
     <color name="textTagSecondary">@color/gray_muted</color>
 
     <color name="btnStrokePrimary">@color/space_purple</color>
     <color name="btnStrokeSecondary">@color/deep_black</color>
     <color name="btnStrokeTertiary">@color/white</color>
-    <color name="btnStrokeQuaternary">@color/gray_muted</color>
+    <color name="btnStrokeQuaternary">@color/gray_light</color>
 
 
     <color name="btnFillPrimary">@color/space_purple</color>
@@ -49,9 +53,7 @@
     <color name="iconPrimary">@color/white</color>
     <color name="iconSecondary">@color/deep_black</color>
     <color name="iconTertiary">@color/space_purple</color>
-
-
-
+    <color name="iconQuaternary">@color/gray_light</color>
 
 
     <!-- Glow Effect colors -->

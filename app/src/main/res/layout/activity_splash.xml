@@ -5,16 +5,8 @@
     android:id="@+id/splashScreen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.SplashActivity">
-
-
-    <ImageView
-        android:id="@+id/bckImageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:scaleType="centerCrop"
-        android:src="@drawable/bck_splash" />
+    android:background="@color/colorBackground"
+    tools:context=".ui.activities.SplashActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

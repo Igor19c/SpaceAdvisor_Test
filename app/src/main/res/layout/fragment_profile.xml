@@ -177,7 +177,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:padding="12dp">
+                android:paddingHorizontal="25dp"
+                android:paddingVertical="12dp">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/edit_prof_btn"
@@ -245,13 +246,13 @@
                 </RelativeLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/my_trips_recycler_view"
+                    android:id="@+id/my_newest_trips_recycler_view"
                     android:layout_width="match_parent"
-                    android:layout_height="140dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_trip" />
+                    tools:listitem="@layout/item_newest_trip" />
 
             </LinearLayout>
 
@@ -290,13 +291,13 @@
                 </RelativeLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/reviews_recycler_view"
+                    android:id="@+id/recent_reviews_recycler_view"
                     android:layout_width="match_parent"
-                    android:layout_height="140dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_trip" />
+                    tools:listitem="@layout/item_review" />
 
             </LinearLayout>
 

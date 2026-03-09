@@ -5,9 +5,11 @@
     android:layout_height="wrap_content">
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/badge_card"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="6dp"
+        android:clickable="true"
         app:cardBackgroundColor="@color/transparent"
         app:cardCornerRadius="16dp"
         app:cardElevation="0dp"
@@ -43,6 +45,28 @@
                 android:text="First Trip"
                 android:textColor="@color/white"
                 android:textSize="10sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/badge_description_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/custom_details_background"
+            android:gravity="center"
+            android:padding="10dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/badge_description_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="10dp"
+                android:text="Badge Description"
+                android:textColor="@color/white"
+                android:textSize="8sp"
                 android:textStyle="bold" />
 
         </LinearLayout>

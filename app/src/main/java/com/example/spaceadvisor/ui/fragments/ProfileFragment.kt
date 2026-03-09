@@ -1,0 +1,303 @@
+package com.example.spaceadvisor.ui.fragments
+
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.net.Uri
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
+import android.widget.Toast
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.signature.ObjectKey
+import com.example.spaceadvisor.R
+import com.example.spaceadvisor.SpaceAdvisorApplication
+import com.example.spaceadvisor.ui.UIConfig
+import com.example.spaceadvisor.ui.adapters.AvatarAdapter
+import com.example.spaceadvisor.ui.adapters.BadgeAdapter
+import com.example.spaceadvisor.ui.adapters.NewestTripsAdapter
+import com.example.spaceadvisor.ui.adapters.ReviewAdapter
+import com.example.spaceadvisor.databinding.DialogEditProfileBinding
+import com.example.spaceadvisor.databinding.DialogChooseImageSourceBinding
+import com.example.spaceadvisor.databinding.DialogBadgeUnlockedBinding
+import com.example.spaceadvisor.databinding.FragmentProfileBinding
+import com.example.spaceadvisor.domain.models.Badge
+import com.example.spaceadvisor.domain.models.Post
+import com.example.spaceadvisor.domain.repository.BadgeRepository
+import com.example.spaceadvisor.ui.viewmodels.FeedViewModel
+import com.example.spaceadvisor.ui.viewmodels.TripViewModel
+import com.example.spaceadvisor.ui.viewmodels.UserViewModel
+import com.example.spaceadvisor.ui.viewmodels.ViewModelFactory
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import java.util.LinkedList
+import java.util.Queue
+
+class ProfileFragment : BaseFragment() {
+
+    private var _binding: FragmentProfileBinding? = null
+    private val binding get() = _binding!!
+
+    private val userViewModel: UserViewModel by activityViewModels {
+        ViewModelFactory(requireActivity().application as SpaceAdvisorApplication)
+    }
+    private val tripViewModel: TripViewModel by activityViewModels {
+        ViewModelFactory(requireActivity().application as SpaceAdvisorApplication)
+    }
+    private val feedViewModel: FeedViewModel by activityViewModels {
+        ViewModelFactory(requireActivity().application as SpaceAdvisorApplication)
+    }
+
+    private var selectedImageUri: Uri? = null
+    private var currentDialogBinding: DialogEditProfileBinding? = null
+    private lateinit var newestTripsAdapter: NewestTripsAdapter
+    private lateinit var badgesAdapter: BadgeAdapter
+    private lateinit var reviewAdapter: ReviewAdapter
+
+    private val badgeDialogQueue: Queue<Badge> = LinkedList()
+    private var isBadgeDialogShowing = false
+
+    private val pickMedia =
+        registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+            if (uri != null) {
+                updatePreviewImage(uri)
+            }
+        }
+
+    override fun getUIConfig() = UIConfig(
+        title = "My Profile",
+        selectedTabId = R.id.nav_profile
+    )
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentProfileBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setupBadgesRecyclerView()
+        setupTripsRecyclerView()
+        setupReviewsRecyclerView()
+        observeViewModel()
+
+        userViewModel.getCurrentUid()?.let { uid ->
+            tripViewModel.fetchUserTrips(uid)
+            userViewModel.startListening(uid)
+            feedViewModel.fetchUserPosts(uid)
+        }
+
+        binding.signoutBtn.setOnClickListener { userViewModel.signOut() }
+        binding.savedBtn.setOnClickListener { navigateTo(SavedDestinationsFragment()) }
+        binding.myTripsSeeAllBtn.setOnClickListener { navigateTo(MyTripsFragment()) }
+        binding.reviewsSeeAllBtn.setOnClickListener { navigateTo(MyReviewsFragment()) }
+
+        binding.editProfBtn.setOnClickListener { showEditProfileDialog() }
+    }
+
+    private fun navigateTo(fragment: BaseFragment) {
+        parentFragmentManager.beginTransaction()
+            .setCustomAnimations(
+                R.anim.slide_in_bottom_to_top,
+                R.anim.fade_out,
+                R.anim.fade_in,
+                R.anim.slide_out_top_to_bottom
+            )
+            .replace(R.id.main_frame, fragment)
+            .addToBackStack(null)
+            .commit()
+
+//        parentFragmentManager.beginTransaction()
+//            .add(R.id.main_frame, fragment)
+//            .hide(this)
+//            .addToBackStack(null)
+//            .commit()
+    }
+
+    private fun observeUserViewModel() {
+        userViewModel.userData.observe(viewLifecycleOwner) { user ->
+            user?.let {
+                binding.userName.text = it.name
+                binding.userNickname.text = it.username
+                binding.userBio.text = it.bio
+                binding.savedCounter.text = it.favoriteDestinations.size.toString()
+
+                val fullBadges = BadgeRepository.getBadgesByIds(it.badges)
+                badgesAdapter.updateBadges(fullBadges)
+
+                if (!it.profileImageUrl.isNullOrEmpty()) {
+                    Glide.with(this).load(it.profileImageUrl)
+                        .placeholder(binding.userPic.drawable)
+                        .signature(ObjectKey(it.profileImageUrl + (System.currentTimeMillis() / (1000 * 60 * 10))))
+                        .diskCacheStrategy(DiskCacheStrategy.ALL).dontAnimate().circleCrop()
+                        .into(binding.userPic)
+                }
+            }
+        }
+
+        userViewModel.newBadgesEarned.observe(viewLifecycleOwner) { badgeIds ->
+            if (!badgeIds.isNullOrEmpty()) {
+                badgeIds.forEach { id ->
+                    BadgeRepository.getBadgeById(id)?.let { badgeDialogQueue.add(it) }
+                }
+                userViewModel.onBadgesDialogShown()
+                showNextBadgeInQueue()
+            }
+        }
+
+        userViewModel.userReviews.observe(viewLifecycleOwner) { reviews ->
+            val recentReviews = reviews.take(5)
+            reviewAdapter.updateData(recentReviews)
+
+            binding.recentReviewsRecyclerView.visibility =
+                if (recentReviews.isEmpty()) View.GONE else View.VISIBLE
+        }
+    }
+
+    private fun showNextBadgeInQueue() {
+        if (isBadgeDialogShowing || badgeDialogQueue.isEmpty()) return
+        val badge = badgeDialogQueue.poll() ?: return
+        showBadgeUnlockedDialog(badge)
+    }
+
+    private fun showBadgeUnlockedDialog(badge: Badge) {
+        isBadgeDialogShowing = true
+        val dialog = Dialog(requireContext())
+        val dialogBinding = DialogBadgeUnlockedBinding.inflate(layoutInflater)
+        dialog.setContentView(dialogBinding.root)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialogBinding.dialogBadgeName.text = badge.name
+        dialogBinding.dialogBadgeDescription.text = badge.description
+        val assetPath = "file:///android_asset/${badge.assetPath}"
+        Glide.with(this).load(assetPath).into(dialogBinding.dialogBadgeImage)
+        dialogBinding.dialogCloseBtn.setOnClickListener { dialog.dismiss() }
+        dialog.setOnDismissListener {
+            isBadgeDialogShowing = false
+            showNextBadgeInQueue()
+        }
+        dialog.show()
+    }
+
+    private fun observeTripViewModel() {
+        tripViewModel.userTrips.observe(viewLifecycleOwner) { trips ->
+            val recentTrips = trips.take(5)
+            newestTripsAdapter.updateData(recentTrips)
+            binding.tripsCounter.text = trips.size.toString()
+            binding.myNewestTripsRecyclerView.visibility =
+                if (recentTrips.isEmpty()) View.GONE else View.VISIBLE
+            val posts = feedViewModel.userPosts.value ?: emptyList()
+            userViewModel.checkForBadges(trips, posts)
+        }
+    }
+
+    private fun observeFeedViewModel() {
+        feedViewModel.userPosts.observe(viewLifecycleOwner) { posts ->
+            binding.postsCounter.text = posts.size.toString()
+            val trips = tripViewModel.userTrips.value ?: emptyList()
+            userViewModel.checkForBadges(trips, posts)
+
+        }
+
+
+    }
+
+    private fun observeViewModel() {
+        observeUserViewModel()
+        observeTripViewModel()
+        observeFeedViewModel()
+        userViewModel.error.observe(viewLifecycleOwner) { errorMessage ->
+            errorMessage?.let { Toast.makeText(context, it, Toast.LENGTH_SHORT).show() }
+        }
+    }
+
+    private fun setupReviewsRecyclerView() {
+        reviewAdapter = ReviewAdapter()
+        binding.recentReviewsRecyclerView.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.recentReviewsRecyclerView.adapter = reviewAdapter
+    }
+
+
+    private fun setupTripsRecyclerView() {
+        newestTripsAdapter = NewestTripsAdapter(mutableListOf()) { trip ->
+            tripViewModel.setCurrentTrip(trip)
+            navigateTo(TripFragment())
+        }
+        binding.myNewestTripsRecyclerView.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.myNewestTripsRecyclerView.adapter = newestTripsAdapter
+    }
+
+    private fun setupBadgesRecyclerView() {
+        badgesAdapter = BadgeAdapter(emptyList())
+        binding.badgeRecyclerView.apply {
+            layoutManager = GridLayoutManager(requireContext(), 3); isNestedScrollingEnabled =
+            false; adapter = badgesAdapter
+        }
+    }
+
+    private fun showEditProfileDialog() {
+        val dialog = BottomSheetDialog(requireContext())
+        dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+        val dialogBinding = DialogEditProfileBinding.inflate(layoutInflater)
+        currentDialogBinding = dialogBinding
+        dialog.setContentView(dialogBinding.root)
+        val currentUser = userViewModel.userData.value
+        dialogBinding.editNameEt.setText(currentUser?.name)
+        dialogBinding.editUsernameEt.setText(currentUser?.username)
+        dialogBinding.editBioEt.setText(currentUser?.bio)
+        currentUser?.profileImageUrl?.let {
+            Glide.with(this).load(it).circleCrop().into(dialogBinding.editUserPic)
+        }
+        dialogBinding.updatePicBtn.setOnClickListener { showAvatarPicker() }
+        dialogBinding.saveBtn.setOnClickListener {
+            userViewModel.updateProfile(
+                dialogBinding.editNameEt.text.toString(),
+                dialogBinding.editUsernameEt.text.toString(),
+                dialogBinding.editBioEt.text.toString()
+            )
+            selectedImageUri?.let { userViewModel.uploadProfileImage(it, requireContext().assets) }
+            dialog.dismiss()
+        }
+        dialogBinding.cancelBtn.setOnClickListener { dialog.dismiss() }
+        dialog.show()
+    }
+
+    private fun showAvatarPicker() {
+        val pickerDialog = BottomSheetDialog(requireContext())
+        val pickerBinding = DialogChooseImageSourceBinding.inflate(layoutInflater)
+        pickerDialog.setContentView(pickerBinding.root)
+        userViewModel.loadAvatars(requireContext().assets)
+        userViewModel.avatarPaths.observe(viewLifecycleOwner) { avatarFiles ->
+            val adapter = AvatarAdapter(
+                avatars = avatarFiles,
+                onPlusClick = { pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)); pickerDialog.dismiss() },
+                onAvatarClick = { assetPath -> updatePreviewImage(Uri.parse(assetPath)); pickerDialog.dismiss() })
+            pickerBinding.itemRecyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
+            pickerBinding.itemRecyclerView.adapter = adapter
+        }
+        pickerDialog.show()
+    }
+
+    private fun updatePreviewImage(uri: Uri) {
+        selectedImageUri = uri
+        currentDialogBinding?.let { Glide.with(this).load(uri).circleCrop().into(it.editUserPic) }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+}

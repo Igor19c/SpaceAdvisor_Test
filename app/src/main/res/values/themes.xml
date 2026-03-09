@@ -6,6 +6,17 @@
 
     <style name="Theme.SpaceAdvisor" parent="Base.Theme.SpaceAdvisor" />
 
+    <!-- FullScreen Theme for AuthUI -->
+    <style name="Theme.Auth.FullScreen" parent="FirebaseUI">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <!-- Hide navigation bar on newer versions -->
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
     <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
         <item name="android:color">@android:color/transparent</item>
     </style>

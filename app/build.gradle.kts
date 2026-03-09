@@ -1,13 +1,11 @@
 plugins {
     alias(libs.plugins.android.application)
-    id("com.google.gms.google-services")
+    alias(libs.plugins.google.services)
 }
 
 android {
     namespace = "com.example.spaceadvisor"
-    compileSdk {
-        version = release(36)
-    }
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.spaceadvisor"
@@ -36,6 +34,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
 }
 
 dependencies {
@@ -45,20 +44,25 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
 
-    implementation(platform("com.google.firebase:firebase-bom:34.8.0"))
-    implementation("com.google.firebase:firebase-database")
-    implementation("com.google.firebase:firebase-firestore")
-    implementation("com.google.firebase:firebase-storage")
-    implementation("com.google.firebase:firebase-auth")
-    implementation("com.firebaseui:firebase-ui-auth:9.0.0")
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.firestore)
+    implementation(libs.firebase.storage)
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.database)
+    implementation(libs.firebase.ui.auth)
 
-    implementation("com.airbnb.android:lottie:6.7.1")
-    implementation("com.github.bumptech.glide:glide:4.16.0")
+    // Coroutines & Lifecycle
+    implementation(libs.kotlinx.coroutines.play.services)
+    implementation(libs.androidx.lifecycle.viewmodel)
+
+    // UI & Navigation
+    implementation(libs.lottie)
+    implementation(libs.glide)
+    implementation(libs.androidx.navigation.fragment)
+    implementation(libs.androidx.navigation.ui)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
-    implementation("androidx.navigation:navigation-fragment:2.7.7")
-    implementation("androidx.navigation:navigation-ui:2.7.7")
 }

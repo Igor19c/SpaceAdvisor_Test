@@ -83,14 +83,6 @@
                     android:text="Trending Destinations"
                     android:textColor="#CCCCCC"
                     android:textSize="16sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:text="See all"
-                    android:textColor="#575AD3"
-                    android:textSize="14sp" />
             </RelativeLayout>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -100,7 +92,7 @@
                 android:layout_marginTop="16dp"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_carousel" />
+                tools:listitem="@layout/item_trending_destination" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.core.widget.NestedScrollView>

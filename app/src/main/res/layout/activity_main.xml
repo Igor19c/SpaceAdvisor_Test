@@ -12,53 +12,70 @@
         android:id="@+id/main_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp">
 
-        <ImageButton
-            android:id="@+id/settings_btn"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="12dp"
-            android:backgroundTint="@android:color/transparent"
-            android:paddingTop="18dp"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/ic_settings"
-            app:tint="#CCCCCC" />
-
-        <LinearLayout
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/main_header_left_btn"
+            style="@style/Widget.Material3.Button.IconButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="12dp"
+            app:icon="@drawable/ic_settings"
+            app:iconSize="30dp"
+            app:iconTint="@color/gray_light" />
 
-            <TextView
-                android:id="@+id/header_title"
+        <FrameLayout
+            android:id="@+id/header_content_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/main_header_right_btn"
+            android:layout_toEndOf="@id/main_header_left_btn"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="6dp">
+
+            <LinearLayout
+                android:id="@+id/default_header_title_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="SpaceAdvisor"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="22sp"
-                android:textStyle="bold" />
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical">
 
+                <TextView
+                    android:id="@+id/header_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SpaceAdvisor"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
-        </LinearLayout>
+            </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/search_btn"
-            android:layout_width="65dp"
-            android:layout_height="65dp"
+            <FrameLayout
+                android:id="@+id/custom_header_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone" />
+
+        </FrameLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/main_header_right_btn"
+            style="@style/Widget.Material3.Button.IconButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="12dp"
-            android:backgroundTint="@android:color/transparent"
-            android:paddingTop="18dp"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/ic_search"
-            app:tint="#CCCCCC" />
+            app:icon="@drawable/ic_search"
+            app:iconSize="35dp"
+            app:iconTint="@color/gray_light" />
     </RelativeLayout>
 
     <LinearLayout
