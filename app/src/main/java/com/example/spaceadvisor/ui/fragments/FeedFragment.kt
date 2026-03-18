@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -56,6 +55,7 @@ class FeedFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupRecyclerView()
+        setupSwipeRefresh()
         observeViewModel()
 
         userViewModel.getCurrentUid()?.let { tripViewModel.fetchUserTrips(it) }
@@ -65,28 +65,43 @@ class FeedFragment : BaseFragment() {
         }
     }
 
+    private fun setupSwipeRefresh() {
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            feedViewModel.fetchPosts()
+        }
+
+        binding.swipeRefreshLayout.setColorSchemeResources(
+            R.color.btn_nav_selected,
+            R.color.space_purple,
+            R.color.green_light
+        )
+    }
+
     private fun showSelectTripDialog() {
+        val trips = tripViewModel.userTrips.value ?: emptyList()
+
+        if (trips.isEmpty()) {
+            showCustomMessage(
+                title = "No trips found!",
+                body = "You need at least one trip to create a post.",
+                duration = 3000
+            )
+            return
+        }
+
         val dialog = BottomSheetDialog(requireContext())
         val dialogBinding = DialogSelectTripBinding.inflate(layoutInflater)
         dialog.setContentView(dialogBinding.root)
 
         var selectedTrip: Trip? = null
 
-        tripViewModel.userTrips.observe(viewLifecycleOwner) { trips ->
-            if (trips.isEmpty()) {
-                Toast.makeText(requireContext(), "No trips found!", Toast.LENGTH_SHORT).show()
-                dialog.dismiss()
-                return@observe
-            }
-
-            val pickerAdapter = TripPickerAdapter(trips) { trip ->
-                selectedTrip = trip
-                dialogBinding.continueBtn.isEnabled = true
-            }
-
-            dialogBinding.tripRecyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
-            dialogBinding.tripRecyclerView.adapter = pickerAdapter
+        val pickerAdapter = TripPickerAdapter(trips) { trip ->
+            selectedTrip = trip
+            dialogBinding.continueBtn.isEnabled = true
         }
+
+        dialogBinding.tripRecyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
+        dialogBinding.tripRecyclerView.adapter = pickerAdapter
 
         dialogBinding.continueBtn.setOnClickListener {
             selectedTrip?.let { trip ->
@@ -104,7 +119,7 @@ class FeedFragment : BaseFragment() {
             }
         }
 
-        dialogBinding.cancelBtn.setOnClickListener { dialog.dismiss() }
+        dialogBinding.cancelBtnEditProfileFragment.setOnClickListener { dialog.dismiss() }
         dialog.show()
     }
 
@@ -141,21 +156,41 @@ class FeedFragment : BaseFragment() {
         feedViewModel.posts.observe(viewLifecycleOwner) { posts ->
             adapter.updateData(posts)
             binding.postsRecyclerView.visibility = if (posts.isEmpty()) View.GONE else View.VISIBLE
+            binding.swipeRefreshLayout.isRefreshing = false
         }
 
         feedViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            binding.loadingLayout.visibility = if (isLoading) View.VISIBLE else View.GONE
+            if (binding.swipeRefreshLayout.isRefreshing && !isLoading) {
+                binding.swipeRefreshLayout.isRefreshing = false
+            }
+
+
+//            if (!binding.swipeRefreshLayout.isRefreshing) {
+//                showLoading("Sharing your post...")
+//                binding.loadingLayout.visibility = if (isLoading) View.VISIBLE else View.GONE
+//            }
         }
 
         feedViewModel.postSaved.observe(viewLifecycleOwner) { saved ->
             if (saved) {
                 feedViewModel.resetPostSavedState()
-                Toast.makeText(requireContext(), "Post Shared!", Toast.LENGTH_SHORT).show()
+                showCustomMessage(
+                    title = "Post Shared!",
+                    body = "Your space adventure is now live.",
+                    duration = 3000
+                )
             }
         }
 
         feedViewModel.error.observe(viewLifecycleOwner) { error ->
-            error?.let { Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show() }
+            error?.let {
+                showCustomMessage(
+                    title = "Error",
+                    body = it,
+                    duration = 3000
+                )
+                binding.swipeRefreshLayout.isRefreshing = false
+            }
         }
     }
 

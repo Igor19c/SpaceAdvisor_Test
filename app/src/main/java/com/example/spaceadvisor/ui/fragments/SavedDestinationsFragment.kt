@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,7 +15,6 @@ import com.example.spaceadvisor.ui.adapters.SavedAdapter
 import com.example.spaceadvisor.databinding.FragmentSavedDestinationsBinding
 import com.example.spaceadvisor.domain.models.Destination
 import com.example.spaceadvisor.ui.UIConfig
-import com.example.spaceadvisor.ui.adapters.TripDestinationsAdapter
 import com.example.spaceadvisor.ui.viewmodels.DestinationViewModel
 import com.example.spaceadvisor.ui.viewmodels.UserViewModel
 import com.example.spaceadvisor.ui.viewmodels.ViewModelFactory
@@ -43,7 +41,7 @@ class SavedDestinationsFragment : BaseFragment() {
         isLeftBtnVisible = true,
         leftIconRes = R.drawable.ic_back,
         onLeftClick = { parentFragmentManager.popBackStack() },
-        isRightBtnVisible = true,
+        isRightBtnVisible = false,
         selectedTabId = R.id.nav_profile
     )
 
@@ -68,6 +66,22 @@ class SavedDestinationsFragment : BaseFragment() {
         binding.unsaveAllBtn.setOnClickListener {
             showUnsaveAllConfirmation()
         }
+        binding.emptyCreateTripBtn.setOnClickListener { navigateTo(ExploreFragment()) }
+
+    }
+
+    private fun navigateTo(fragment: BaseFragment) {
+        parentFragmentManager.beginTransaction()
+            .setCustomAnimations(
+                R.anim.slide_in_bottom_to_top,
+                R.anim.fade_out,
+                R.anim.fade_in,
+                R.anim.slide_out_top_to_bottom
+            )
+            .add(R.id.main_frame, fragment)
+            .hide(this)
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun setupRecyclerView() {
@@ -92,11 +106,11 @@ class SavedDestinationsFragment : BaseFragment() {
                     handleUnsaveDestination(
                         destination,
                         onDeleted = {
-                            Toast.makeText(
-                                requireContext(),
-                                "${destination.title} unsaved",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            showCustomMessage(
+                                title = "Unsaved",
+                                body = "${destination.title} removed from favorites.",
+                                duration = 2000
+                            )
                         },
                         onCancel = {
                             adapter.notifyItemChanged(position)
@@ -130,8 +144,6 @@ class SavedDestinationsFragment : BaseFragment() {
                 }
             }
 
-
-
         ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(binding.myDestinationsRecyclerView)
     }
 
@@ -151,25 +163,25 @@ class SavedDestinationsFragment : BaseFragment() {
             .setPositiveButton("Delete") { _, _ ->
                 userViewModel.getCurrentUid()?.let { uid ->
                     destinationViewModel.unsaveDestination(uid, destination.id)
+                    onDeleted?.invoke()
                 }
             }.show()
 
     }
 
     private fun showUnsaveAllConfirmation() {
-        MaterialAlertDialogBuilder(requireContext())
+        MaterialAlertDialogBuilder(requireContext(), R.style.CustomAlertDialog)
             .setTitle("Unsave All")
             .setMessage("Are you sure you want to remove all saved destinations?")
             .setNegativeButton("Cancel", null)
             .setPositiveButton("Remove All") { _, _ ->
                 userViewModel.getCurrentUid()?.let { uid ->
                     destinationViewModel.unsaveAllDestinations(uid)
-                    Toast.makeText(
-                        requireContext(),
-                        "All destinations removed",
-                        Toast.LENGTH_SHORT
+                    showCustomMessage(
+                        title = "Cleared",
+                        body = "All destinations removed.",
+                        duration = 3000
                     )
-                        .show()
                 }
             }
             .show()
@@ -177,16 +189,20 @@ class SavedDestinationsFragment : BaseFragment() {
 
     private fun observeViewModel() {
         destinationViewModel.savedDestinations.observe(viewLifecycleOwner) { destinations ->
-            adapter.updateData(destinations)
-            binding.emptyStateText.visibility =
-                if (destinations.isEmpty()) View.VISIBLE else View.GONE
-            binding.myDestinationsRecyclerView.visibility =
-                if (destinations.isEmpty()) View.GONE else View.VISIBLE
+            val isEmpty = destinations.isNullOrEmpty()
+
+            binding.myDestinationsRecyclerView.visibility = if (isEmpty) View.GONE else View.VISIBLE
+            binding.emptyStateContainer.visibility = if (isEmpty) View.VISIBLE else View.GONE
+            binding.unsaveAllBtn.visibility = if (isEmpty) View.INVISIBLE else View.VISIBLE
+
+            if (!isEmpty) {
+                adapter.updateData(destinations)
+            }
         }
 
         destinationViewModel.error.observe(viewLifecycleOwner) { error ->
             error?.let {
-                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                showError(it)
             }
         }
     }

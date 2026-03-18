@@ -16,7 +16,7 @@
             android:layout_height="4dp"
             android:layout_centerVertical="true"
             android:layout_marginHorizontal="30dp"
-            android:background="#20FFFFFF" />
+            android:background="@color/layout_background_transparent_white_20" />
 
         <ProgressBar
             android:id="@+id/trip_progress_bar_header"
@@ -26,7 +26,7 @@
             android:layout_centerVertical="true"
             android:layout_marginHorizontal="30dp"
             android:progress="3"
-            android:progressDrawable="@drawable/custom_progress_drawable" />
+            android:progressDrawable="@drawable/custom_progress_bar" />
 
         <LinearLayout
             android:id="@+id/dots_container"
@@ -50,7 +50,8 @@
                     android:id="@+id/dot_planet_header"
                     android:layout_width="14dp"
                     android:layout_height="14dp"
-                    android:src="@drawable/ic_dot_inactive" />
+                    android:layout_marginTop="12dp"
+                    android:src="@drawable/ic_dot_active" />
 
                 <TextView
                     android:id="@+id/dot_label_body_header"
@@ -58,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="Planets"
-                    android:textColor="#80FFFFFF"
+                    android:textColor="@color/text_quaternary_light"
                     android:textSize="9sp" />
             </LinearLayout>
 
@@ -74,6 +75,7 @@
                     android:id="@+id/dot_location_header"
                     android:layout_width="14dp"
                     android:layout_height="14dp"
+                    android:layout_marginTop="12dp"
                     android:src="@drawable/ic_dot_inactive" />
 
                 <TextView
@@ -82,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="Locations"
-                    android:textColor="#80FFFFFF"
+                    android:textColor="@color/text_quaternary_light"
                     android:textSize="9sp" />
             </LinearLayout>
 

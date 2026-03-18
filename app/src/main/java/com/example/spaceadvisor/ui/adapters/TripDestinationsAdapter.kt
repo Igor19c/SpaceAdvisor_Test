@@ -83,10 +83,10 @@ class TripDestinationsAdapter(
                     1 -> R.color.green_light
                     2 -> R.color.yellow_accent
                     3 -> R.color.red_muted
-                    else -> R.color.textQuaternary
+                    else -> R.color.text_quaternary_light
                 }
             } else {
-                R.color.textQuaternary
+                R.color.text_quaternary_light
             }
 
             iconView.setColorFilter(

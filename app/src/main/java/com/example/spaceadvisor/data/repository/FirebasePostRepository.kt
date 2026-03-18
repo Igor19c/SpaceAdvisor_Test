@@ -1,7 +1,6 @@
 package com.example.spaceadvisor.data.repository
 
 import android.net.Uri
-import com.example.spaceadvisor.domain.models.Destination
 import com.example.spaceadvisor.domain.models.Post
 import com.example.spaceadvisor.domain.repository.IPostRepository
 import com.google.firebase.firestore.FieldValue
@@ -119,6 +118,34 @@ class FirebasePostRepository(
             storageRef.putFile(imageUri).await()
             val downloadUrl = storageRef.downloadUrl.await().toString()
             Result.success(downloadUrl)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    override suspend fun syncUserPosts(
+        uid: String,
+        newUsername: String,
+        newUserImage: String
+    ): Result<Unit> {
+        return try {
+            val postsSnapshot = db.collection("posts")
+                .whereEqualTo("uid", uid)
+                .get()
+                .await()
+
+            if (postsSnapshot.isEmpty) return Result.success(Unit)
+
+            val batch = db.batch()
+            for (document in postsSnapshot.documents) {
+                batch.update(
+                    document.reference,
+                    "username", newUsername,
+                    "userProfileImage", newUserImage
+                )
+            }
+            batch.commit().await()
+            Result.success(Unit)
         } catch (e: Exception) {
             Result.failure(e)
         }

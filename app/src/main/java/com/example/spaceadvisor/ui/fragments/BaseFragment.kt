@@ -1,10 +1,10 @@
 package com.example.spaceadvisor.ui.fragments
 
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.spaceadvisor.ui.UIConfig
 import com.example.spaceadvisor.ui.activities.BaseActivity
+import com.example.spaceadvisor.ui.activities.LoadingType
 import com.example.spaceadvisor.ui.viewmodels.UIViewModel
 
 abstract class BaseFragment : Fragment() {
@@ -27,8 +27,11 @@ abstract class BaseFragment : Fragment() {
         }
     }
 
-    fun showLoading(message: String? = null) {
-        (activity as? BaseActivity)?.showLoading(message)
+    fun showLoading(
+        message: String? = null,
+        type: LoadingType = LoadingType.PROGRESS_BAR
+    ) {
+        (activity as? BaseActivity)?.showLoading(message, type)
     }
 
     fun hideLoading() {
@@ -36,8 +39,10 @@ abstract class BaseFragment : Fragment() {
     }
 
     fun showError(message: String) {
-        context?.let {
-            Toast.makeText(it, message, Toast.LENGTH_SHORT).show()
-        }
+        showCustomMessage("Error", message)
+    }
+
+    fun showCustomMessage(title: String, body: String, duration: Long = 3000) {
+        (activity as? BaseActivity)?.showCustomMessage(title, body, duration)
     }
 }

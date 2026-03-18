@@ -1,6 +1,5 @@
 package com.example.spaceadvisor.ui.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +9,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.RecyclerView
@@ -49,7 +47,6 @@ class ExploreFragment : BaseFragment() {
     private var pendingDestinationToAdd: Destination? = null
 
     // Header View References
-    private var headerView: View? = null
     private var headerProgressBar: ProgressBar? = null
     private var headerDotPlanet: ImageView? = null
     private var headerDotLocation: ImageView? = null
@@ -62,14 +59,16 @@ class ExploreFragment : BaseFragment() {
             isHeaderVisible = true
         )
 
-        if (headerView == null) {
-            headerView =
-                LayoutInflater.from(context).inflate(R.layout.layout_explore_header, null)
-            headerProgressBar = headerView?.findViewById(R.id.trip_progress_bar_header)
-            headerDotPlanet = headerView?.findViewById(R.id.dot_planet_header)
-            headerDotLocation = headerView?.findViewById(R.id.dot_location_header)
-            headerLabelPlanet = headerView?.findViewById(R.id.dot_label_body_header)
-            headerLabelLocation = headerView?.findViewById(R.id.dot_label_location_header)
+        val headerView = LayoutInflater.from(context).inflate(R.layout.layout_explore_header, null)
+        headerProgressBar = headerView.findViewById(R.id.trip_progress_bar_header)
+        headerDotPlanet = headerView.findViewById(R.id.dot_planet_header)
+        headerDotLocation = headerView.findViewById(R.id.dot_location_header)
+        headerLabelPlanet = headerView.findViewById(R.id.dot_label_body_header)
+        headerLabelLocation = headerView.findViewById(R.id.dot_label_location_header)
+
+        val navState = destinationViewModel.navigationUiState.value
+        if (navState != null) {
+            updateProgressUI(navState.bodyActive, navState.locationActive)
         }
 
         val isRoot: Boolean = destinationViewModel.currentExploreParentId == "root"
@@ -79,7 +78,9 @@ class ExploreFragment : BaseFragment() {
             isHeaderVisible = true,
             isLeftBtnVisible = true,
             leftIconRes = if (isRoot) R.drawable.ic_settings else R.drawable.ic_back,
-            onLeftClick = { if (isRoot) openSettings() else handleBackNavigation() },
+            onLeftClick = if (isRoot) null else {
+                { handleBackNavigation() }
+            },
             isRightBtnVisible = true,
             customHeaderView = headerView
         )
@@ -237,10 +238,10 @@ class ExploreFragment : BaseFragment() {
                     1 -> ContextCompat.getColor(requireContext(), R.color.green_light)
                     2 -> ContextCompat.getColor(requireContext(), R.color.yellow_accent)
                     3 -> ContextCompat.getColor(requireContext(), R.color.red_muted)
-                    else -> ContextCompat.getColor(requireContext(), R.color.textQuaternary)
+                    else -> ContextCompat.getColor(requireContext(), R.color.text_quaternary_light)
                 }
             } else {
-                ContextCompat.getColor(requireContext(), R.color.textQuaternary)
+                ContextCompat.getColor(requireContext(), R.color.text_quaternary_light)
             }
 
             iconView.setColorFilter(tintColor, android.graphics.PorterDuff.Mode.SRC_IN)
@@ -343,7 +344,7 @@ class ExploreFragment : BaseFragment() {
         destinationViewModel.error.observe(viewLifecycleOwner) { error ->
             error?.let {
                 val currentContext = context ?: return@observe
-                Toast.makeText(currentContext, it, Toast.LENGTH_SHORT).show()
+                showError(it)
                 binding.exploreContentLayout.alpha = 1f
                 isLevelTransition = false
             }
@@ -410,13 +411,14 @@ class ExploreFragment : BaseFragment() {
         }
 
         parentFragmentManager.beginTransaction()
-//            .setCustomAnimations(
-//                R.anim.slide_in_bottom_to_top,
-//                R.anim.fade_out,
-//                R.anim.fade_in,
-//                R.anim.slide_out_top_to_bottom
-//            )
-            .replace(R.id.main_frame, fragment)
+            .setCustomAnimations(
+                R.anim.slide_in_bottom_to_top,
+                R.anim.fade_out,
+                R.anim.fade_in,
+                R.anim.slide_out_top_to_bottom
+            )
+            .add(R.id.main_frame, fragment)
+            .hide(this)
             .addToBackStack(null)
             .commit()
     }
@@ -431,7 +433,7 @@ class ExploreFragment : BaseFragment() {
 
         val currentContext = context ?: return
         val activeColor = ContextCompat.getColor(currentContext, R.color.white)
-        val inactiveColor = ContextCompat.getColor(currentContext, R.color.textQuaternary)
+        val inactiveColor = ContextCompat.getColor(currentContext, R.color.text_quaternary_light)
 
         headerLabelPlanet?.setTextColor(if (bodyActive || currentParentId == "root") activeColor else inactiveColor)
         headerLabelLocation?.setTextColor(if (locationActive) activeColor else inactiveColor)
@@ -471,5 +473,11 @@ class ExploreFragment : BaseFragment() {
         mediator?.detach()
         mediator = null
         _binding = null
+
+        headerProgressBar = null
+        headerDotPlanet = null
+        headerDotLocation = null
+        headerLabelPlanet = null
+        headerLabelLocation = null
     }
 }

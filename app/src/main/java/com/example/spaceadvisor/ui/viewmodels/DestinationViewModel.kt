@@ -29,6 +29,12 @@ class DestinationViewModel(
     private val _destinations = MutableLiveData<List<Destination>>()
     val destinations: LiveData<List<Destination>> = _destinations
 
+    private val _subDestinations = MutableLiveData<List<Destination>>()
+    val subDestinations: LiveData<List<Destination>> = _subDestinations
+
+    private val _trendingDestinations = MutableLiveData<List<Destination>>()
+    val trendingDestinations: LiveData<List<Destination>> = _trendingDestinations
+
     private val _savedDestinations = MutableLiveData<List<Destination>>()
     val savedDestinations: LiveData<List<Destination>> = _savedDestinations
 
@@ -72,6 +78,18 @@ class DestinationViewModel(
         }
     }
 
+    fun fetchSubDestinations(parentId: String) {
+        viewModelScope.launch {
+            repository.fetchDestinationsByParent(parentId).collectLatest { result ->
+                result.onSuccess { list ->
+                    _subDestinations.value = list
+                }.onFailure { e ->
+                    _error.value = e.message
+                }
+            }
+        }
+    }
+
     fun submitReview(review: Review) {
         viewModelScope.launch {
             _isLoading.value = true
@@ -96,7 +114,7 @@ class DestinationViewModel(
             repository.fetchDestinationsByRating().collectLatest { result ->
                 _isLoading.value = false
                 result.onSuccess { list ->
-                    _destinations.value = list
+                    _trendingDestinations.value = list
                 }.onFailure { e ->
                     _error.value = e.message
                 }

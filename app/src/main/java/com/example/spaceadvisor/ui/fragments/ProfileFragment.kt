@@ -1,17 +1,16 @@
 package com.example.spaceadvisor.ui.fragments
 
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
-import android.widget.Toast
-import androidx.activity.result.PickVisualMediaRequest
-import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,24 +20,21 @@ import com.bumptech.glide.signature.ObjectKey
 import com.example.spaceadvisor.R
 import com.example.spaceadvisor.SpaceAdvisorApplication
 import com.example.spaceadvisor.ui.UIConfig
-import com.example.spaceadvisor.ui.adapters.AvatarAdapter
+import com.example.spaceadvisor.ui.activities.AuthActivity
 import com.example.spaceadvisor.ui.adapters.BadgeAdapter
 import com.example.spaceadvisor.ui.adapters.NewestTripsAdapter
 import com.example.spaceadvisor.ui.adapters.ReviewAdapter
-import com.example.spaceadvisor.databinding.DialogEditProfileBinding
-import com.example.spaceadvisor.databinding.DialogChooseImageSourceBinding
 import com.example.spaceadvisor.databinding.DialogBadgeUnlockedBinding
 import com.example.spaceadvisor.databinding.FragmentProfileBinding
 import com.example.spaceadvisor.domain.models.Badge
-import com.example.spaceadvisor.domain.models.Post
 import com.example.spaceadvisor.domain.repository.BadgeRepository
+import com.example.spaceadvisor.ui.activities.LoadingType
 import com.example.spaceadvisor.ui.viewmodels.FeedViewModel
 import com.example.spaceadvisor.ui.viewmodels.TripViewModel
 import com.example.spaceadvisor.ui.viewmodels.UserViewModel
 import com.example.spaceadvisor.ui.viewmodels.ViewModelFactory
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import java.util.LinkedList
+import com.firebase.ui.auth.AuthUI
 import java.util.Queue
 
 class ProfileFragment : BaseFragment() {
@@ -56,21 +52,12 @@ class ProfileFragment : BaseFragment() {
         ViewModelFactory(requireActivity().application as SpaceAdvisorApplication)
     }
 
-    private var selectedImageUri: Uri? = null
-    private var currentDialogBinding: DialogEditProfileBinding? = null
     private lateinit var newestTripsAdapter: NewestTripsAdapter
     private lateinit var badgesAdapter: BadgeAdapter
     private lateinit var reviewAdapter: ReviewAdapter
 
     private val badgeDialogQueue: Queue<Badge> = LinkedList()
     private var isBadgeDialogShowing = false
-
-    private val pickMedia =
-        registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-            if (uri != null) {
-                updatePreviewImage(uri)
-            }
-        }
 
     override fun getUIConfig() = UIConfig(
         title = "My Profile",
@@ -98,12 +85,45 @@ class ProfileFragment : BaseFragment() {
             feedViewModel.fetchUserPosts(uid)
         }
 
-        binding.signoutBtn.setOnClickListener { userViewModel.signOut() }
+        binding.signOutBtn.setOnClickListener { handleSignOut() }
         binding.savedBtn.setOnClickListener { navigateTo(SavedDestinationsFragment()) }
         binding.myTripsSeeAllBtn.setOnClickListener { navigateTo(MyTripsFragment()) }
         binding.reviewsSeeAllBtn.setOnClickListener { navigateTo(MyReviewsFragment()) }
+        binding.editProfBtn.setOnClickListener {
+            navigateTo(
+                EditProfileFragment.newInstance(
+                    isFirstTime = false
+                )
+            )
+        }
 
-        binding.editProfBtn.setOnClickListener { showEditProfileDialog() }
+        val isNewUser = requireActivity().intent.getBooleanExtra("IS_NEW_USER", false)
+        if (isNewUser) {
+            requireActivity().intent.removeExtra("IS_NEW_USER")
+            navigateTo(EditProfileFragment.newInstance(isFirstTime = true))
+        }
+    }
+
+    private fun handleSignOut() {
+//        binding.signOutLoadingOverlay.visibility = View.VISIBLE
+//        binding.signOutLoadingOverlay.alpha = 0f
+//        binding.signOutLoadingOverlay.animate().alpha(1f).setDuration(300).start()
+
+        showLoading("Preparing your space...", LoadingType.LOTTIE)
+        userViewModel.createNewUserProfile {
+            Handler(Looper.getMainLooper()).postDelayed({
+                hideLoading()
+                AuthUI.getInstance().signOut(requireContext())
+                    .addOnCompleteListener {
+                        userViewModel.signOut()
+                    }
+            }, 2200)
+        }
+
+//        AuthUI.getInstance().signOut(requireContext())
+//            .addOnCompleteListener {
+//                userViewModel.signOut()
+//            }
     }
 
     private fun navigateTo(fragment: BaseFragment) {
@@ -114,15 +134,10 @@ class ProfileFragment : BaseFragment() {
                 R.anim.fade_in,
                 R.anim.slide_out_top_to_bottom
             )
-            .replace(R.id.main_frame, fragment)
+            .add(R.id.main_frame, fragment)
+            .hide(this)
             .addToBackStack(null)
             .commit()
-
-//        parentFragmentManager.beginTransaction()
-//            .add(R.id.main_frame, fragment)
-//            .hide(this)
-//            .addToBackStack(null)
-//            .commit()
     }
 
     private fun observeUserViewModel() {
@@ -163,6 +178,27 @@ class ProfileFragment : BaseFragment() {
             binding.recentReviewsRecyclerView.visibility =
                 if (recentReviews.isEmpty()) View.GONE else View.VISIBLE
         }
+
+        userViewModel.isLoggedOut.observe(viewLifecycleOwner) { loggedOut ->
+            if (loggedOut) {
+                navigateToAuth()
+            }
+        }
+    }
+
+    private fun navigateToAuth() {
+        val intent = Intent(requireContext(), AuthActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            putExtra("force_relogin", false)
+        }
+
+        val options = ActivityOptionsCompat.makeCustomAnimation(
+            requireContext(),
+            android.R.anim.fade_in,
+            android.R.anim.fade_out
+        )
+        startActivity(intent, options.toBundle())
+        requireActivity().finish()
     }
 
     private fun showNextBadgeInQueue() {
@@ -206,10 +242,7 @@ class ProfileFragment : BaseFragment() {
             binding.postsCounter.text = posts.size.toString()
             val trips = tripViewModel.userTrips.value ?: emptyList()
             userViewModel.checkForBadges(trips, posts)
-
         }
-
-
     }
 
     private fun observeViewModel() {
@@ -217,7 +250,7 @@ class ProfileFragment : BaseFragment() {
         observeTripViewModel()
         observeFeedViewModel()
         userViewModel.error.observe(viewLifecycleOwner) { errorMessage ->
-            errorMessage?.let { Toast.makeText(context, it, Toast.LENGTH_SHORT).show() }
+            errorMessage?.let { showError(it) }
         }
     }
 
@@ -245,55 +278,6 @@ class ProfileFragment : BaseFragment() {
             layoutManager = GridLayoutManager(requireContext(), 3); isNestedScrollingEnabled =
             false; adapter = badgesAdapter
         }
-    }
-
-    private fun showEditProfileDialog() {
-        val dialog = BottomSheetDialog(requireContext())
-        dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
-        dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-        val dialogBinding = DialogEditProfileBinding.inflate(layoutInflater)
-        currentDialogBinding = dialogBinding
-        dialog.setContentView(dialogBinding.root)
-        val currentUser = userViewModel.userData.value
-        dialogBinding.editNameEt.setText(currentUser?.name)
-        dialogBinding.editUsernameEt.setText(currentUser?.username)
-        dialogBinding.editBioEt.setText(currentUser?.bio)
-        currentUser?.profileImageUrl?.let {
-            Glide.with(this).load(it).circleCrop().into(dialogBinding.editUserPic)
-        }
-        dialogBinding.updatePicBtn.setOnClickListener { showAvatarPicker() }
-        dialogBinding.saveBtn.setOnClickListener {
-            userViewModel.updateProfile(
-                dialogBinding.editNameEt.text.toString(),
-                dialogBinding.editUsernameEt.text.toString(),
-                dialogBinding.editBioEt.text.toString()
-            )
-            selectedImageUri?.let { userViewModel.uploadProfileImage(it, requireContext().assets) }
-            dialog.dismiss()
-        }
-        dialogBinding.cancelBtn.setOnClickListener { dialog.dismiss() }
-        dialog.show()
-    }
-
-    private fun showAvatarPicker() {
-        val pickerDialog = BottomSheetDialog(requireContext())
-        val pickerBinding = DialogChooseImageSourceBinding.inflate(layoutInflater)
-        pickerDialog.setContentView(pickerBinding.root)
-        userViewModel.loadAvatars(requireContext().assets)
-        userViewModel.avatarPaths.observe(viewLifecycleOwner) { avatarFiles ->
-            val adapter = AvatarAdapter(
-                avatars = avatarFiles,
-                onPlusClick = { pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)); pickerDialog.dismiss() },
-                onAvatarClick = { assetPath -> updatePreviewImage(Uri.parse(assetPath)); pickerDialog.dismiss() })
-            pickerBinding.itemRecyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
-            pickerBinding.itemRecyclerView.adapter = adapter
-        }
-        pickerDialog.show()
-    }
-
-    private fun updatePreviewImage(uri: Uri) {
-        selectedImageUri = uri
-        currentDialogBinding?.let { Glide.with(this).load(uri).circleCrop().into(it.editUserPic) }
     }
 
     override fun onDestroyView() {

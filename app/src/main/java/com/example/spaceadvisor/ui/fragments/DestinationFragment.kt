@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -90,8 +89,7 @@ class DestinationFragment : BaseFragment() {
             binding.destSaveDestinationBtn.setOnClickListener {
                 userViewModel.getCurrentUid()?.let { uid ->
                     destinationViewModel.toggleSaveDestination(uid, dest)
-                } ?: Toast.makeText(requireContext(), "Please login to save", Toast.LENGTH_SHORT)
-                    .show()
+                } ?: showError("Please login to save")
             }
         }
 
@@ -189,7 +187,7 @@ class DestinationFragment : BaseFragment() {
         } else {
             binding.destChildrenSection.visibility = View.VISIBLE
             binding.destChildrenTitleText.text = "${destination.title} destinations"
-            destinationViewModel.fetchDestinations(destination.id, destination.type)
+            destinationViewModel.fetchSubDestinations(destination.id)
         }
     }
 
@@ -214,7 +212,7 @@ class DestinationFragment : BaseFragment() {
             details?.let { updateDetailsUI(it) }
         }
 
-        destinationViewModel.destinations.observe(viewLifecycleOwner) { list ->
+        destinationViewModel.subDestinations.observe(viewLifecycleOwner) { list ->
             childrenAdapter.updateData(list)
             trendingChildrenAdapter.updateData(list.sortedByDescending { it.ratingAvg })
         }
@@ -226,8 +224,7 @@ class DestinationFragment : BaseFragment() {
 
         destinationViewModel.reviewSuccess.observe(viewLifecycleOwner) { success ->
             if (success) {
-                Toast.makeText(requireContext(), "Review shared! Thank you.", Toast.LENGTH_SHORT)
-                    .show()
+                showCustomMessage("Review shared!", "Thank you for your feedback.")
                 clearReviewFields()
                 destinationViewModel.resetReviewStatus()
                 destinationViewModel.fetchFullDetails(destinationId)
@@ -246,18 +243,13 @@ class DestinationFragment : BaseFragment() {
         binding.destSubmitReviewBtn.setOnClickListener {
             val user = userViewModel.userData.value
             if (user == null) {
-                Toast.makeText(
-                    requireContext(),
-                    "Please login to leave a review",
-                    Toast.LENGTH_SHORT
-                ).show()
+                showError("Please login to leave a review")
                 return@setOnClickListener
             }
 
             val rating = binding.destReviewRatingBar.rating.toInt()
             if (rating == 0) {
-                Toast.makeText(requireContext(), "Please select a rating", Toast.LENGTH_SHORT)
-                    .show()
+                showError("Please select a rating")
                 return@setOnClickListener
             }
 
@@ -300,7 +292,8 @@ class DestinationFragment : BaseFragment() {
                     }
                 }
                 parentFragmentManager.beginTransaction()
-                    .replace(R.id.main_frame, nextFragment)
+                    .add(R.id.main_frame, nextFragment)
+                    .hide(this)
                     .addToBackStack(null)
                     .commit()
             } else {

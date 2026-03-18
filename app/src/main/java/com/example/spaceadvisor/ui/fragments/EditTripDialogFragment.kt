@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import com.example.spaceadvisor.R
 import com.example.spaceadvisor.SpaceAdvisorApplication
-import com.example.spaceadvisor.databinding.FragmentDialogEditTripBinding
+import com.example.spaceadvisor.databinding.FragmentEditTripBinding
 import com.example.spaceadvisor.domain.models.Trip
 import com.example.spaceadvisor.ui.viewmodels.TripViewModel
 import com.example.spaceadvisor.ui.viewmodels.UserViewModel
@@ -22,7 +22,7 @@ import java.util.*
 
 class EditTripDialogFragment : BottomSheetDialogFragment() {
 
-    private var _binding: FragmentDialogEditTripBinding? = null
+    private var _binding: FragmentEditTripBinding? = null
     private val binding get() = _binding!!
 
     private val tripViewModel: TripViewModel by activityViewModels {
@@ -41,7 +41,7 @@ class EditTripDialogFragment : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentDialogEditTripBinding.inflate(inflater, container, false)
+        _binding = FragmentEditTripBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -69,7 +69,7 @@ class EditTripDialogFragment : BottomSheetDialogFragment() {
         binding.saveNewTripBtn.text = if (isEdit) "Save Changes" else "Start Journey"
 
         if (isEdit && currentTrip != null) {
-            binding.editNameEt.setText(currentTrip.title)
+            binding.editTextNameEditTripFragment.setText(currentTrip.title)
             startDateLong = currentTrip.startDate
             endDateLong = currentTrip.endDate
             startDateLong?.let { binding.editStartDate.setText(dateFormatter.format(Date(it))) }
@@ -118,13 +118,14 @@ class EditTripDialogFragment : BottomSheetDialogFragment() {
     }
 
     private fun handleSave(isEdit: Boolean, shouldNavigate: Boolean) {
-        val title = binding.editNameEt.text.toString().trim()
+        val title = binding.editTextNameEditTripFragment.text.toString().trim()
 
         if (title.isEmpty()) {
-            binding.editNameEt.error = "Name is required"
+            binding.editTextNameEditTripFragment.error = "Name is required"
             return
         }
         if (startDateLong == null || endDateLong == null) {
+
             Toast.makeText(requireContext(), "Please select dates", Toast.LENGTH_SHORT).show()
             return
         }

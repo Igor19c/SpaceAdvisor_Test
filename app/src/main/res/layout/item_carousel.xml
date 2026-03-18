@@ -3,200 +3,34 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginHorizontal="8dp"
-    app:cardCornerRadius="24dp"
-    app:cardElevation="4dp">
+    android:backgroundTint="@color/layout_background_transparent"
+    app:strokeWidth="0dp">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/dest_image_carousel_item"
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorBackground"
-            android:clickable="true"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_home_earth" />
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/layout_background_transparent"
+            app:cardCornerRadius="24dp"
+            app:strokeWidth="0dp">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#20000000" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:orientation="vertical"
-            android:paddingHorizontal="15dp"
-            android:paddingBottom="15dp">
-
-            <LinearLayout
-                android:id="@+id/detail_glass_container_carousel_item"
-                style="@style/ShapeAppearance.Material3.Corner.Medium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingHorizontal="5dp"
-                android:paddingVertical="8dp">
-
-
-                <TextView
-                    android:id="@+id/dest_title_carousel_item"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="Mars"
-                    android:textColor="@color/textPrimary"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
-
-
-                <TextView
-                    android:id="@+id/dest_subtitle_carousel_item"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="The Red Planet"
-                    android:textColor="@color/textPrimary"
-                    android:textSize="14sp" />
-
-                <!--                <TextView-->
-                <!--                    android:id="@+id/dest_short_description_carousel_item"-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:layout_marginTop="5dp"-->
-                <!--                    android:text="A barred spiral galaxy approximately 2.5 million light-years from Earth"-->
-                <!--                    android:textColor="@color/textQuaternary"-->
-                <!--                    android:textSize="14sp" />-->
-
-                <!--                <com.google.android.material.chip.ChipGroup-->
-                <!--                    android:id="@+id/dest_tags_chip_group"-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:layout_marginTop="3dp"-->
-                <!--                    app:chipSpacingHorizontal="8dp"-->
-                <!--                    app:chipSpacingVertical="4dp">-->
-
-                <!--                    <com.google.android.material.chip.Chip-->
-                <!--                        android:layout_width="wrap_content"-->
-                <!--                        android:layout_height="40dp"-->
-                <!--                        android:text="Adventure"-->
-                <!--                        android:textColor="@color/gray_light"-->
-                <!--                        android:textSize="8sp"-->
-                <!--                        app:chipBackgroundColor="#7E333333"-->
-                <!--                        app:chipCornerRadius="10dp"-->
-                <!--                        app:chipStrokeColor="@color/gray_light" />-->
-
-                <!--                </com.google.android.material.chip.ChipGroup>-->
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:paddingVertical="4dp">
-
-                    <TextView
-                        android:id="@+id/dest_type_chip_carousel_item"
-                        style="@style/MaterialAlertDialog.Material3.Body.Text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/custom_text_blue_background_stroke"
-                        android:paddingHorizontal="18dp"
-                        android:paddingVertical="8dp"
-                        android:text="Planet"
-                        android:textColor="#5F70FD"
-                        android:textSize="11sp" />
-
-                    <View
-                        android:layout_width="8dp"
-                        android:layout_height="match_parent" />
-
-                    <TextView
-                        android:id="@+id/dest_rating_chip_carousel_item"
-                        style="@style/MaterialAlertDialog.Material3.Body.Text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:background="@drawable/custom_text_purple_background_stroke"
-                        android:paddingHorizontal="18dp"
-                        android:paddingVertical="8dp"
-                        android:text="★ 4.5"
-                        android:textColor="#AE52D4"
-                        android:textSize="11sp" />
-
-
-                </LinearLayout>
-
-                <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/dest_tags_chip_group"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:chipSpacingHorizontal="8dp"
-                    app:chipSpacingVertical="4dp">
-
-                    <com.google.android.material.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@color/transparent"
-                        android:text="Adventure"
-                        android:textColor="@color/gray_light"
-                        android:textSize="11sp"
-                        app:chipBackgroundColor="#B3000000"
-                        app:chipCornerRadius="20dp"
-                        app:chipStrokeColor="#90000000" />
-
-                    <com.google.android.material.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@color/transparent"
-                        android:text="Adventure"
-                        android:textColor="@color/gray_light"
-                        android:textSize="11sp"
-                        app:chipBackgroundColor="#B3000000"
-                        app:chipCornerRadius="20dp"
-                        app:chipStrokeColor="#90000000" />
-
-                </com.google.android.material.chip.ChipGroup>
-            </LinearLayout>
-
-            <LinearLayout
+            <ImageView
+                android:id="@+id/dest_image_carousel_item"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="start"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:elevation="8dp"
+                android:focusable="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/pic_profile" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/selectBtn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/white"
-                    android:text="Select"
-                    android:textAllCaps="false"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
-                    app:cornerRadius="6dp" />
+        </com.google.android.material.card.MaterialCardView>
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/detailsBtn"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:backgroundTint="@android:color/transparent"
-                    android:text="View Details"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
-                    app:cornerRadius="6dp"
-                    app:strokeColor="@color/white"
-                    app:strokeWidth="1dp" />
+    </LinearLayout>
 
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </RelativeLayout>
 </com.google.android.material.card.MaterialCardView>

@@ -11,8 +11,6 @@ interface IUserRepository {
 
     fun getFirebaseUserProperties(): Pair<String?, String?>
     fun observeUser(uid: String): Flow<Result<User?>>
-    suspend fun getUser(uid: String): Result<User?>
-    suspend fun getUsers(uids: List<String>): Result<List<User>>
     suspend fun createUserProfile(user: User): Result<Unit>
     suspend fun updateProfile(
         uid: String,

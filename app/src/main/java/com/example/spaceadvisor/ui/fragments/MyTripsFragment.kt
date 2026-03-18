@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -106,11 +105,7 @@ class MyTripsFragment : BaseFragment() {
                     tripSelectionHelper.handleDeleteTrip(
                         trip,
                         onDeleted = {
-                            Toast.makeText(
-                                requireContext(),
-                                "Trip removed",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            showCustomMessage("Trip Removed!", "Trip has been removed")
                         },
                         onCancel = {
                             allTripsAdapter.notifyItemChanged(position)
@@ -150,18 +145,17 @@ class MyTripsFragment : BaseFragment() {
     private fun observeViewModel() {
         tripViewModel.userTrips.observe(viewLifecycleOwner) { trips ->
             val isEmpty = trips.isNullOrEmpty()
-            
-            // Toggle visibility between list and empty state
+
             binding.tripsListContainer.visibility = if (isEmpty) View.GONE else View.VISIBLE
             binding.emptyStateContainer.visibility = if (isEmpty) View.VISIBLE else View.GONE
-            
+
             if (!isEmpty) {
                 allTripsAdapter.updateData(trips)
             }
         }
 
         tripViewModel.error.observe(viewLifecycleOwner) { error ->
-            error?.let { Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show() }
+            error?.let { showCustomMessage("Error", it) }
         }
     }
 

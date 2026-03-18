@@ -12,8 +12,8 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_centerInParent="true"
-        android:background="@color/colorBackground"
-        android:backgroundTint="@color/transparent"
+        android:background="@color/layout_background_primary"
+        android:backgroundTint="@color/layout_background_transparent"
         android:padding="6dp"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -30,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Title"
-        android:textColor="@color/textPrimary"
+        android:textColor="@color/text_primary"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@id/image_trip_picker_item"
         app:layout_constraintEnd_toEndOf="@id/image_trip_picker_item"
@@ -47,6 +47,6 @@
         app:layout_constraintEnd_toEndOf="@id/image_trip_picker_item"
         app:layout_constraintStart_toStartOf="@id/image_trip_picker_item"
         app:layout_constraintTop_toTopOf="@id/image_trip_picker_item"
-        app:tint="@color/white" />
+        app:tint="@color/icon_primary" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -31,7 +31,11 @@ class MyReviewsFragment : BaseFragment() {
 
     override fun getUIConfig() = UIConfig(
         title = "My Reviews",
-        isHeaderVisible = false,
+        isRightBtnVisible = false,
+        isHeaderVisible = true,
+        leftIconRes = R.drawable.ic_back,
+        isLeftBtnVisible = true,
+        onLeftClick = { parentFragmentManager.popBackStack() },
         selectedTabId = R.id.nav_profile
     )
 
@@ -51,10 +55,6 @@ class MyReviewsFragment : BaseFragment() {
 
         userViewModel.getCurrentUid()?.let { uid ->
             userViewModel.startListening(uid)
-        }
-
-        binding.myReviewsBackBtn.setOnClickListener {
-            parentFragmentManager.popBackStack()
         }
     }
 

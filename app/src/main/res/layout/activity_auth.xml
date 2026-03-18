@@ -3,42 +3,68 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground">
+    android:background="@color/layout_background_primary">
 
-    <FrameLayout
-        android:id="@+id/loading_overlay"
+    <ImageView
+        android:id="@+id/logo_auth_activity"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorBackground"
-        android:elevation="10dp"
-        android:visibility="gone">
+        android:layout_height="250dp"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/app_logo_pin_new"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="vertical">
+    <TextView
+        android:id="@+id/welcome_text_auth_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-12dp"
+        android:fontFamily="@font/orbitron_bold"
+        android:letterSpacing="0.2"
+        android:text="ASTRYX"
+        android:textColor="@color/text_primary"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logo_auth_activity" />
 
-            <ImageView
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_marginBottom="24dp"
-                android:src="@drawable/ic_home_earth" />
+    <LinearLayout
+        android:id="@+id/button_container_auth_activity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="60dp"
+        android:orientation="vertical"
+        android:padding="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-            <ProgressBar
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:indeterminateTint="@color/white" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/email_button_auth_activity"
+            style="@style/Widget.Material3.Button"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginBottom="12dp"
+            android:text="Sign in with Email"
+            android:textAllCaps="false"
+            android:textColor="@color/text_secondary"
+            android:textSize="16sp"
+            app:backgroundTint="@color/btn_fill_primary"
+            app:cornerRadius="12dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Preparing your space..."
-                android:textColor="@color/white"
-                android:textSize="16sp" />
-        </LinearLayout>
-    </FrameLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/google_button_auth_activity"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="Sign in with Google"
+            android:textAllCaps="false"
+            android:textColor="@color/text_primary"
+            android:textSize="16sp"
+            app:cornerRadius="12dp"
+            app:strokeColor="@color/btn_stroke_primary"
+            app:strokeWidth="1dp" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

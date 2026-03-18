@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
-    android:background="@color/colorBackground"
+    android:background="@color/layout_background_primary"
     android:clickable="true"
     android:focusable="true"
     android:orientation="vertical">
@@ -40,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="User Name"
-                android:textColor="@color/textPrimary"
+                android:textColor="@color/text_primary"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -49,7 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Trip Title"
-                android:textColor="@color/textQuaternary"
+                android:textColor="@color/text_quaternary_light"
                 android:textSize="14sp" />
         </LinearLayout>
 
@@ -107,7 +107,7 @@
             android:layout_marginEnd="-8dp"
             app:icon="@drawable/ic_dots"
             app:iconSize="30dp"
-            app:iconTint="@color/white" />
+            app:iconTint="@color/icon_primary" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -121,7 +121,7 @@
             android:id="@+id/image_post_item"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorBackground"
+            android:background="@color/layout_background_primary"
             android:clickable="true"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_home_earth" />
@@ -129,7 +129,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#40000000" />
+            android:background="@color/layout_background_transparent_black_20" />
 
     </RelativeLayout>
 
@@ -153,7 +153,7 @@
                 android:layout_height="40dp"
                 android:layout_marginStart="8dp"
                 android:src="@drawable/ic_star_outlined"
-                android:tint="@color/space_purple" />
+                app:tint="@color/btn_fill_tertiary" />
 
             <TextView
                 android:id="@+id/like_counter_post_item"
@@ -161,7 +161,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:text="47"
-                android:textColor="@color/textPrimary"
+                android:textColor="@color/text_primary"
                 android:textSize="18sp" />
 
         </LinearLayout>
@@ -174,7 +174,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="34dp"
             android:text="The sunrise on Mars is absolutely breathtaking! Blue hues dancing across the red landscape. A must-visit!"
-            android:textColor="@color/textPrimary"
+            android:textColor="@color/text_primary"
             android:textSize="14sp" />
 
     </LinearLayout>
@@ -185,11 +185,11 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="45dp"
         android:visibility="gone"
-        app:cardBackgroundColor="#60000000"
+        app:cardBackgroundColor="@color/layout_background_transparent_black_80"
         app:cardCornerRadius="16dp"
         app:cardElevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:strokeColor="#20E8EAF6"
+        app:strokeColor="@color/layout_stroke_tertiary"
         app:strokeWidth="2dp">
 
         <LinearLayout
@@ -201,18 +201,18 @@
                 android:id="@+id/delete_btn_post_item"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/transparent"
+                android:backgroundTint="@color/btn_fill_transparent"
                 android:text="Delete"
-                android:textColor="@color/red_muted"
+                android:textColor="@color/text_alert"
                 android:textSize="16sp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/edit_btn_post_item"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/transparent"
+                android:backgroundTint="@color/btn_fill_transparent"
                 android:text="Edit"
-                android:textColor="@color/white"
+                android:textColor="@color/text_primary"
                 android:textSize="16sp" />
 
         </LinearLayout>

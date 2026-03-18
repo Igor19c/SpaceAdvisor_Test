@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.spaceadvisor.domain.models.Destination
@@ -28,7 +27,7 @@ class CarouselAdapter(private var items: List<Destination>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_carousel_new, parent, false)
+            .inflate(R.layout.item_carousel, parent, false)
         return ViewHolder(view)
     }
 

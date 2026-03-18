@@ -4,7 +4,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
+    android:background="@color/layout_background_primary"
     android:clipChildren="false"
     android:clipToPadding="false">
 
@@ -25,12 +25,12 @@
             android:layout_marginStart="12dp"
             app:icon="@drawable/ic_settings"
             app:iconSize="30dp"
-            app:iconTint="@color/gray_light" />
+            app:iconTint="@color/icon_quaternary" />
 
         <FrameLayout
             android:id="@+id/header_content_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_centerVertical="true"
             android:layout_toStartOf="@+id/main_header_right_btn"
             android:layout_toEndOf="@id/main_header_left_btn"
@@ -49,9 +49,11 @@
                     android:id="@+id/header_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="SpaceAdvisor"
+                    android:fontFamily="@font/orbitron_bold"
+                    android:letterSpacing="0.1"
+                    android:text="ASTRYX"
                     android:textAlignment="center"
-                    android:textColor="@color/white"
+                    android:textColor="@color/text_primary"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -75,7 +77,7 @@
             android:layout_marginEnd="12dp"
             app:icon="@drawable/ic_search"
             app:iconSize="35dp"
-            app:iconTint="@color/gray_light" />
+            app:iconTint="@color/icon_quaternary" />
     </RelativeLayout>
 
     <LinearLayout
@@ -89,7 +91,7 @@
             android:id="@+id/main_frame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/transparent" />
+            android:background="@color/layout_background_transparent" />
     </LinearLayout>
 
     <RelativeLayout
@@ -104,12 +106,13 @@
             android:id="@+id/btn_navigation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
+            android:background="@color/layout_background_primary"
             android:paddingTop="5dp"
-            android:paddingBottom="15dp"
-            app:itemActiveIndicatorStyle="@style/App.Custom.Indicator"
-            app:itemIconTint="@color/nav_clicked"
-            app:itemTextColor="@color/nav_clicked"
+            android:paddingBottom="8dp"
+            app:elevation="8dp"
+            app:itemActiveIndicatorStyle="@color/transparent"
+            app:itemIconTint="@color/nav_btn_tint"
+            app:itemTextColor="@color/nav_btn_tint"
             app:labelVisibilityMode="labeled"
             app:menu="@menu/bottom_nav_menu" />
 
@@ -135,14 +138,13 @@
                 app:icon="@drawable/ic_home_earth"
                 app:iconGravity="top"
                 app:iconSize="30dp"
-                app:iconTint="@color/white" />
+                app:iconTint="@color/icon_primary" />
 
             <TextView
                 android:id="@+id/home_btn_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:fontFamily="sans-serif-medium"
                 android:text="Home"
                 android:textColor="@color/btn_nav_unselected"
                 android:textSize="14sp" />

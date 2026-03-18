@@ -9,14 +9,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
-        app:cardBackgroundColor="#000000"
+        app:cardBackgroundColor="@color/layout_background_transparent_black_80"
         app:cardCornerRadius="16dp"
         app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:strokeColor="@color/space_purple_faded"
+        app:strokeColor="@color/layout_stroke_secondary"
         app:strokeWidth="1dp">
 
         <LinearLayout
@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:text="Invalid Trip Dates"
                 android:textAlignment="center"
-                android:textColor="@color/textPrimary"
+                android:textColor="@color/text_primary"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -42,14 +42,14 @@
                 android:layout_marginBottom="6dp"
                 android:text="The trip start date has already passed. You cannot publish a trip in the past."
                 android:textAlignment="center"
-                android:textColor="@color/textPrimary"
+                android:textColor="@color/text_primary"
                 android:textSize="14sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_marginTop="12dp"
+                android:orientation="vertical"
                 android:paddingHorizontal="24dp">
 
                 <com.google.android.material.button.MaterialButton
@@ -57,20 +57,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:backgroundTint="@color/white"
+                    android:backgroundTint="@color/btn_fill_primary"
                     android:text="Fix Dates"
-                    android:textColor="@color/textSecondary"
+                    android:textColor="@color/text_secondary"
                     android:textSize="16sp"
-                    app:cornerRadius="12dp"/>
+                    app:cornerRadius="12dp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/delete_trip_btn_container_trip_fragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:backgroundTint="@color/red_muted_faded"
+                    android:backgroundTint="@color/btn_fill_alert_faded"
                     android:text="Delete Trip"
-                    android:textColor="@color/white"
+                    android:textColor="@color/text_primary"
                     android:textSize="16sp"
                     app:cornerRadius="12dp" />
 
@@ -80,9 +80,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:backgroundTint="@color/transparent"
+                    android:backgroundTint="@color/layout_background_transparent"
                     android:text="Cancel"
-                    android:textColor="@color/white"
+                    android:textColor="@color/text_primary"
                     android:textSize="16sp" />
 
             </LinearLayout>

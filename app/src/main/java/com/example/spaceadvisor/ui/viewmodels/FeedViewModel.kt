@@ -8,20 +8,16 @@ import androidx.lifecycle.viewModelScope
 import com.example.spaceadvisor.domain.models.Post
 import com.example.spaceadvisor.domain.models.User
 import com.example.spaceadvisor.domain.repository.IPostRepository
-import com.example.spaceadvisor.domain.repository.IUserRepository
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class FeedViewModel(
-    private val repository: IPostRepository,
-    private val userRepository: IUserRepository
+    private val repository: IPostRepository
 ) : ViewModel() {
 
     private val _posts = MutableLiveData<List<Post>>()
     val posts: LiveData<List<Post>> = _posts
-
-    private val _likedPosts = MutableLiveData<List<Post>>()
-    val likedPosts: LiveData<List<Post>> = _likedPosts
 
     private val _userPosts = MutableLiveData<List<Post>>()
     val userPosts: LiveData<List<Post>> = _userPosts
@@ -38,24 +34,25 @@ class FeedViewModel(
     private val _selectedImageUri = MutableLiveData<Uri?>(null)
     val selectedImageUri: LiveData<Uri?> = _selectedImageUri
 
+    private var postsJob: Job? = null
+
     init {
         fetchPosts()
     }
 
+    /**
+     * טוען את הפוסטים. 
+     * מכיוון שמדובר ב-SnapshotListener, אנחנו מבטלים את המאזין הקודם (אם היה) 
+     * לפני פתיחת חדש כדי למנוע כפל קריאות ברענון.
+     */
     fun fetchPosts() {
-        viewModelScope.launch {
+        postsJob?.cancel()
+        postsJob = viewModelScope.launch {
             _isLoading.value = true
             repository.fetchPosts().collect { result ->
-                result.onSuccess { postsList ->
-                    // Perform "Join" with fresh user data
-                    val updatedPosts = enrichPostsWithUserData(postsList)
-                    _posts.value = updatedPosts
-                    _isLoading.value = false
-                }
-                result.onFailure { 
-                    _error.value = it.message
-                    _isLoading.value = false
-                }
+                _isLoading.value = false
+                result.onSuccess { _posts.value = it }
+                result.onFailure { _error.value = it.message }
             }
         }
     }
@@ -63,39 +60,12 @@ class FeedViewModel(
     fun fetchUserPosts(uid: String) {
         viewModelScope.launch {
             repository.fetchUserPosts(uid).collectLatest { result ->
-                result.onSuccess { postsList ->
-                    val updatedPosts = enrichPostsWithUserData(postsList)
-                    _userPosts.value = updatedPosts
+                result.onSuccess { posts ->
+                    _userPosts.value = posts
                 }.onFailure { e ->
                     _error.value = e.message
                 }
             }
-        }
-    }
-
-    /**
-     * Fetches current user info for all posts in the list and updates them.
-     * This ensures names and profile pictures are always up-to-date.
-     */
-    private suspend fun enrichPostsWithUserData(postsList: List<Post>): List<Post> {
-        val uids = postsList.map { it.uid }.distinct()
-        val usersResult = userRepository.getUsers(uids)
-        
-        return if (usersResult.isSuccess) {
-            val usersMap = usersResult.getOrNull()?.associateBy { it.uid } ?: emptyMap()
-            postsList.map { post ->
-                val user = usersMap[post.uid]
-                if (user != null) {
-                    post.copy(
-                        username = user.username.ifEmpty { user.name },
-                        userProfileImage = user.profileImageUrl
-                    )
-                } else {
-                    post
-                }
-            }
-        } else {
-            postsList // Fallback to original data if fetch fails
         }
     }
 
@@ -132,6 +102,8 @@ class FeedViewModel(
 
             val newPost = Post(
                 uid = user.uid,
+                username = user.name,
+                userProfileImage = user.profileImageUrl,
                 title = title,
                 description = description,
                 rating = rating,

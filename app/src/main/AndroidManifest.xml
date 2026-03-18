@@ -14,7 +14,8 @@
 
         <activity
             android:name=".ui.activities.SplashActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.Auth.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -23,7 +24,8 @@
 
         <activity
             android:name=".ui.activities.AuthActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.Auth.FullScreen" />
 
         <activity
             android:name=".ui.activities.MainActivity"

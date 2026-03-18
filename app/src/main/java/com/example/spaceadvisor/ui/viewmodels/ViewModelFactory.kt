@@ -21,11 +21,18 @@ class ViewModelFactory(private val application: SpaceAdvisorApplication) :
             }
 
             modelClass.isAssignableFrom(UserViewModel::class.java) -> {
-                UserViewModel(container.userRepository, container.reviewRepository) as T
+                UserViewModel(
+                    container.userRepository,
+                    container.reviewRepository,
+                    container.postRepository
+                ) as T
             }
 
             modelClass.isAssignableFrom(DestinationViewModel::class.java) -> {
-                DestinationViewModel(container.destinationRepository, container.reviewRepository) as T
+                DestinationViewModel(
+                    container.destinationRepository,
+                    container.reviewRepository
+                ) as T
             }
 
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

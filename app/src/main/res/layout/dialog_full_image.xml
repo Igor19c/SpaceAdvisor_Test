@@ -3,7 +3,7 @@
     android:id="@+id/dialog_full_image"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#bf000000">
+    android:background="@color/transparent_black_60">
 
     <ImageView
         android:id="@+id/full_image_view"

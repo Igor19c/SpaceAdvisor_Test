@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -38,9 +37,10 @@ class CreatePostFragment : BaseFragment() {
     private var selectedTrip: Trip? = null
     private var editingPost: Post? = null
 
-    private val pickImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-        uri?.let { updatePreviewImage(it) }
-    }
+    private val pickImageLauncher =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            uri?.let { updatePreviewImage(it) }
+        }
 
     override fun getUIConfig() = UIConfig(
         title = if (editingPost != null) "Edit Post" else "Create Post",
@@ -64,7 +64,7 @@ class CreatePostFragment : BaseFragment() {
 
         setupInitialUI()
 
-        binding.updatePicBtn.setOnClickListener {
+        binding.btnUpdatePicEditProfileFragment.setOnClickListener {
             showImagePicker()
         }
 
@@ -79,7 +79,7 @@ class CreatePostFragment : BaseFragment() {
             }
 
             if (rating == 0) {
-                Toast.makeText(requireContext(), "Please provide a rating", Toast.LENGTH_SHORT).show()
+                showCustomMessage("Error", "Please provide a rating")
                 return@setOnClickListener
             }
 
@@ -116,18 +116,20 @@ class CreatePostFragment : BaseFragment() {
             binding.editPostDescription.setText(editingPost!!.description)
             binding.postRatingBar.rating = editingPost!!.rating.toFloat()
             if (editingPost!!.imageUrl.isNotEmpty()) {
-                Glide.with(this).load(editingPost!!.imageUrl).into(binding.editUserPic)
+                Glide.with(this).load(editingPost!!.imageUrl)
+                    .into(binding.profilePicEditProfileFragment)
             }
         } else if (selectedTrip != null) {
             binding.editPostTitle.setText(selectedTrip!!.title)
-            
+
             val isSharingTrip = arguments?.getBoolean("isSharingTrip", false) ?: false
             if (isSharingTrip) {
                 binding.editPostDescription.setText("Check out my journey with ${selectedTrip!!.destinationIds.size} stops!")
             }
-            
+
             if (selectedTrip!!.imageUrl.isNotEmpty()) {
-                Glide.with(this).load(selectedTrip!!.imageUrl).into(binding.editUserPic)
+                Glide.with(this).load(selectedTrip!!.imageUrl)
+                    .into(binding.profilePicEditProfileFragment)
             }
         }
     }
@@ -142,7 +144,7 @@ class CreatePostFragment : BaseFragment() {
             if (trip.imageUrl.isNotEmpty()) tripImages.add(trip.imageUrl)
             tripImages.addAll(trip.destinationImages.filter { it.isNotEmpty() })
         }
-        
+
         editingPost?.let { post ->
             if (post.imageUrl.isNotEmpty() && !tripImages.contains(post.imageUrl)) {
                 tripImages.add(post.imageUrl)
@@ -168,7 +170,7 @@ class CreatePostFragment : BaseFragment() {
         } else {
             feedViewModel.setSelectedImageUri(uri)
         }
-        Glide.with(this).load(uri).into(binding.editUserPic)
+        Glide.with(this).load(uri).into(binding.profilePicEditProfileFragment)
     }
 
     override fun onDestroyView() {

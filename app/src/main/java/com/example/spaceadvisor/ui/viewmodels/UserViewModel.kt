@@ -11,6 +11,7 @@ import com.example.spaceadvisor.domain.models.Post
 import com.example.spaceadvisor.domain.models.Review
 import com.example.spaceadvisor.domain.models.Trip
 import com.example.spaceadvisor.domain.models.User
+import com.example.spaceadvisor.domain.repository.IPostRepository
 import com.example.spaceadvisor.domain.repository.IReviewRepository
 import com.example.spaceadvisor.domain.repository.IUserRepository
 import kotlinx.coroutines.flow.collectLatest
@@ -19,7 +20,8 @@ import java.io.InputStream
 
 class UserViewModel(
     private val repository: IUserRepository,
-    private val reviewRepository: IReviewRepository
+    private val reviewRepository: IReviewRepository,
+    private val postRepository: IPostRepository
 ) : ViewModel() {
 
     private val _userData = MutableLiveData<User?>()
@@ -40,6 +42,9 @@ class UserViewModel(
     private val _avatarPaths = MutableLiveData<List<String>>()
     val avatarPaths: LiveData<List<String>> = _avatarPaths
 
+    private val _isLoggedOut = MutableLiveData<Boolean>(false)
+    val isLoggedOut: LiveData<Boolean> = _isLoggedOut
+
     private val grantedBadgesIds = mutableSetOf<String>()
     private var isUpdatingBadges = false
 
@@ -47,14 +52,16 @@ class UserViewModel(
 
     fun getCurrentUserName(): String? = repository.getCurrentUserName()
 
-
     fun getFirebaseUserProperties(): Pair<String?, String?> = repository.getFirebaseUserProperties()
 
     fun startListening(uid: String) {
         viewModelScope.launch {
             repository.observeUser(uid).collectLatest { result ->
                 result.onSuccess { user ->
-                    _userData.value = user
+                    // Only update if we are not in the middle of an upload/update to prevent flickering
+                    if (_uploadProgress.value != true) {
+                        _userData.value = user
+                    }
                     user?.badges?.let { grantedBadgesIds.addAll(it) }
                 }.onFailure { e ->
                     _error.value = e.message
@@ -108,6 +115,7 @@ class UserViewModel(
     }
 
     fun createNewUserProfile(onComplete: () -> Unit) {
+
         val uid = getCurrentUid() ?: return
         val (name, email) = getFirebaseUserProperties()
         val newUser = User(
@@ -121,23 +129,34 @@ class UserViewModel(
 
     fun updateProfile(newName: String, newUsername: String, newBio: String) {
         val uid = getCurrentUid() ?: return
+
+        // Optimistic Update: Update UI immediately
         val currentUser = _userData.value
         if (currentUser != null) {
             _userData.value = currentUser.copy(name = newName, username = newUsername, bio = newBio)
         }
+
         viewModelScope.launch {
-            repository.updateProfile(uid, newName, newUsername, newBio)
-                .onFailure { _error.value = it.message }
+            val result = repository.updateProfile(uid, newName, newUsername, newBio)
+            result.onSuccess {
+                val currentImage = _userData.value?.profileImageUrl ?: ""
+                postRepository.syncUserPosts(uid, newName, currentImage)
+            }.onFailure {
+                _error.value = it.message
+            }
         }
     }
 
     fun uploadProfileImage(imageUri: Uri, assetManager: AssetManager) {
         val uid = getCurrentUid() ?: return
         _uploadProgress.value = true
+
+        // Optimistic Update: Show the local image immediately as a placeholder
         val currentUser = _userData.value
         if (currentUser != null) {
             _userData.value = currentUser.copy(profileImageUrl = imageUri.toString())
         }
+
         viewModelScope.launch {
             val uriString = imageUri.toString()
             val result =
@@ -155,11 +174,16 @@ class UserViewModel(
                 } else {
                     repository.uploadProfileImage(uid, imageUri)
                 }
-            _uploadProgress.value = false
-            result.onFailure { _error.value = it.message }
+
+            result.onSuccess { imageUrl ->
+                val freshName = _userData.value?.name ?: ""
+                postRepository.syncUserPosts(uid, freshName, imageUrl)
+                _uploadProgress.value = false
+            }.onFailure {
+                _error.value = it.message
+                _uploadProgress.value = false
+            }
         }
-
-
     }
 
     fun loadAvatars(assetManager: AssetManager) {
@@ -193,6 +217,9 @@ class UserViewModel(
     }
 
     fun signOut() {
-        repository.signOut(); _userData.value = null; grantedBadgesIds.clear()
+        repository.signOut()
+        _userData.value = null
+        grantedBadgesIds.clear()
+        _isLoggedOut.value = true
     }
 }

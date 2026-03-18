@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.animation.LinearInterpolator
 import android.widget.ProgressBar
 import androidx.activity.viewModels
+import androidx.core.app.ActivityOptionsCompat
 import com.example.spaceadvisor.R
 import com.example.spaceadvisor.SpaceAdvisorApplication
 import com.example.spaceadvisor.databinding.ActivitySplashBinding
@@ -20,6 +21,8 @@ class SplashActivity : BaseActivity() {
     private val userViewModel: UserViewModel by viewModels {
         ViewModelFactory(application as SpaceAdvisorApplication)
     }
+
+    private var isTransitionStarted = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +43,8 @@ class SplashActivity : BaseActivity() {
             val animatedValue = visualProgress.animatedValue as Int
             progressBar.progress = animatedValue
 
-            if (animatedValue == 100) {
+            if (animatedValue == 100 && !isTransitionStarted) {
+                isTransitionStarted = true
                 checkUser()
             }
         }
@@ -48,7 +52,8 @@ class SplashActivity : BaseActivity() {
     }
 
     private fun checkUser() {
-        if (userViewModel.getCurrentUid() != null) {
+        val uid = userViewModel.getCurrentUid()
+        if (uid != null) {
             startMainActivity()
         } else {
             startAuthActivity()
@@ -56,29 +61,20 @@ class SplashActivity : BaseActivity() {
     }
 
     private fun startMainActivity() {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-        applyTransition()
+        val intent = Intent(this, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        val options = ActivityOptionsCompat.makeCustomAnimation(this, R.anim.fade_in, R.anim.fade_out)
+        startActivity(intent, options.toBundle())
         finish()
     }
 
     private fun startAuthActivity() {
-        val intent = Intent(this, AuthActivity::class.java)
-        startActivity(intent)
-        applyTransition()
-        finish()
-    }
-
-    private fun applyTransition() {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-            overrideActivityTransition(
-                OVERRIDE_TRANSITION_OPEN,
-                R.anim.fade_in,
-                R.anim.fade_out
-            )
-        } else {
-            @Suppress("DEPRECATION")
-            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+        val intent = Intent(this, AuthActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
+        val options = ActivityOptionsCompat.makeCustomAnimation(this, R.anim.fade_in, R.anim.fade_out)
+        startActivity(intent, options.toBundle())
+        finish()
     }
 }

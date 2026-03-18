@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
+    android:background="@color/layout_background_primary"
     android:orientation="vertical">
 
     <androidx.core.widget.NestedScrollView
@@ -38,11 +38,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:background="@color/deep_black"
+                    android:background="@color/layout_background_primary"
                     android:paddingVertical="20dp"
                     android:text="WELCOME"
                     android:textAlignment="center"
-                    android:textColor="@color/textPrimary"
+                    android:textColor="@color/text_primary"
                     android:textSize="50dp"
                     android:textStyle="bold" />
 
@@ -60,12 +60,13 @@
                     android:id="@+id/create_trip_btn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/btnFillPrimary"
+                    android:backgroundTint="@color/btn_fill_tertiary"
                     android:paddingVertical="10dp"
                     android:text="Create Trip"
-                    android:textColor="@color/textPrimary"
+                    android:textColor="@color/text_primary"
                     android:textSize="20sp"
-                    app:cornerRadius="8dp" />
+                    app:cornerRadius="8dp"
+                    app:strokeWidth="0dp" />
 
             </RelativeLayout>
 
@@ -81,7 +82,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Trending Destinations"
-                    android:textColor="#CCCCCC"
+                    android:textColor="@color/text_quaternary_light"
                     android:textSize="16sp" />
             </RelativeLayout>
 

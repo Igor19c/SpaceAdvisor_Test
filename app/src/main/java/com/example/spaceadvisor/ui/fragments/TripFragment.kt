@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -154,11 +153,15 @@ class TripFragment : BaseFragment() {
 
         if (trip.startDate != null && trip.endDate != null) {
             val sdf = SimpleDateFormat("dd/MM", Locale.getDefault())
-            binding.tripDateText.text =
-                "${sdf.format(Date(trip.startDate))} - ${sdf.format(Date(trip.endDate))}"
-            binding.tripDateText.visibility = View.VISIBLE
+            binding.tripDepartureDateText.text =
+                "${sdf.format(Date(trip.startDate))}"
+            binding.tripReturnDateText.text =
+                "${sdf.format(Date(trip.endDate))}"
+            binding.departureDateContainer.visibility = View.VISIBLE
+            binding.returnDateContainer.visibility = View.VISIBLE
         } else {
-            binding.tripDateText.visibility = View.GONE
+            binding.departureDateContainer.visibility = View.GONE
+            binding.returnDateContainer.visibility = View.GONE
         }
 
         binding.editBtn.visibility = View.GONE
@@ -205,11 +208,7 @@ class TripFragment : BaseFragment() {
                     tripSelectionHelper.handleDeleteTripDestination(
                         destination,
                         onDeleted = {
-                            Toast.makeText(
-                                requireContext(),
-                                "Destination removed",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            showCustomMessage("Success", "Destination removed")
                         },
                         onCancel = {
                             tripAdapter.notifyItemChanged(position)

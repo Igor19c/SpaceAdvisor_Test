@@ -10,18 +10,19 @@
     <ImageView
         android:layout_width="15dp"
         android:layout_height="15dp"
+        android:layout_marginTop="2dp"
         android:src="@drawable/ic_arrow_right"
-        app:tint="@color/space_purple" />
+        app:tint="@color/icon_tertiary" />
 
 
     <TextView
         android:id="@+id/bullet_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:lineSpacingExtra="3dp"
         android:layout_marginStart="12dp"
+        android:lineSpacingExtra="3dp"
         android:text="Highlights here"
-        android:textColor="@color/textQuaternary"
+        android:textColor="@color/text_quaternary_light"
         android:textSize="14sp" />
 
 </LinearLayout>

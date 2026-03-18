@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <!-- Navigation buttons colors -->
+    <color name="btn_nav_selected">@color/space_purple</color>
+    <color name="btn_nav_unselected">@color/gray_light</color>
+    <color name="btn_home_fill_start">#BEBFFB</color>..
+    <color name="btn_home_fill_end">#4413F6</color>
+
+
+    <!-- Toast message colors -->
+    <color name="toast_message_fill">@color/silver_muted</color>
+    <color name="toast_message_stroke">@color/space_purple_faded</color>
+
+
+    <!-- Background colors -->
+    <color name="layout_background_primary">@color/deep_black</color>
+    <color name="layout_background_secondary">@color/white</color>
+    <color name="layout_background_tertiary">@color/space_purple</color>
+    <color name="layout_background_quaternary">@color/space_purple_faded</color>
+    <color name="layout_background_alert">@color/red_muted</color>
+
+    <color name="layout_stroke_primary">@color/space_purple_glow</color>
+    <color name="layout_stroke_secondary">@color/space_purple_faded</color>
+    <color name="layout_stroke_tertiary">@color/transparent_white_20</color>
+
+
+    <!-- Text colors -->
+    <color name="text_primary">@color/white</color>
+    <color name="text_secondary">@color/deep_black</color>
+    <color name="text_tertiary">@color/space_purple</color>
+    <color name="text_tertiary_light">@color/space_purple_light</color>
+    <color name="text_quaternary_light">@color/gray_light</color>
+    <color name="text_quaternary_dark">@color/gray_dark</color>
+    <color name="text_achievement">@color/yellow_accent</color>
+    <color name="text_alert">@color/alert</color>
+    <color name="text_alert_faded">@color/alert_faded</color>
+
+
+    <!-- Button colors -->
+    <color name="btn_stroke_primary">@color/white</color>
+    <color name="btn_stroke_secondary">@color/deep_black</color>
+    <color name="btn_stroke_tertiary">@color/space_purple</color>
+    <color name="btn_stroke_quaternary">@color/gray_light</color>
+
+    <color name="btn_fill_primary">@color/white</color>
+    <color name="btn_fill_secondary">@color/deep_black</color>
+    <color name="btn_fill_tertiary">@color/space_purple</color>
+    <color name="btn_fill_quaternary">@color/gray_light</color>
+    <color name="btn_fill_alert">@color/alert</color>
+    <color name="btn_fill_alert_faded">@color/alert_faded</color>
+    <color name="btn_fill_transparent">@color/transparent</color>
+
+
+    <!-- Icon colors -->
+    <color name="icon_primary">@color/white</color>
+    <color name="icon_secondary">@color/deep_black</color>
+    <color name="icon_tertiary">@color/space_purple</color>
+    <color name="icon_tertiary_faded">@color/space_purple_faded</color>
+    <color name="icon_tertiary_light">@color/space_purple_light</color>
+    <color name="icon_quaternary">@color/gray_light</color>
+    <color name="icon_alert">@color/red_muted</color>
+    <color name="icon_alert_faded">@color/red_muted_faded</color>
+
+
+    <!-- Switch colors -->
+    <color name="switch_fill">@color/transparent</color>
+    <color name="switch_thumb_checked">@color/white</color>
+    <color name="switch_thumb_unchecked">@color/space_purple</color>
+    <color name="switch_track_checked">@color/space_purple_faded</color>
+    <color name="switch_track_unchecked">@color/white</color>
+
+
+    <!-- Chip colors -->
+    <color name="chip_text_primary">@color/space_pink</color>
+    <color name="chip_text_secondary">@color/space_blue</color>
+    <color name="chip_text_tertiary">@color/gray_dark</color>
+    <color name="chip_text_quaternary">@color/gray_light</color>
+
+    <color name="chip_stroke_primary">@color/space_pink</color>
+    <color name="chip_stroke_secondary">@color/space_blue</color>
+    <color name="chip_stroke_tertiary">@color/gray_dark</color>
+    <color name="chip_stroke_quaternary">@color/gray_light</color>
+
+    <color name="chip_fill_primary">@color/space_pink_faded</color>
+    <color name="chip_fill_secondary">@color/space_blue_faded</color>
+    <color name="chip_fill_tertiary">@color/gray_muted</color>
+    <color name="chip_fill_quaternary">@color/deep_silver</color>
+
+
+    <!-- App Logo colors -->
+    <color name="ic_launcher_background">@color/layout_background_primary</color>
+
+
+</resources>

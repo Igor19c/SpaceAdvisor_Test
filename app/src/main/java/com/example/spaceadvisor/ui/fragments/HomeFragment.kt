@@ -32,7 +32,7 @@ class HomeFragment : BaseFragment() {
     }
 
     override fun getUIConfig() = UIConfig(
-        title = "Space Advisor",
+        title = "ASTRYX",
         selectedTabId = R.id.place_holder
     )
 
@@ -54,13 +54,13 @@ class HomeFragment : BaseFragment() {
 
         binding.createTripBtn.setOnClickListener {
             tripViewModel.createNewTrip()
-            EditTripDialogFragment.newInstance(navigateOnSuccess = true)
+            EditTripDialogFragment.newInstance()
                 .show(parentFragmentManager, "CREATE_TRIP_DIALOG")
         }
     }
 
     private fun observeViewModel() {
-        destinationViewModel.destinations.observe(viewLifecycleOwner) { destinations ->
+        destinationViewModel.trendingDestinations.observe(viewLifecycleOwner) { destinations ->
             trendingDestinationsAdapter.updateData(destinations)
         }
     }
@@ -82,8 +82,16 @@ class HomeFragment : BaseFragment() {
                 putSerializable("destination_key", destination)
             }
         }
+        
         parentFragmentManager.beginTransaction()
-            .replace(R.id.main_frame, fragment)
+            .setCustomAnimations(
+                R.anim.slide_in_bottom_to_top,
+                R.anim.fade_out,
+                R.anim.fade_in,
+                R.anim.slide_out_top_to_bottom
+            )
+            .add(R.id.main_frame, fragment)
+            .hide(this)
             .addToBackStack(null)
             .commit()
     }

@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/layout_background_primary"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:id="@+id/account_container_settings_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:gravity="start"
+                    android:text="Account"
+                    android:textColor="@color/text_quaternary_light"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/custom_text_transparent_background"
+                    android:orientation="vertical"
+                    android:padding="6dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_edit_profile_settings_fragment"
+                            style="@style/Widget.Material3.Button.IconButton.Outlined"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Edit Profile"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/text_primary"
+                            android:textSize="16sp"
+                            app:icon="@drawable/ic_profile"
+                            app:iconPadding="12dp"
+                            app:iconSize="16dp"
+                            app:iconTint="@color/icon_quaternary"
+                            app:strokeWidth="0dp" />
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="12dp"
+                            android:src="@drawable/ic_arrow_right"
+                            app:tint="@color/icon_quaternary" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_change_pass_settings_fragment"
+                            style="@style/Widget.Material3.Button.IconButton.Outlined"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Change Password"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/text_primary"
+                            android:textSize="16sp"
+                            app:icon="@drawable/ic_lock"
+                            app:iconPadding="12dp"
+                            app:iconSize="16dp"
+                            app:iconTint="@color/icon_quaternary"
+                            app:strokeWidth="0dp" />
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="12dp"
+                            android:src="@drawable/ic_arrow_right"
+                            app:tint="@color/icon_quaternary" />
+
+                    </RelativeLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_delete_profile_settings_fragment"
+                        style="@style/Widget.Material3.Button.IconButton.Outlined"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Delete Profile"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/text_alert"
+                        android:textSize="16sp"
+                        app:icon="@drawable/ic_trash"
+                        app:iconPadding="12dp"
+                        app:iconSize="16dp"
+                        app:iconTint="@color/icon_alert"
+                        app:strokeWidth="0dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_logout_settings_fragment"
+                        style="@style/Widget.Material3.Button.IconButton.Outlined"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="12dp"
+                        android:text="Log Out"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/text_alert"
+                        android:textSize="16sp"
+                        app:cornerRadius="1dp"
+                        app:icon="@drawable/ic_logout"
+                        app:iconPadding="10dp"
+                        app:iconSize="16dp"
+                        app:iconTint="@color/icon_alert"
+                        app:strokeWidth="0dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/appearance_container_settings_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:gravity="start"
+                    android:text="Appearance"
+                    android:textColor="@color/text_quaternary_light"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/custom_text_transparent_background"
+                    android:orientation="vertical"
+                    android:padding="6dp">
+
+                    <RelativeLayout
+                        android:id="@+id/dark_mode_container_settings_fragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+
+                        <ImageView
+                            android:id="@+id/dark_mode_icon_settings_fragment"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="12dp"
+                            android:src="@drawable/ic_moon"
+                            app:tint="@color/icon_quaternary" />
+
+                        <TextView
+                            android:id="@+id/dark_mode_text_settings_fragment"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginEnd="6dp"
+                            android:layout_toStartOf="@+id/dark_mode_switch_settings_fragment"
+                            android:layout_toEndOf="@+id/dark_mode_icon_settings_fragment"
+                            android:text="Dark Mode"
+                            android:textColor="@color/text_primary"
+                            android:textSize="16sp" />
+
+                        <com.google.android.material.materialswitch.MaterialSwitch
+                            android:id="@+id/dark_mode_switch_settings_fragment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="12dp"
+                            android:checked="true"
+                            app:thumbIcon="@drawable/ic_sun"
+                            app:thumbIconSize="22dp"
+                            app:thumbIconTint="@color/switch_thumb"
+                            app:thumbTint="@color/switch_fill"
+                            app:trackDecorationTint="@color/switch_track"
+                            app:trackTint="@color/switch_track" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/accent_color_container_settings_fragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+
+                        <ImageView
+                            android:id="@+id/accent_color_icon_settings_fragment"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="12dp"
+                            android:src="@drawable/ic_pallete"
+                            app:tint="@color/icon_quaternary" />
+
+                        <TextView
+                            android:id="@+id/accent_color_text_settings_fragment"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="12dp"
+                            android:layout_toStartOf="@+id/accent_color_text_tint_settings_fragment"
+                            android:layout_toEndOf="@+id/accent_color_icon_settings_fragment"
+                            android:text="Accent Color"
+                            android:textColor="@color/text_primary"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/accent_color_text_tint_settings_fragment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginHorizontal="6dp"
+                            android:layout_toStartOf="@id/accent_color_arrow_settings_fragment"
+                            android:text="Indigo"
+                            android:textColor="@color/text_quaternary_light"
+                            android:textSize="14sp" />
+
+                        <ImageView
+                            android:id="@+id/accent_color_arrow_settings_fragment"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="12dp"
+                            android:src="@drawable/ic_arrow_right"
+                            app:tint="@color/icon_quaternary" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/help_container_settings_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:gravity="start"
+                    android:text="Help and Support"
+                    android:textColor="@color/text_quaternary_light"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/custom_text_transparent_background"
+                    android:orientation="vertical"
+                    android:padding="6dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:clickable="true">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_faq_settings_fragment"
+                            style="@style/Widget.Material3.Button.IconButton.Outlined"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="FAQ"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/text_primary"
+                            android:textSize="16sp"
+                            app:icon="@drawable/ic_help"
+                            app:iconPadding="12dp"
+                            app:iconSize="20dp"
+                            app:iconTint="@color/icon_quaternary"
+                            app:strokeWidth="0dp" />
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="12dp"
+                            android:src="@drawable/ic_arrow_right"
+                            app:tint="@color/icon_quaternary" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_about_settings_fragment"
+                            style="@style/Widget.Material3.Button.IconButton.Outlined"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="About"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/text_primary"
+                            android:textSize="16sp"
+                            app:icon="@drawable/ic_info"
+                            app:iconPadding="12dp"
+                            app:iconSize="20dp"
+                            app:iconTint="@color/icon_quaternary"
+                            app:strokeWidth="0dp" />
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="12dp"
+                            android:src="@drawable/ic_arrow_right"
+                            app:tint="@color/icon_quaternary" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
+                android:gravity="center"
+                android:text="SpaceAdvisor v1.0.0"
+                android:textColor="@color/text_quaternary_light"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="© 2026 SpaceAdvisor. All rights reserved."
+                android:textColor="@color/text_quaternary_light"
+                android:textSize="12sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

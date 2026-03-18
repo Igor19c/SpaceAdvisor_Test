@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
+    android:background="@color/layout_background_primary"
     android:orientation="vertical"
     android:paddingHorizontal="12dp"
     android:paddingVertical="10dp">
@@ -40,7 +40,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="12dp"
                     android:layout_marginBottom="6dp"
-                    android:background="@drawable/label_background"
+                    android:background="@drawable/custom_text_gray_background"
                     android:gravity="center"
                     android:paddingHorizontal="12dp"
                     android:paddingVertical="6dp">
@@ -50,7 +50,7 @@
                         android:layout_height="15dp"
                         android:scaleType="centerCrop"
                         android:src="@drawable/ic_rating_star_filled"
-                        app:tint="@color/white" />
+                        app:tint="@color/icon_primary" />
 
                     <TextView
                         android:id="@+id/dest_rating_text_carousel_item"
@@ -58,7 +58,7 @@
                         android:layout_height="wrap_content"
                         android:paddingHorizontal="4dp"
                         android:text="4.5"
-                        android:textColor="@color/white"
+                        android:textColor="@color/text_primary"
                         android:textSize="14sp" />
 
                 </LinearLayout>
@@ -69,8 +69,8 @@
                     android:layout_height="4dp"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginVertical="16dp"
-                    android:background="@android:color/transparent"
+                    android:layout_marginVertical="6dp"
+                    android:background="@color/layout_background_transparent"
                     android:minHeight="0dp"
                     app:tabBackground="@drawable/tab_selector"
                     app:tabGravity="center"
@@ -84,12 +84,12 @@
                     style="@style/Widget.Material3.Button.IconButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="6dp"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="6dp"
                     app:icon="@drawable/ic_help"
                     app:iconSize="28dp"
-                    app:iconTint="@color/iconQuaternary" />
+                    app:iconTint="@color/icon_quaternary" />
 
             </RelativeLayout>
 
@@ -98,7 +98,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="6dp"
-                android:backgroundTint="@color/transparent"
+                android:backgroundTint="@color/layout_background_transparent"
                 app:cardCornerRadius="24dp"
                 app:strokeWidth="1dp">
 
@@ -133,7 +133,7 @@
                                 android:gravity="start"
                                 android:padding="6dp"
                                 android:text="Aurora Observatory Dome"
-                                android:textColor="@color/white"
+                                android:textColor="@color/text_primary"
                                 android:textSize="15sp"
                                 android:textStyle="bold" />
 
@@ -167,7 +167,7 @@
                                 android:gravity="start"
                                 android:padding="6dp"
                                 android:text="The Red Planet"
-                                android:textColor="@color/white"
+                                android:textColor="@color/text_primary"
                                 android:textSize="12sp" />
 
                             <LinearLayout
@@ -202,7 +202,7 @@
                                     android:layout_height="match_parent"
                                     android:gravity="start"
                                     android:text="Travel time: "
-                                    android:textColor="@color/white"
+                                    android:textColor="@color/text_primary"
                                     android:textSize="12sp" />
 
                                 <TextView
@@ -210,7 +210,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
                                     android:gravity="start"
-                                    android:textColor="@color/white"
+                                    android:textColor="@color/text_primary"
                                     android:textSize="12sp" />
 
                             </LinearLayout>
@@ -246,13 +246,13 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="10dp"
                             android:layout_weight="1"
-                            android:backgroundTint="@android:color/transparent"
+                            android:backgroundTint="@color/btn_fill_transparent"
                             android:text="View Details"
                             android:textAllCaps="false"
-                            android:textColor="@color/white"
+                            android:textColor="@color/text_primary"
                             android:textSize="14sp"
                             app:cornerRadius="6dp"
-                            app:strokeColor="@color/white"
+                            app:strokeColor="@color/btn_stroke_primary"
                             app:strokeWidth="1dp" />
 
                         <com.google.android.material.button.MaterialButton
@@ -260,10 +260,10 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:backgroundTint="@color/white"
+                            android:backgroundTint="@color/btn_fill_primary"
                             android:text="Explore"
                             android:textAllCaps="false"
-                            android:textColor="@color/black"
+                            android:textColor="@color/text_secondary"
                             android:textSize="14sp"
                             app:cornerRadius="6dp" />
                     </LinearLayout>

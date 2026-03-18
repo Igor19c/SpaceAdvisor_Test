@@ -4,9 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
-    android:backgroundTint="@color/colorBackground"
+    android:backgroundTint="@color/layout_background_primary"
     app:cardCornerRadius="24dp"
-    app:cardElevation="6dp">
+    app:cardElevation="6dp"
+    app:strokeColor="@color/layout_stroke_primary">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -28,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:text="Mars Colony Alpha"
-                android:textColor="@color/textPrimary"
+                android:textColor="@color/text_primary"
                 android:textSize="20sp" />
 
             <LinearLayout
@@ -41,8 +42,8 @@
                     android:id="@+id/star1"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_marginEnd="-3dp"
                     android:layout_marginStart="-3dp"
+                    android:layout_marginEnd="-3dp"
                     android:src="@drawable/ic_rating_star_filled" />
 
                 <ImageView
@@ -79,10 +80,10 @@
                 android:id="@+id/review_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:text="Incredible experience! The red desert landscape is otherworldly."
-                android:textColor="@color/textQuaternary"
+                android:textColor="@color/text_quaternary_light"
                 android:textSize="16sp" />
 
             <TextView
@@ -90,7 +91,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="3 days ago"
-                android:textColor="@color/textQuaternary"
+                android:textColor="@color/text_quaternary_light"
                 android:textSize="14sp" />
 
         </LinearLayout>

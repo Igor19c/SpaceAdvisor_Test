@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorBackground"
+    android:background="@color/layout_background_primary"
     android:orientation="vertical"
     android:padding="20dp">
 
@@ -13,7 +13,7 @@
         android:layout_marginBottom="20dp"
         android:gravity="center"
         android:text="Select"
-        android:textColor="@color/white"
+        android:textColor="@color/text_primary"
         android:textSize="20sp"
         android:textStyle="bold" />
 

@@ -20,7 +20,6 @@ class TrendingDestinationsAdapter(
         val title: TextView = view.findViewById(R.id.trend_dest_title_item)
         val subtitle: TextView = view.findViewById(R.id.trend_dest_subtitle_item)
         val ratings: TextView = view.findViewById(R.id.trend_dest_rating_item)
-        val difficulty: TextView = view.findViewById(R.id.trend_dest_difficulty_item)
         val destCard: View = view.findViewById(R.id.trend_dest_card_item)
     }
 
@@ -37,7 +36,6 @@ class TrendingDestinationsAdapter(
         val item = destinations[position]
         holder.title.text = item.title
         holder.subtitle.text = item.subtitle
-        holder.difficulty.text = "" + item.difficulty
         holder.ratings.text = "" + item.ratingAvg
 
         if (item.imageUrl.isNotEmpty()) {

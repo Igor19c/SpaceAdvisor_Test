@@ -17,13 +17,9 @@
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
-    <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
-        <item name="android:color">@android:color/transparent</item>
-    </style>
-
     <!-- Style for the Onboarding Dialog -->
     <style name="CustomAlertDialog" parent="Theme.Material3.DayNight.Dialog">
-        <item name="android:background">@color/colorBackground</item>
+        <item name="android:background">@color/layout_background_primary</item>
         <item name="shapeAppearanceOverlay">@style/ShapeAppearance.App.MediumComponent</item>
     </style>
 

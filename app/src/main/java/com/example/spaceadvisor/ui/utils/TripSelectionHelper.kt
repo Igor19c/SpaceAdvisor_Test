@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Toast
 import androidx.core.graphics.drawable.toDrawable
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -40,20 +39,12 @@ class TripSelectionHelper(
         if (trip.canBePublished) {
             tripViewModel.setCurrentTrip(trip)
             tripViewModel.finalizeTrip()
-            Toast.makeText(
-                fragment.requireContext(),
-                "Journey '${trip.title}' Confirmed!",
-                Toast.LENGTH_SHORT
-            ).show()
+            fragment.showCustomMessage("Success", "Journey '${trip.title}' Published!")
             onSuccess?.invoke()
         } else {
             when {
                 trip.destinationIds.isEmpty() -> {
-                    Toast.makeText(
-                        fragment.requireContext(),
-                        "Your trip is empty!",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    fragment.showCustomMessage("Error", "Your trip is empty!")
                 }
 
                 trip.isPastTrip -> {
@@ -85,7 +76,6 @@ class TripSelectionHelper(
 
         dialogBinding.deleteTripBtnContainerTripFragment.setOnClickListener {
             handleDeleteTrip(trip) {
-                // Special case: if we are inside the TripFragment, close it after deletion
                 if (fragment.javaClass.simpleName == "TripFragment") {
                     fragment.parentFragmentManager.popBackStack()
                 }
@@ -174,19 +164,17 @@ class TripSelectionHelper(
                 text = "Add to Current: ${activeTrip.title}"
                 setOnClickListener {
                     if (isDestinationInTrip(activeTrip, destination)) {
-                        Toast.makeText(
-                            context,
-                            "${destination.title} is already in ${activeTrip.title}!",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        fragment.showCustomMessage(
+                            "Error",
+                            "${destination.title} is already in ${activeTrip.title}!"
+                        )
                     } else {
                         tripViewModel.setCurrentTrip(activeTrip)
                         tripViewModel.addDestination(destination)
-                        Toast.makeText(
-                            context,
-                            "${destination.title} added to ${activeTrip.title}!",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        fragment.showCustomMessage(
+                            "Success",
+                            "${destination.title} added to ${activeTrip.title}!"
+                        )
                     }
                     dialog.dismiss()
                 }
@@ -241,25 +229,17 @@ class TripSelectionHelper(
         dialogBinding.continueBtn.setOnClickListener {
             selectedTrip?.let { trip ->
                 if (isDestinationInTrip(trip, destination)) {
-                    Toast.makeText(
-                        context,
-                        "${destination.title} is already in ${trip.title}!",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    fragment.showCustomMessage("Error", "${destination.title} is already in ${trip.title}!")
                 } else {
                     tripViewModel.setCurrentTrip(trip)
                     tripViewModel.addDestination(destination)
-                    Toast.makeText(
-                        context,
-                        "${destination.title} added to ${trip.title}!",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    fragment.showCustomMessage("Success", "${destination.title} added to ${trip.title}!")
                 }
                 dialog.dismiss()
             }
         }
 
-        dialogBinding.cancelBtn.setOnClickListener { dialog.dismiss() }
+        dialogBinding.cancelBtnEditProfileFragment.setOnClickListener { dialog.dismiss() }
         dialog.show()
     }
 }

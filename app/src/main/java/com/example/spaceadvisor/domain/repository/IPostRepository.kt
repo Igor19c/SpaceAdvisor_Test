@@ -1,7 +1,6 @@
 package com.example.spaceadvisor.domain.repository
 
 import android.net.Uri
-import com.example.spaceadvisor.domain.models.Destination
 import com.example.spaceadvisor.domain.models.Post
 import kotlinx.coroutines.flow.Flow
 
@@ -33,4 +32,9 @@ interface IPostRepository {
      * Uploads a post image and returns its URL.
      */
     suspend fun uploadPostImage(postId: String, imageUri: Uri): Result<String>
+
+    /**
+     * Synchronizes user details across all their posts.
+     */
+    suspend fun syncUserPosts(uid: String, newUsername: String, newUserImage: String): Result<Unit>
 }

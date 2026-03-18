@@ -4,7 +4,7 @@
     android:layout_width="250dp"
     android:layout_height="300dp"
     android:layout_margin="10dp"
-    android:backgroundTint="@color/colorBackground"
+    android:backgroundTint="@color/layout_background_primary"
     android:clickable="true"
     android:focusable="true"
     app:cardCornerRadius="18dp"
@@ -19,7 +19,7 @@
             android:id="@+id/item_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorBackground"
+            android:background="@color/layout_background_primary"
             android:clickable="true"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_home_earth" />
@@ -28,8 +28,7 @@
             android:id="@+id/newest_trip_card_item"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#40000000"
-            />
+            android:background="@color/layout_background_transparent_black_20" />
 
 
         <LinearLayout
@@ -37,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="#88111213"
+            android:background="@color/layout_background_transparent_black_80"
             android:orientation="vertical"
             android:paddingHorizontal="20dp"
             android:paddingVertical="20dp">
@@ -49,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:text="Title"
-                android:textColor="@color/textPrimary"
+                android:textColor="@color/text_primary"
                 android:textSize="18sp" />
 
 
@@ -62,14 +61,15 @@
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/ic_pin" />
+                    android:src="@drawable/ic_pin"
+                    app:tint="@color/icon_quaternary" />
 
                 <TextView
                     android:id="@+id/trip_stop_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="8 stops"
-                    android:textColor="@color/textQuaternary"
+                    android:textColor="@color/text_quaternary_light"
                     android:textSize="10sp" />
 
                 <View
@@ -79,7 +79,8 @@
                 <ImageView
                     android:layout_width="16dp"
                     android:layout_height="16dp"
-                    android:src="@drawable/ic_calendar" />
+                    android:src="@drawable/ic_calendar"
+                    app:tint="@color/icon_quaternary" />
 
                 <TextView
                     android:id="@+id/trip_created_at"
@@ -87,24 +88,24 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:text="1 week ago"
-                    android:textColor="@color/textQuaternary"
+                    android:textColor="@color/text_quaternary_light"
                     android:textSize="10sp" />
 
             </LinearLayout>
 
         </LinearLayout>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/share_trip_btn"
-            style="@style/Widget.Material3.Button.IconButton"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            app:icon="@drawable/ic_share"
-            app:iconGravity="textStart"
-            app:iconTint="@color/white" />
+        <!--        <com.google.android.material.button.MaterialButton-->
+        <!--            android:id="@+id/share_trip_btn"-->
+        <!--            style="@style/Widget.Material3.Button.IconButton"-->
+        <!--            android:layout_width="30dp"-->
+        <!--            android:layout_height="30dp"-->
+        <!--            android:layout_alignParentEnd="true"-->
+        <!--            android:layout_marginTop="10dp"-->
+        <!--            android:layout_marginEnd="10dp"-->
+        <!--            app:icon="@drawable/ic_share"-->
+        <!--            app:iconGravity="textStart"-->
+        <!--            app:iconTint="@color/white" />-->
 
     </RelativeLayout>
 </com.google.android.material.card.MaterialCardView>

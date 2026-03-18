@@ -15,6 +15,7 @@ import com.example.spaceadvisor.ui.fragments.FeedFragment
 import com.example.spaceadvisor.ui.fragments.HomeFragment
 import com.example.spaceadvisor.ui.fragments.MyTripsFragment
 import com.example.spaceadvisor.ui.fragments.ProfileFragment
+import com.example.spaceadvisor.ui.fragments.SettingsFragment
 import com.example.spaceadvisor.ui.viewmodels.UIViewModel
 import com.example.spaceadvisor.ui.viewmodels.UserViewModel
 import com.example.spaceadvisor.ui.viewmodels.ViewModelFactory
@@ -41,6 +42,7 @@ class MainActivity : BaseActivity() {
     private val feedFragment by lazy {
         supportFragmentManager.findFragmentByTag("FeedFragment") ?: FeedFragment()
     }
+    
     private var activeFragment: Fragment? = null
     private var isProgrammaticChange = false
 
@@ -55,7 +57,13 @@ class MainActivity : BaseActivity() {
         setupNavigation()
 
         if (savedInstanceState == null) {
-            loadHomeFragment()
+            val isNewUser = intent.getBooleanExtra("IS_NEW_USER", false)
+            if (isNewUser) {
+                loadFragment(profileFragment)
+                binding.btnNavigation.selectedItemId = R.id.nav_profile
+            } else {
+                loadHomeFragment()
+            }
         }
     }
 
@@ -67,13 +75,9 @@ class MainActivity : BaseActivity() {
 
     private fun setupUIObserver() {
         uiViewModel.uiConfig.observe(this) { config ->
-            // Update Title
             binding.headerTitle.text = config.title
-
-            // Header Visibility
             binding.mainHeader.visibility = if (config.isHeaderVisible) View.VISIBLE else View.GONE
 
-            // Handle Custom Header View
             binding.customHeaderContainer.removeAllViews()
             if (config.customHeaderView != null) {
                 binding.defaultHeaderTitleContainer.visibility = View.GONE
@@ -85,30 +89,22 @@ class MainActivity : BaseActivity() {
                 binding.customHeaderContainer.visibility = View.GONE
             }
 
-            // Left Button Control
             binding.mainHeaderLeftBtn.apply {
                 visibility = if (config.isLeftBtnVisible) View.VISIBLE else View.GONE
                 setIconResource(config.leftIconRes)
                 setOnClickListener {
-                    config.onLeftClick?.invoke()
-                        ?: openSettings()
+                    config.onLeftClick?.invoke() ?: openSettings()
                 }
             }
 
-            // Right Button Control
             binding.mainHeaderRightBtn.apply {
-                visibility = if (config.isRightBtnVisible) View.VISIBLE else View.GONE
+                visibility = if (config.isRightBtnVisible) View.VISIBLE else View.INVISIBLE
                 setIconResource(config.rightIconRes)
-                setOnClickListener {
-                    config.onRightClick?.invoke()
-                }
+                setOnClickListener { config.onRightClick?.invoke() }
             }
 
-            // Navigation Visibilities
-            binding.navContainer.visibility =
-                if (config.isBottomNavVisible) View.VISIBLE else View.GONE
+            binding.navContainer.visibility = if (config.isBottomNavVisible) View.VISIBLE else View.GONE
 
-            // Sync BottomNav Selection
             config.selectedTabId?.let { id ->
                 val menuItem = binding.btnNavigation.menu.findItem(id)
                 if (binding.btnNavigation.selectedItemId != id && menuItem?.isEnabled == true) {
@@ -120,9 +116,8 @@ class MainActivity : BaseActivity() {
         }
     }
 
-
     private fun openSettings() {
-        // Implement settings navigation or dialog
+        loadFragment(SettingsFragment(), addToBackStack = true)
     }
 
     private fun setupNavigation() {
@@ -144,10 +139,7 @@ class MainActivity : BaseActivity() {
                 handleNavigation(item.itemId)
             } else {
                 if (supportFragmentManager.backStackEntryCount > 0) {
-                    supportFragmentManager.popBackStack(
-                        null,
-                        FragmentManager.POP_BACK_STACK_INCLUSIVE
-                    )
+                    supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
                 }
             }
         }
@@ -155,10 +147,7 @@ class MainActivity : BaseActivity() {
 
     private fun handleNavigation(itemId: Int) {
         if (supportFragmentManager.backStackEntryCount > 0) {
-            supportFragmentManager.popBackStackImmediate(
-                null,
-                FragmentManager.POP_BACK_STACK_INCLUSIVE
-            )
+            supportFragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         }
 
         val target = when (itemId) {
@@ -173,31 +162,36 @@ class MainActivity : BaseActivity() {
 
     private fun loadHomeFragment() {
         if (supportFragmentManager.backStackEntryCount > 0) {
-            supportFragmentManager.popBackStackImmediate(
-                null,
-                FragmentManager.POP_BACK_STACK_INCLUSIVE
-            )
+            supportFragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         }
         loadFragment(homeFragment)
     }
 
-    private fun loadFragment(fragment: Fragment) {
-        if (fragment === activeFragment) return
+    private fun loadFragment(fragment: Fragment, addToBackStack: Boolean = false) {
+        if (fragment === activeFragment && !addToBackStack) return
 
-        supportFragmentManager.beginTransaction().apply {
+        val tag = fragment.javaClass.simpleName
+        val transaction = supportFragmentManager.beginTransaction()
+        
+        transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out)
 
-            setCustomAnimations(
-                R.anim.fade_in,
-                R.anim.fade_out,
-                R.anim.fade_in,
-                R.anim.fade_out
-            )
-            activeFragment?.let { hide(it) }
-            val tag = fragment.javaClass.simpleName
-            if (!fragment.isAdded) add(R.id.main_frame, fragment, tag) else show(fragment)
-            commit()
+        supportFragmentManager.fragments.forEach {
+            if (it != fragment && it.isAdded && !it.isHidden) {
+                transaction.hide(it)
+            }
         }
 
+        if (!fragment.isAdded) {
+            transaction.add(R.id.main_frame, fragment, tag)
+        } else {
+            transaction.show(fragment)
+        }
+
+        if (addToBackStack) {
+            transaction.addToBackStack(tag)
+        }
+        
+        transaction.commit()
         activeFragment = fragment
         if (fragment is BaseFragment) {
             uiViewModel.updateUI(fragment.getUIConfig())
@@ -206,14 +200,8 @@ class MainActivity : BaseActivity() {
 
     private fun updateBottomNavStyles(selectedItemId: Int) {
         val isHome = selectedItemId == R.id.place_holder
-        val activeColor = ContextCompat.getColorStateList(
-            this,
-            if (isHome) R.color.btn_nav_unselected else R.color.nav_clicked
-        )
-        val fabLabelColor = ContextCompat.getColor(
-            this,
-            if (isHome) R.color.btn_nav_selected else R.color.btn_nav_unselected
-        )
+        val activeColor = ContextCompat.getColorStateList(this, if (isHome) R.color.btn_nav_unselected else R.color.nav_btn_tint)
+        val fabLabelColor = ContextCompat.getColor(this, if (isHome) R.color.btn_nav_selected else R.color.btn_nav_unselected)
 
         binding.btnNavigation.itemIconTintList = activeColor
         binding.btnNavigation.itemTextColor = activeColor

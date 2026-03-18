@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
+    android:background="@color/layout_background_primary"
     android:fillViewport="true">
 
     <LinearLayout
@@ -28,21 +28,22 @@
                     android:layout_marginTop="5dp">
 
                     <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/editUserPic"
+                        android:id="@+id/profile_pic_edit_profile_fragment"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
                         android:src="@drawable/ic_home_earth" />
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/updatePicBtn"
+                        android:id="@+id/btn_update_pic_edit_profile_fragment"
                         style="@style/Widget.Material3.Button.IconButton.Filled"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_gravity="center"
-                        android:backgroundTint="@color/space_purple"
+                        android:backgroundTint="@color/btn_fill_tertiary"
                         app:icon="@drawable/ic_plus"
-                        app:iconSize="32dp" />
+                        app:iconSize="32dp"
+                        app:iconTint="@color/icon_primary" />
 
                 </FrameLayout>
 
@@ -59,7 +60,7 @@
                         android:layout_marginStart="6dp"
                         android:layout_marginBottom="8dp"
                         android:text="Rate your trip"
-                        android:textColor="#CCCCCCCC"
+                        android:textColor="@color/text_primary"
                         android:textSize="12sp" />
 
 
@@ -68,9 +69,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:numStars="5"
-                        android:progressBackgroundTint="@color/space_purple_faded"
-                        android:progressTint="@color/space_purple"
-                        android:rating="0"
+                        android:progressBackgroundTint="@color/icon_tertiary_faded"
+                        android:progressTint="@color/icon_tertiary"
+                        android:rating="4"
                         android:stepSize="1" />
 
                 </LinearLayout>
@@ -81,20 +82,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Post Title"
-                    android:textColorHint="@color/textQuaternary"
-                    app:cursorColor="@color/gray_light"
-                    app:cursorErrorColor="@color/gray_light"
-                    app:errorTextColor="@color/gray_light"
-                    app:hintTextColor="@color/gray_light"
-                    app:placeholderTextColor="@color/gray_light">
+                    app:boxStrokeColor="@color/edit_text_stroke_color"
+                    app:cursorColor="@color/icon_tertiary"
+                    app:hintTextColor="@color/text_quaternary_light">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edit_post_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/textPrimary"
-                        android:textColorHighlight="@color/gray_light"
-                        android:textColorHint="@color/gray_light" />
+                        android:textColor="@color/text_primary"
+                        android:textColorHint="@color/text_quaternary_light" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -103,7 +100,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:hint="Tell us about your trip">
+                    android:hint="Tell us about your trip"
+                    app:boxStrokeColor="@color/edit_text_stroke_color"
+                    app:cursorColor="@color/icon_tertiary"
+                    app:hintTextColor="@color/text_quaternary_light">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edit_post_description"
@@ -111,7 +111,8 @@
                         android:layout_height="120dp"
                         android:gravity="top"
                         android:inputType="textMultiLine"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/text_primary"
+                        android:textColorHint="@color/text_quaternary_light" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -130,11 +131,12 @@
                 android:id="@+id/save_btn"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:backgroundTint="@color/space_purple"
+                android:backgroundTint="@color/btn_fill_tertiary"
                 android:text="Share Post"
-                android:textColor="@color/textPrimary"
+                android:textColor="@color/text_primary"
                 android:textSize="18sp"
-                app:cornerRadius="12dp" />
+                app:cornerRadius="12dp"
+                app:strokeWidth="0dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/cancel_btn"
@@ -144,7 +146,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="10dp"
                 android:text="Cancel"
-                android:textColor="@color/textQuaternary"
+                android:textColor="@color/text_primary"
                 android:textSize="16sp" />
         </LinearLayout>
 

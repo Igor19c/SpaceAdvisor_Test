@@ -10,7 +10,7 @@
         android:layout_height="0dp"
         android:layout_margin="6dp"
         android:clickable="true"
-        app:cardBackgroundColor="@color/transparent"
+        app:cardBackgroundColor="@color/layout_background_transparent"
         app:cardCornerRadius="16dp"
         app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -18,7 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:strokeColor="#48575AD3"
+        app:strokeColor="@color/layout_stroke_secondary"
         app:strokeWidth="2dp">
 
         <LinearLayout
@@ -43,7 +43,7 @@
                 android:gravity="center"
                 android:maxLines="2"
                 android:text="First Trip"
-                android:textColor="@color/white"
+                android:textColor="@color/text_primary"
                 android:textSize="10sp"
                 android:textStyle="bold" />
 
@@ -54,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@drawable/custom_details_background"
+            android:background="@color/layout_background_transparent_black_80"
             android:gravity="center"
             android:padding="10dp"
             android:visibility="gone">
@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="10dp"
                 android:text="Badge Description"
-                android:textColor="@color/white"
+                android:textColor="@color/text_primary"
                 android:textSize="8sp"
                 android:textStyle="bold" />
 

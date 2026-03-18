@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground">
+    android:background="@color/layout_background_primary">
 
 
     <LinearLayout
@@ -24,50 +24,73 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/unsave_all_btn"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                style="@style/Widget.Material3.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="-12dp"
-                android:backgroundTint="@color/transparent"
                 android:text="Unsave all"
-                android:textColor="@color/textPrimary"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp"
                 app:cornerRadius="10dp"
                 app:strokeWidth="0dp" />
 
         </RelativeLayout>
 
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/empty_state_container"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="32dp"
             android:visibility="gone">
 
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:alpha="0.5"
+                android:src="@drawable/ic_explore"
+                app:tint="@color/icon_quaternary" />
+
             <TextView
-                android:id="@+id/empty_state_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+                android:layout_marginTop="24dp"
                 android:gravity="center"
-                android:text="Explore new destinations 🚀\nand save them here"
-                android:textColor="@color/textQuaternary"
-                android:textSize="20sp" />
+                android:text="Explore new destinations 🚀"
+                android:textColor="@color/text_primary"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="And save them here"
+                android:textColor="@color/text_quaternary_light"
+                android:textSize="14sp" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/explore_btn"
+                android:id="@+id/empty_create_trip_btn"
+                style="@style/Widget.Material3.Button.TonalButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:backgroundTint="@color/btnFillPrimary"
+                android:layout_marginTop="32dp"
+                android:paddingHorizontal="32dp"
+                android:paddingVertical="16dp"
                 android:text="Explore"
-                android:textColor="@color/textPrimary"
-                app:cornerRadius="10dp" />
+                android:textAllCaps="false"
+                android:textColor="@color/text_primary"
+                app:backgroundTint="@color/btn_fill_tertiary"
+                app:cornerRadius="12dp"
+                app:icon="@drawable/ic_explore"
+                app:iconTint="@color/icon_primary" />
 
-
-        </RelativeLayout>
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/my_destinations_recycler_view"
