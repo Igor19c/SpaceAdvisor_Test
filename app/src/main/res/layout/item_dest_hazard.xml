@@ -4,9 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="12dp"
-    android:backgroundTint="@color/layout_background_primary"
+    android:backgroundTint="@color/background"
     app:cardCornerRadius="12dp"
-    app:strokeColor="@color/layout_stroke_primary"
+    app:strokeColor="?attr/customColorPrimaryGlow"
     app:strokeWidth="1dp">
 
     <LinearLayout
@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Hazard Name"
-                android:textColor="@color/text_primary"
+                android:textColor="@color/title"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -42,7 +42,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@drawable/ic_hazard"
-                    app:tint="@color/icon_alert" />
+                    app:tint="@color/alert" />
 
                 <ImageView
                     android:id="@+id/dest_hazard_lvl_icon_2"
@@ -50,28 +50,28 @@
                     android:layout_height="20dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_hazard"
-                    app:tint="@color/icon_alert" />
+                    app:tint="@color/alert" />
 
                 <ImageView
                     android:id="@+id/dest_hazard_lvl_icon_3"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@drawable/ic_hazard"
-                    app:tint="@color/icon_alert_faded" />
+                    app:tint="@color/alert_faded" />
 
                 <ImageView
                     android:id="@+id/dest_hazard_lvl_icon_4"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@drawable/ic_hazard"
-                    app:tint="@color/icon_alert_faded" />
+                    app:tint="@color/alert_faded" />
 
                 <ImageView
                     android:id="@+id/dest_hazard_lvl_icon_5"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@drawable/ic_hazard"
-                    app:tint="@color/icon_alert_faded" />
+                    app:tint="@color/alert_faded" />
 
             </LinearLayout>
 
@@ -90,7 +90,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Tip"
-                android:textColor="@color/text_tertiary_light"
+                android:textColor="?attr/customColorPrimaryLight"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -101,14 +101,14 @@
                 android:layout_marginHorizontal="8dp"
                 android:layout_marginTop="5dp"
                 android:src="@drawable/ic_arrow_right"
-                app:tint="@color/icon_tertiary_light" />
+                app:tint="?attr/customColorPrimaryLight" />
 
             <TextView
                 android:id="@+id/hazard_tip_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Safety tip goes here..."
-                android:textColor="@color/text_quaternary_light"
+                android:textColor="@color/body"
                 android:textSize="14sp"
                 android:visibility="gone" />
         </LinearLayout>

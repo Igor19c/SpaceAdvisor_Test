@@ -12,7 +12,7 @@
         android:layout_height="15dp"
         android:layout_marginTop="2dp"
         android:src="@drawable/ic_arrow_right"
-        app:tint="@color/icon_tertiary" />
+        app:tint="?attr/customColorPrimary" />
 
 
     <TextView
@@ -22,7 +22,7 @@
         android:layout_marginStart="12dp"
         android:lineSpacingExtra="3dp"
         android:text="Highlights here"
-        android:textColor="@color/text_quaternary_light"
+        android:textColor="@color/body"
         android:textSize="14sp" />
 
 </LinearLayout>

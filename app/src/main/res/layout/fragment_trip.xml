@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/layout_background_primary"
+    android:background="@color/background"
     android:orientation="vertical"
     android:paddingHorizontal="20dp"
     android:paddingTop="6dp"
@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="6dp"
-        android:background="@drawable/custom_text_transparent_background">
+        android:background="@drawable/custom_text_transparent_background_purple_stroke">
 
         <LinearLayout
             android:id="@+id/departure_date_container"
@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Departure Date: "
-                android:textColor="@color/text_quaternary_light"
+                android:textColor="@color/subtitle"
                 android:textSize="16sp" />
 
             <TextView
@@ -37,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="21/02"
-                android:textColor="@color/text_quaternary_light"
+                android:textColor="@color/subtitle"
                 android:textSize="16sp" />
         </LinearLayout>
 
@@ -56,7 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Return Date: "
-                android:textColor="@color/text_quaternary_light"
+                android:textColor="@color/subtitle"
                 android:textSize="16sp" />
 
             <TextView
@@ -64,7 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="29/02"
-                android:textColor="@color/text_quaternary_light"
+                android:textColor="@color/subtitle"
                 android:textSize="16sp" />
         </LinearLayout>
 
@@ -75,10 +75,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:backgroundTint="@color/btn_fill_transparent"
+            android:backgroundTint="@color/transparent"
             app:icon="@drawable/ic_edit"
             app:iconSize="22dp"
-            app:iconTint="@color/icon_quaternary" />
+            app:iconTint="@color/icon" />
     </RelativeLayout>
 
     <FrameLayout
@@ -110,7 +110,7 @@
                 android:layout_marginTop="-60dp"
                 android:alpha="0.4"
                 android:src="@drawable/ic_galaxy"
-                app:tint="@color/icon_quaternary" />
+                app:tint="@color/icon" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -118,7 +118,7 @@
                 android:layout_marginTop="20dp"
                 android:gravity="center"
                 android:text="No stops planned yet"
-                android:textColor="@color/text_primary"
+                android:textColor="@color/title"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -128,7 +128,7 @@
                 android:layout_marginTop="8dp"
                 android:gravity="center"
                 android:text="Your itinerary is looking a bit empty. \nReady to add some star systems to your route?"
-                android:textColor="@color/text_quaternary_light"
+                android:textColor="@color/body"
                 android:textSize="14sp" />
 
             <com.google.android.material.button.MaterialButton
@@ -139,13 +139,13 @@
                 android:layout_marginTop="24dp"
                 android:paddingHorizontal="24dp"
                 android:text="Explore Destinations"
-                android:textColor="@color/text_primary"
+                android:textColor="@color/title"
                 android:textSize="14sp"
-                app:backgroundTint="@color/btn_fill_tertiary"
+                app:backgroundTint="?attr/customColorPrimary"
                 app:cornerRadius="10dp"
                 app:icon="@drawable/ic_explore"
                 app:iconSize="18dp"
-                app:iconTint="@color/icon_primary" />
+                app:iconTint="@color/on_primary" />
 
         </LinearLayout>
 
@@ -163,10 +163,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:backgroundTint="@color/btn_fill_primary"
+            android:backgroundTint="@color/secondary_filled_btn"
             android:paddingVertical="12dp"
             android:text="Add Destination"
-            android:textColor="@color/text_secondary"
+            android:textColor="@color/on_secondary_filled_btn"
             android:textSize="16sp"
             app:cornerRadius="10dp" />
 
@@ -176,10 +176,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:backgroundTint="@color/btn_fill_tertiary"
+            android:backgroundTint="?attr/customColorPrimary"
             android:paddingVertical="12dp"
             android:text="Confirm Journey"
-            android:textColor="@color/text_primary"
+            android:textColor="@color/on_primary"
             android:textSize="16sp"
             app:cornerRadius="10dp" />
     </LinearLayout>

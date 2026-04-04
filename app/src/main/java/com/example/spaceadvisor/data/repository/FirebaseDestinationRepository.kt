@@ -57,6 +57,23 @@ class FirebaseDestinationRepository(
         }
     }
 
+    override fun fetchAllDestinations(): Flow<Result<List<Destination>>> = callbackFlow {
+        val subscription = db.collection("destinations")
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    trySend(Result.failure(error))
+                    return@addSnapshotListener
+                }
+                if (snapshot != null) {
+                    val destinations = snapshot.documents.mapNotNull { doc ->
+                        doc.toObject(Destination::class.java)?.copy(id = doc.id)
+                    }
+                    trySend(Result.success(destinations))
+                }
+            }
+        awaitClose { subscription.remove() }
+    }
+
     override fun fetchSavedDestinations(userId: String): Flow<Result<List<Destination>>> =
         callbackFlow {
             val userDocRef = db.collection("users").document(userId)
@@ -77,7 +94,8 @@ class FirebaseDestinationRepository(
                 if (destinationIds.isNullOrEmpty()) {
                     trySend(Result.success(emptyList()))
                 } else {
-                    db.collection("destinations").whereIn(FieldPath.documentId(), destinationIds)
+                    db.collection("destinations")
+                        .whereIn(FieldPath.documentId(), destinationIds)
                         .get()
                         .addOnSuccessListener { destinationSnapshot ->
                             val destinations = destinationSnapshot.documents.mapNotNull { doc ->

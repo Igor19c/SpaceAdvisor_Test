@@ -71,9 +71,9 @@ class FeedFragment : BaseFragment() {
         }
 
         binding.swipeRefreshLayout.setColorSchemeResources(
-            R.color.btn_nav_selected,
-            R.color.space_purple,
-            R.color.green_light
+            R.color.primary,
+            R.color.primary,
+            R.color.success
         )
     }
 

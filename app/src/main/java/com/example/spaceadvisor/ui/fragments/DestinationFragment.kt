@@ -204,7 +204,7 @@ class DestinationFragment : BaseFragment() {
     }
 
     private fun updateRatingUI(avg: Double, count: Int) {
-        binding.destRatingText.text = String.format("★ %.1f", avg)
+        binding.destRatingText.text = String.format("%.1f", avg)
     }
 
     private fun observeViewModel(destinationId: String) {

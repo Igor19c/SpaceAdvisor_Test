@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/layout_background_primary"
+    android:background="@color/background"
     android:fillViewport="true">
 
     <LinearLayout
@@ -40,10 +40,10 @@
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_gravity="center"
-                        android:backgroundTint="@color/btn_fill_tertiary"
+                        android:backgroundTint="?attr/customColorPrimary"
                         app:icon="@drawable/ic_plus"
                         app:iconSize="32dp"
-                        app:iconTint="@color/icon_primary" />
+                        app:iconTint="@color/on_primary" />
 
                 </FrameLayout>
 
@@ -60,7 +60,7 @@
                         android:layout_marginStart="6dp"
                         android:layout_marginBottom="8dp"
                         android:text="Rate your trip"
-                        android:textColor="@color/text_primary"
+                        android:textColor="@color/title"
                         android:textSize="12sp" />
 
 
@@ -69,8 +69,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:numStars="5"
-                        android:progressBackgroundTint="@color/icon_tertiary_faded"
-                        android:progressTint="@color/icon_tertiary"
+                        android:progressBackgroundTint="?attr/customColorPrimaryFaded"
+                        android:progressTint="?attr/customColorPrimary"
                         android:rating="4"
                         android:stepSize="1" />
 
@@ -82,16 +82,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Post Title"
-                    app:boxStrokeColor="@color/edit_text_stroke_color"
-                    app:cursorColor="@color/icon_tertiary"
-                    app:hintTextColor="@color/text_quaternary_light">
+                    android:textColorHint="@color/text_input_hint"
+                    app:boxStrokeColor="@color/text_input_stroke"
+                    app:cursorColor="?attr/customColorPrimary"
+                    app:hintTextColor="@color/text_input_hint">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edit_post_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/text_primary"
-                        android:textColorHint="@color/text_quaternary_light" />
+                        android:textColor="@color/text_input"
+                        android:textColorHint="@color/text_input_hint" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -101,9 +102,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:hint="Tell us about your trip"
-                    app:boxStrokeColor="@color/edit_text_stroke_color"
-                    app:cursorColor="@color/icon_tertiary"
-                    app:hintTextColor="@color/text_quaternary_light">
+                    android:textColorHint="@color/text_input_hint"
+                    app:boxStrokeColor="@color/text_input_stroke"
+                    app:cursorColor="?attr/customColorPrimary"
+                    app:hintTextColor="@color/text_input_hint">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edit_post_description"
@@ -111,8 +113,8 @@
                         android:layout_height="120dp"
                         android:gravity="top"
                         android:inputType="textMultiLine"
-                        android:textColor="@color/text_primary"
-                        android:textColorHint="@color/text_quaternary_light" />
+                        android:textColor="@color/text_input"
+                        android:textColorHint="@color/text_input_hint" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -131,9 +133,9 @@
                 android:id="@+id/save_btn"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:backgroundTint="@color/btn_fill_tertiary"
+                android:backgroundTint="?attr/customColorPrimary"
                 android:text="Share Post"
-                android:textColor="@color/text_primary"
+                android:textColor="@color/on_primary"
                 android:textSize="18sp"
                 app:cornerRadius="12dp"
                 app:strokeWidth="0dp" />
@@ -146,7 +148,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="10dp"
                 android:text="Cancel"
-                android:textColor="@color/text_primary"
+                android:textColor="@color/secondary"
                 android:textSize="16sp" />
         </LinearLayout>
 

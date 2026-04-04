@@ -1,5 +1,6 @@
 package com.example.spaceadvisor.ui.viewmodels
 
+import android.content.Context
 import android.content.res.AssetManager
 import android.net.Uri
 import androidx.lifecycle.LiveData
@@ -14,6 +15,7 @@ import com.example.spaceadvisor.domain.models.User
 import com.example.spaceadvisor.domain.repository.IPostRepository
 import com.example.spaceadvisor.domain.repository.IReviewRepository
 import com.example.spaceadvisor.domain.repository.IUserRepository
+import com.firebase.ui.auth.AuthUI
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.io.InputStream
@@ -35,6 +37,9 @@ class UserViewModel(
 
     private val _uploadProgress = MutableLiveData<Boolean>()
     val uploadProgress: LiveData<Boolean> = _uploadProgress
+
+    private val _isLoading = MutableLiveData<Boolean>(false)
+    val isLoading: LiveData<Boolean> = _isLoading
 
     private val _error = MutableLiveData<String?>()
     val error: LiveData<String?> = _error
@@ -125,6 +130,18 @@ class UserViewModel(
             createdAt = System.currentTimeMillis()
         )
         viewModelScope.launch { repository.createUserProfile(newUser); onComplete() }
+    }
+
+    fun handleSignOut(context: Context) {
+        _isLoading.value = true
+
+        AuthUI.getInstance()
+            .signOut(context)
+            .addOnCompleteListener {
+                _userData.value = null
+                _isLoggedOut.value = true
+                _isLoading.value = false
+            }
     }
 
     fun updateProfile(newName: String, newUsername: String, newBio: String) {

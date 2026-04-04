@@ -4,7 +4,7 @@
     android:layout_width="250dp"
     android:layout_height="300dp"
     android:layout_margin="10dp"
-    android:backgroundTint="@color/layout_background_primary"
+    android:backgroundTint="@color/background"
     android:clickable="true"
     android:focusable="true"
     app:cardCornerRadius="18dp"
@@ -19,7 +19,7 @@
             android:id="@+id/item_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/layout_background_primary"
+            android:background="@color/background"
             android:clickable="true"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_home_earth" />
@@ -28,7 +28,7 @@
             android:id="@+id/newest_trip_card_item"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/layout_background_transparent_black_20" />
+            android:background="@color/transparent_black_20" />
 
 
         <LinearLayout
@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="@color/layout_background_transparent_black_80"
+            android:background="@color/transparent_black_60"
             android:orientation="vertical"
             android:paddingHorizontal="20dp"
             android:paddingVertical="20dp">
@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:text="Title"
-                android:textColor="@color/text_primary"
+                android:textColor="@color/white"
                 android:textSize="18sp" />
 
 
@@ -62,14 +62,14 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@drawable/ic_pin"
-                    app:tint="@color/icon_quaternary" />
+                    app:tint="@color/white" />
 
                 <TextView
                     android:id="@+id/trip_stop_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="8 stops"
-                    android:textColor="@color/text_quaternary_light"
+                    android:textColor="@color/white"
                     android:textSize="10sp" />
 
                 <View
@@ -80,7 +80,7 @@
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:src="@drawable/ic_calendar"
-                    app:tint="@color/icon_quaternary" />
+                    app:tint="@color/white" />
 
                 <TextView
                     android:id="@+id/trip_created_at"
@@ -88,7 +88,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:text="1 week ago"
-                    android:textColor="@color/text_quaternary_light"
+                    android:textColor="@color/white"
                     android:textSize="10sp" />
 
             </LinearLayout>

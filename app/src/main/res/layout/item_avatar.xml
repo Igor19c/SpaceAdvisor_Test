@@ -9,8 +9,8 @@
         android:id="@+id/avatarImage"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/layout_background_primary"
-        android:backgroundTint="@color/layout_background_transparent"
+        android:background="@color/background"
+        android:backgroundTint="@color/transparent"
         android:padding="6dp"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -19,7 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
-        app:strokeColor="@color/layout_stroke_secondary"
+        app:strokeColor="?attr/customColorPrimaryFaded"
         app:strokeWidth="3dp" />
 
     <ImageView
@@ -32,7 +32,7 @@
         app:layout_constraintEnd_toEndOf="@id/avatarImage"
         app:layout_constraintStart_toStartOf="@id/avatarImage"
         app:layout_constraintTop_toTopOf="@id/avatarImage"
-        app:tint="@color/icon_primary" />
+        app:tint="@color/icon" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

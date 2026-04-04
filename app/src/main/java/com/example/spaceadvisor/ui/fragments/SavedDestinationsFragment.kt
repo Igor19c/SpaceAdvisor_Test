@@ -70,20 +70,6 @@ class SavedDestinationsFragment : BaseFragment() {
 
     }
 
-    private fun navigateTo(fragment: BaseFragment) {
-        parentFragmentManager.beginTransaction()
-            .setCustomAnimations(
-                R.anim.slide_in_bottom_to_top,
-                R.anim.fade_out,
-                R.anim.fade_in,
-                R.anim.slide_out_top_to_bottom
-            )
-            .add(R.id.main_frame, fragment)
-            .hide(this)
-            .addToBackStack(null)
-            .commit()
-    }
-
     private fun setupRecyclerView() {
         adapter = SavedAdapter(
             destinations = mutableListOf()

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/layout_background_primary"
+    android:background="@color/background"
     android:orientation="vertical"
     android:paddingHorizontal="12dp"
     android:paddingVertical="10dp">
@@ -50,7 +50,7 @@
                         android:layout_height="15dp"
                         android:scaleType="centerCrop"
                         android:src="@drawable/ic_rating_star_filled"
-                        app:tint="@color/icon_primary" />
+                        app:tint="@color/white" />
 
                     <TextView
                         android:id="@+id/dest_rating_text_carousel_item"
@@ -58,26 +58,30 @@
                         android:layout_height="wrap_content"
                         android:paddingHorizontal="4dp"
                         android:text="4.5"
-                        android:textColor="@color/text_primary"
+                        android:textColor="@color/white"
                         android:textSize="14sp" />
 
                 </LinearLayout>
 
                 <com.google.android.material.tabs.TabLayout
                     android:id="@+id/carousel_indicator"
-                    android:layout_width="120dp"
-                    android:layout_height="4dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:layout_marginVertical="6dp"
-                    android:background="@color/layout_background_transparent"
-                    android:minHeight="0dp"
-                    app:tabBackground="@drawable/tab_selector"
-                    app:tabGravity="center"
-                    app:tabIndicatorHeight="0dp"
-                    app:tabMaxWidth="20dp"
-                    app:tabMinWidth="20dp"
-                    app:tabMode="auto" />
+                    android:backgroundTint="@color/transparent"
+
+                    app:tabIconTint="@color/dot_tint_selector"
+                    app:tabIndicator="@drawable/tab_indicator"
+                    app:tabIndicatorAnimationMode="elastic"
+                    app:tabIndicatorColor="?attr/customColorPrimary"
+                    app:tabIndicatorFullWidth="false"
+                    app:tabIndicatorGravity="center"
+                    app:tabMaxWidth="80dp"
+                    app:tabMinWidth="10dp"
+                    app:tabMode="fixed"
+                    app:tabRippleColor="@color/transparent" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/explore_help_btn"
@@ -89,7 +93,7 @@
                     android:layout_marginEnd="6dp"
                     app:icon="@drawable/ic_help"
                     app:iconSize="28dp"
-                    app:iconTint="@color/icon_quaternary" />
+                    app:iconTint="@color/icon" />
 
             </RelativeLayout>
 
@@ -98,7 +102,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="6dp"
-                android:backgroundTint="@color/layout_background_transparent"
+                android:backgroundTint="@color/transparent"
                 app:cardCornerRadius="24dp"
                 app:strokeWidth="1dp">
 
@@ -133,7 +137,7 @@
                                 android:gravity="start"
                                 android:padding="6dp"
                                 android:text="Aurora Observatory Dome"
-                                android:textColor="@color/text_primary"
+                                android:textColor="@color/title"
                                 android:textSize="15sp"
                                 android:textStyle="bold" />
 
@@ -167,7 +171,7 @@
                                 android:gravity="start"
                                 android:padding="6dp"
                                 android:text="The Red Planet"
-                                android:textColor="@color/text_primary"
+                                android:textColor="@color/title"
                                 android:textSize="12sp" />
 
                             <LinearLayout
@@ -202,7 +206,7 @@
                                     android:layout_height="match_parent"
                                     android:gravity="start"
                                     android:text="Travel time: "
-                                    android:textColor="@color/text_primary"
+                                    android:textColor="@color/title"
                                     android:textSize="12sp" />
 
                                 <TextView
@@ -210,7 +214,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
                                     android:gravity="start"
-                                    android:textColor="@color/text_primary"
+                                    android:textColor="@color/title"
                                     android:textSize="12sp" />
 
                             </LinearLayout>
@@ -246,13 +250,13 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="10dp"
                             android:layout_weight="1"
-                            android:backgroundTint="@color/btn_fill_transparent"
+                            android:backgroundTint="@color/transparent"
                             android:text="View Details"
                             android:textAllCaps="false"
-                            android:textColor="@color/text_primary"
+                            android:textColor="@color/secondary"
                             android:textSize="14sp"
                             app:cornerRadius="6dp"
-                            app:strokeColor="@color/btn_stroke_primary"
+                            app:strokeColor="@color/secondary_outlined_btn"
                             app:strokeWidth="1dp" />
 
                         <com.google.android.material.button.MaterialButton
@@ -260,10 +264,10 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:backgroundTint="@color/btn_fill_primary"
+                            android:backgroundTint="@color/secondary_filled_btn"
                             android:text="Explore"
                             android:textAllCaps="false"
-                            android:textColor="@color/text_secondary"
+                            android:textColor="@color/on_secondary_filled_btn"
                             android:textSize="14sp"
                             app:cornerRadius="6dp" />
                     </LinearLayout>

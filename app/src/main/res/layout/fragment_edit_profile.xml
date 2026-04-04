@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/layout_background_primary"
+    android:background="@color/background"
     android:fillViewport="true">
 
     <FrameLayout
@@ -24,10 +24,10 @@
             android:layout_width="170dp"
             android:layout_height="170dp"
             android:layout_gravity="center"
-            android:background="@color/layout_background_primary"
+            android:background="@color/background"
             android:padding="6dp"
             app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
-            app:strokeColor="@color/layout_stroke_primary"
+            app:strokeColor="?attr/customColorPrimaryGlow"
             app:strokeWidth="3dp" />
 
         <com.google.android.material.imageview.ShapeableImageView
@@ -35,7 +35,7 @@
             android:layout_width="140dp"
             android:layout_height="140dp"
             android:layout_gravity="center"
-            android:background="@color/layout_background_transparent"
+            android:background="@color/transparent"
             android:padding="10dp"
             android:scaleType="centerCrop"
             android:src="@drawable/pic_profile" />
@@ -48,10 +48,10 @@
             android:layout_gravity="end"
             android:layout_marginTop="160dp"
             android:layout_marginEnd="50dp"
-            android:backgroundTint="@color/btn_fill_tertiary"
+            android:backgroundTint="?attr/customColorPrimary"
             app:icon="@drawable/ic_plus"
             app:iconSize="16dp"
-            app:iconTint="@color/icon_primary"
+            app:iconTint="@color/on_primary"
             app:strokeWidth="0dp" />
 
     </FrameLayout>
@@ -70,18 +70,18 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:hint="Full Name"
-            android:textColorHint="@color/text_quaternary_light"
-            app:boxStrokeColor="@color/edit_text_stroke_color"
-            app:cursorColor="@color/icon_tertiary"
-            app:hintTextColor="@color/text_quaternary_light">
+            android:textColorHint="@color/text_input_hint"
+            app:boxStrokeColor="@color/text_input_stroke"
+            app:cursorColor="?attr/customColorPrimary"
+            app:hintTextColor="@color/text_input_hint">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_text_name_edit_profile_fragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
-                android:textColor="@color/text_primary"
-                android:textColorHint="@color/text_quaternary_light" />
+                android:textColor="@color/text_input"
+                android:textColorHint="@color/text_input_hint" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -90,18 +90,18 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="Username"
-            android:textColorHint="@color/text_quaternary_light"
-            app:boxStrokeColor="@color/edit_text_stroke_color"
-            app:cursorColor="@color/icon_tertiary"
-            app:hintTextColor="@color/text_quaternary_light">
+            android:textColorHint="@color/text_input_hint"
+            app:boxStrokeColor="@color/text_input_stroke"
+            app:cursorColor="?attr/customColorPrimary"
+            app:hintTextColor="@color/text_input_hint">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_text_username_edit_profile_fragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
-                android:textColor="@color/text_primary"
-                android:textColorHint="@color/text_quaternary_light" />
+                android:textColor="@color/text_input"
+                android:textColorHint="@color/text_input_hint" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -110,18 +110,18 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="Bio"
-            android:textColorHint="@color/text_quaternary_light"
-            app:boxStrokeColor="@color/edit_text_stroke_color"
-            app:cursorColor="@color/icon_tertiary"
-            app:hintTextColor="@color/text_quaternary_light">
+            android:textColorHint="@color/text_input_hint"
+            app:boxStrokeColor="@color/text_input_stroke"
+            app:cursorColor="?attr/customColorPrimary"
+            app:hintTextColor="@color/text_input_hint">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_text_bio_edit_profile_fragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textMultiLine"
-                android:textColor="@color/text_primary"
-                android:textColorHint="@color/text_quaternary_light" />
+                android:textColor="@color/text_input"
+                android:textColorHint="@color/text_input_hint" />
         </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
@@ -140,9 +140,9 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:text="Save Changes"
-            android:textColor="@color/text_primary"
+            android:textColor="@color/on_primary"
             android:textSize="14dp"
-            app:backgroundTint="@color/btn_fill_tertiary"
+            app:backgroundTint="?attr/customColorPrimary"
             app:cornerRadius="12dp"
             app:strokeWidth="0dp" />
 
@@ -154,7 +154,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="36dp"
             android:text="Cancel"
-            android:textColor="@color/text_primary"
+            android:textColor="@color/secondary"
             android:textSize="14dp" />
 
     </LinearLayout>

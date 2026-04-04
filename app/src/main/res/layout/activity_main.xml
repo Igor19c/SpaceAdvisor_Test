@@ -4,7 +4,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/layout_background_primary"
+    android:background="@color/background"
     android:clipChildren="false"
     android:clipToPadding="false">
 
@@ -21,11 +21,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
             android:layout_marginStart="12dp"
             app:icon="@drawable/ic_settings"
             app:iconSize="30dp"
-            app:iconTint="@color/icon_quaternary" />
+            app:iconTint="@color/icon" />
 
         <FrameLayout
             android:id="@+id/header_content_container"
@@ -53,7 +53,7 @@
                     android:letterSpacing="0.1"
                     android:text="ASTRYX"
                     android:textAlignment="center"
-                    android:textColor="@color/text_primary"
+                    android:textColor="@color/title"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -72,12 +72,12 @@
             style="@style/Widget.Material3.Button.IconButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="12dp"
             app:icon="@drawable/ic_search"
             app:iconSize="35dp"
-            app:iconTint="@color/icon_quaternary" />
+            app:iconTint="@color/icon" />
     </RelativeLayout>
 
     <LinearLayout
@@ -91,7 +91,7 @@
             android:id="@+id/main_frame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/layout_background_transparent" />
+            android:background="@color/transparent" />
     </LinearLayout>
 
     <RelativeLayout
@@ -106,7 +106,7 @@
             android:id="@+id/btn_navigation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/layout_background_primary"
+            android:background="@color/background"
             android:paddingTop="5dp"
             android:paddingBottom="8dp"
             app:elevation="8dp"
@@ -130,15 +130,15 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/home_btn"
+                style="@style/Widget.Material3.Button.IconButton"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:background="@drawable/gradient_home_btn"
-                android:paddingTop="10dp"
                 app:backgroundTint="@null"
                 app:icon="@drawable/ic_home_earth"
                 app:iconGravity="top"
                 app:iconSize="30dp"
-                app:iconTint="@color/icon_primary" />
+                app:iconTint="@color/on_primary" />
 
             <TextView
                 android:id="@+id/home_btn_label"
@@ -147,7 +147,8 @@
                 android:layout_marginTop="10dp"
                 android:text="Home"
                 android:textColor="@color/btn_nav_unselected"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 

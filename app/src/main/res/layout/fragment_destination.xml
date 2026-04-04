@@ -4,18 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/layout_background_primary">
+    android:background="@color/background">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/dest_app_bar"
         android:layout_width="match_parent"
         android:layout_height="400dp"
-        android:background="@color/layout_background_transparent">
+        android:background="@color/transparent">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:contentScrim="@color/layout_background_primary"
+            app:contentScrim="@color/background"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageView
@@ -43,10 +43,10 @@
                     style="@style/Widget.Material3.Button.IconButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/btn_fill_transparent"
+                    android:backgroundTint="@color/transparent"
                     app:icon="@drawable/ic_back"
                     app:iconSize="30dp"
-                    app:iconTint="@color/icon_primary" />
+                    app:iconTint="@color/icon" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/dest_save_destination_btn"
@@ -55,10 +55,10 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:layout_marginEnd="10dp"
-                    app:backgroundTint="@color/btn_fill_transparent"
+                    app:backgroundTint="@color/transparent"
                     app:icon="@drawable/ic_star_outlined"
                     app:iconSize="30dp"
-                    app:iconTint="@color/icon_primary" />
+                    app:iconTint="@color/icon" />
             </androidx.appcompat.widget.Toolbar>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -69,7 +69,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/layout_background_primary"
+        android:background="@color/background"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -91,20 +91,39 @@
                     android:layout_marginEnd="12dp"
                     android:layout_weight="1"
                     android:text="Mars"
-                    android:textColor="@color/text_primary"
+                    android:textColor="@color/title"
                     android:textSize="32sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/dest_rating_text"
+                <LinearLayout
+                    android:id="@+id/dest_rating_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
+                    android:layout_gravity="top"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/custom_text_gray_background"
+                    android:gravity="center"
                     android:paddingHorizontal="12dp"
-                    android:paddingVertical="6dp"
-                    android:text="★ 4.5"
-                    android:textColor="@color/text_primary" />
+                    android:paddingVertical="6dp">
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_rating_star_filled"
+                        app:tint="@color/white" />
+
+                    <TextView
+                        android:id="@+id/dest_rating_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="4dp"
+                        android:text="4.5"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
@@ -119,7 +138,7 @@
                     android:layout_marginEnd="12dp"
                     android:layout_weight="1"
                     android:text="The Red Planet"
-                    android:textColor="@color/text_tertiary_light"
+                    android:textColor="?attr/customColorPrimary"
                     android:textSize="16sp" />
 
                 <LinearLayout
@@ -153,7 +172,7 @@
                 android:layout_marginTop="12dp"
                 android:lineSpacingExtra="6dp"
                 android:text="Short description here..."
-                android:textColor="@color/text_quaternary_light"
+                android:textColor="@color/body"
                 android:textSize="15sp" />
 
             <com.google.android.material.chip.ChipGroup
@@ -168,7 +187,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:text="Adventure"
-                    android:textColor="@color/text_quaternary_light"
+                    android:textColor="@color/body"
                     android:textSize="8sp"
                     app:chipBackgroundColor="@color/transparent_black_80"
                     app:chipCornerRadius="10dp"
@@ -178,7 +197,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:text="Adventure"
-                    android:textColor="@color/text_quaternary_light"
+                    android:textColor="@color/body"
                     android:textSize="8sp"
                     app:chipBackgroundColor="@color/transparent_black_80"
                     app:chipCornerRadius="10dp"
@@ -194,7 +213,7 @@
                 android:layout_marginTop="24dp"
                 android:lineSpacingExtra="6dp"
                 android:text="Long description here..."
-                android:textColor="@color/text_quaternary_light"
+                android:textColor="@color/body"
                 android:textSize="15sp" />
 
             <!-- Best Time to Visit Section -->
@@ -210,7 +229,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
                     android:text="Best time to visit:"
-                    android:textColor="@color/text_primary"
+                    android:textColor="@color/title"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -220,7 +239,7 @@
                     android:layout_height="wrap_content"
                     android:lineSpacingExtra="6dp"
                     android:text="Best time to visit..."
-                    android:textColor="@color/text_quaternary_light"
+                    android:textColor="@color/body"
                     android:textSize="15sp" />
 
             </LinearLayout>
@@ -238,7 +257,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Mars destination"
-                    android:textColor="@color/text_primary"
+                    android:textColor="@color/title"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -265,11 +284,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:background="@color/layout_background_transparent"
-                    app:tabIndicatorColor="@color/btn_stroke_tertiary"
+                    android:background="@color/transparent"
+                    app:tabIndicatorColor="?attr/customColorPrimary"
                     app:tabMode="scrollable"
-                    app:tabSelectedTextColor="@color/text_primary"
-                    app:tabTextColor="@color/text_quaternary_dark">
+                    app:tabSelectedTextColor="@color/title"
+                    app:tabTextColor="@color/body">
 
                     <com.google.android.material.tabs.TabItem
                         android:layout_width="wrap_content"
@@ -336,7 +355,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="12dp"
                                     android:text="Atmosphere"
-                                    android:textColor="@color/text_quaternary_light"
+                                    android:textColor="@color/body"
                                     android:textSize="14sp" />
 
                                 <TextView
@@ -346,7 +365,7 @@
                                     android:layout_marginEnd="12dp"
                                     android:gravity="end"
                                     android:text="Breathable"
-                                    android:textColor="@color/text_primary"
+                                    android:textColor="@color/title"
                                     android:textSize="14sp"
                                     android:textStyle="bold" />
                             </TableRow>
@@ -362,7 +381,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="12dp"
                                     android:text="Gravity"
-                                    android:textColor="@color/text_quaternary_light"
+                                    android:textColor="@color/body"
                                     android:textSize="14sp" />
 
                                 <TextView
@@ -372,7 +391,7 @@
                                     android:layout_marginEnd="12dp"
                                     android:gravity="end"
                                     android:text="1.0 G"
-                                    android:textColor="@color/text_primary"
+                                    android:textColor="@color/title"
                                     android:textSize="14sp"
                                     android:textStyle="bold" />
                             </TableRow>
@@ -388,7 +407,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="12dp"
                                     android:text="Temperature"
-                                    android:textColor="@color/text_quaternary_light"
+                                    android:textColor="@color/body"
                                     android:textSize="14sp" />
 
                                 <TextView
@@ -398,7 +417,7 @@
                                     android:layout_marginEnd="12dp"
                                     android:gravity="end"
                                     android:text="-10°C to 35°C"
-                                    android:textColor="@color/text_primary"
+                                    android:textColor="@color/title"
                                     android:textSize="14sp"
                                     android:textStyle="bold" />
                             </TableRow>
@@ -414,7 +433,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="12dp"
                                     android:text="Radiation"
-                                    android:textColor="@color/text_quaternary_light"
+                                    android:textColor="@color/body"
                                     android:textSize="14sp" />
 
                                 <TextView
@@ -424,7 +443,7 @@
                                     android:layout_marginEnd="12dp"
                                     android:gravity="end"
                                     android:text="Low"
-                                    android:textColor="@color/text_primary"
+                                    android:textColor="@color/title"
                                     android:textSize="14sp"
                                     android:textStyle="bold" />
                             </TableRow>
@@ -440,7 +459,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="12dp"
                                     android:text="Day Length"
-                                    android:textColor="@color/text_quaternary_light"
+                                    android:textColor="@color/body"
                                     android:textSize="14sp" />
 
                                 <TextView
@@ -450,7 +469,7 @@
                                     android:layout_marginEnd="12dp"
                                     android:gravity="end"
                                     android:text="24h"
-                                    android:textColor="@color/text_primary"
+                                    android:textColor="@color/title"
                                     android:textSize="14sp"
                                     android:textStyle="bold" />
                             </TableRow>
@@ -465,7 +484,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="12dp"
                                     android:text="Visibility"
-                                    android:textColor="@color/text_quaternary_light"
+                                    android:textColor="@color/body"
                                     android:textSize="14sp" />
 
                                 <TextView
@@ -475,7 +494,7 @@
                                     android:layout_marginEnd="12dp"
                                     android:gravity="end"
                                     android:text="High"
-                                    android:textColor="@color/text_primary"
+                                    android:textColor="@color/title"
                                     android:textSize="14sp"
                                     android:textStyle="bold" />
                             </TableRow>
@@ -503,7 +522,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="24dp"
                             android:text="Hazards:"
-                            android:textColor="@color/text_primary"
+                            android:textColor="@color/title"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
@@ -520,26 +539,26 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="6dp"
+                android:layout_marginHorizontal="12dp"
                 android:layout_marginVertical="36dp"
-                android:backgroundTint="@color/layout_background_primary"
+                android:backgroundTint="@color/background"
                 app:cardCornerRadius="28dp"
-                app:cardElevation="12dp"
-                app:strokeColor="@color/layout_stroke_secondary"
+                app:cardElevation="8dp"
+                app:strokeColor="?attr/customColorPrimaryFaded"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="24dp">
+                    android:padding="12dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="Rate your Experience"
-                        android:textColor="@color/text_primary"
+                        android:textColor="@color/title"
                         android:textSize="22sp"
                         android:textStyle="bold" />
 
@@ -549,7 +568,7 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="4dp"
                         android:text="How was your stay at this destination?"
-                        android:textColor="@color/text_quaternary_light"
+                        android:textColor="@color/body"
                         android:textSize="14sp" />
 
                     <RatingBar
@@ -559,8 +578,8 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="20dp"
                         android:numStars="5"
-                        android:progressBackgroundTint="@color/icon_tertiary_faded"
-                        android:progressTint="@color/icon_tertiary"
+                        android:progressBackgroundTint="?attr/customColorPrimaryFaded"
+                        android:progressTint="?attr/customColorPrimary"
                         android:rating="4"
                         android:stepSize="1" />
 
@@ -570,14 +589,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:hint="Tell us more (optional)"
-                        android:textColorHint="@color/text_quaternary_light"
+                        android:textColorHint="@color/body"
                         app:boxCornerRadiusBottomEnd="16dp"
                         app:boxCornerRadiusBottomStart="16dp"
                         app:boxCornerRadiusTopEnd="16dp"
                         app:boxCornerRadiusTopStart="16dp"
-                        app:boxStrokeColor="@color/edit_text_stroke_color"
-                        app:cursorColor="@color/icon_tertiary"
-                        app:hintTextColor="@color/text_quaternary_light">
+                        app:boxStrokeColor="@color/text_input_stroke"
+                        app:cursorColor="?attr/customColorPrimary"
+                        app:hintTextColor="@color/body">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/dest_edit_review_content"
@@ -586,8 +605,8 @@
                             android:gravity="top"
                             android:inputType="textMultiLine"
                             android:minLines="3"
-                            android:textColor="@color/text_primary"
-                            android:textColorHint="@color/text_quaternary_light" />
+                            android:textColor="@color/title"
+                            android:textColorHint="@color/body" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <LinearLayout
@@ -604,7 +623,7 @@
                             android:layout_weight="1"
                             android:text="Clear"
                             android:textAllCaps="false"
-                            android:textColor="@color/text_quaternary_light" />
+                            android:textColor="@color/secondary" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/dest_submit_review_btn"
@@ -612,9 +631,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="12dp"
                             android:layout_weight="1"
-                            android:backgroundTint="@color/btn_fill_primary"
+                            android:backgroundTint="@color/secondary_filled_btn"
                             android:text="Submit"
-                            android:textColor="@color/text_primary"
+                            android:textColor="@color/on_secondary_filled_btn"
                             app:cornerRadius="12dp" />
 
                     </LinearLayout>
@@ -637,11 +656,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="@color/layout_background_primary"
+        android:background="@color/background"
         android:gravity="center_vertical"
         android:paddingHorizontal="20dp"
         android:paddingVertical="20dp">
-
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/dest_add_btn"
@@ -651,9 +669,9 @@
             android:paddingVertical="12dp"
             android:text="Add to Trip"
             android:textAllCaps="false"
-            android:textColor="@color/text_primary"
+            android:textColor="@color/on_primary"
             android:textSize="16sp"
-            app:backgroundTint="@color/btn_fill_tertiary"
+            app:backgroundTint="?attr/customColorPrimary"
             app:cornerRadius="10dp"
             app:strokeWidth="0dp" />
 

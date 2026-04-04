@@ -1,7 +1,60 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.SpaceAdvisor" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="colorPrimary">@color/primary</item>
     </style>
+
+    <!-- Blue Theme (Default) -->
+    <style name="Theme.SpaceAdvisor" parent="Base.Theme.SpaceAdvisor">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="customColorPrimary">@color/primary</item>
+        <item name="customColorPrimaryGlow">@color/primary_glow</item>
+        <item name="customColorPrimaryFaded">@color/primary_faded</item>
+        <item name="customColorPrimaryLight">@color/primary_light</item>
+        <item name="customColorPrimaryVariant">@color/primary_variant</item>
+        <item name="customColorPrimaryVariantFaded">@color/primary_variant_faded</item>
+    </style>
+
+    <!-- Red Theme -->
+    <style name="Theme.SpaceAdvisor.Red" parent="Base.Theme.SpaceAdvisor">
+        <item name="colorPrimary">@color/red_muted</item>
+        <item name="customColorPrimary">@color/red_muted</item>
+        <item name="customColorPrimaryGlow">@color/red_muted_faded</item>
+        <item name="customColorPrimaryFaded">@color/red_muted_faded</item>
+        <item name="customColorPrimaryLight">@color/red_muted_faded</item>
+        <item name="customColorPrimaryVariant">@color/red_muted</item>
+        <item name="customColorPrimaryVariantFaded">@color/red_muted_faded</item>
+    </style>
+
+    <!-- Green Theme -->
+    <style name="Theme.SpaceAdvisor.Green" parent="Base.Theme.SpaceAdvisor">
+        <item name="colorPrimary">@color/green_light</item>
+        <item name="customColorPrimary">@color/green_light</item>
+        <item name="customColorPrimaryGlow">@color/green_light_faded</item>
+        <item name="customColorPrimaryFaded">@color/green_light_faded</item>
+        <item name="customColorPrimaryLight">@color/green_light_faded</item>
+        <item name="customColorPrimaryVariant">@color/green_light</item>
+        <item name="customColorPrimaryVariantFaded">@color/green_light_faded</item>
+    </style>
+
+
+    <!-- FullScreen Theme -->
+    <style name="Theme.SpaceAdvisor.FullScreen" parent="Theme.SpaceAdvisor">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="o_mr1">shortEdges
+        </item>
+    </style>
+
+    <!-- Auth Theme (Specifically for FirebaseUI screens) -->
+    <style name="Theme.SpaceAdvisor.Auth" parent="Theme.SpaceAdvisor.FullScreen">
+        <!-- We change primary colors for Firebase screens to improve readability -->
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorSecondary">@color/primary</item>
+        <item name="colorAccent">@color/primary</item>
+
+        <!-- This controls the background of the buttons in FirebaseUI -->
+        <item name="materialButtonStyle">@style/Widget.Material3.Button.TonalButton</item>
+    </style>
+
 </resources>

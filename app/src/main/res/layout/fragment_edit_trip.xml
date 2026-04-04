@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/layout_background_primary"
+    android:background="@color/background"
     android:orientation="vertical"
     android:padding="24dp">
 
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="New Trip"
-        android:textColor="@color/text_primary"
+        android:textColor="@color/title"
         android:textSize="24sp"
         android:textStyle="bold" />
 
@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="16dp"
-        android:background="@color/layout_background_transparent_white_40" />
+        android:background="@color/divider" />
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -29,18 +29,18 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:hint="Trip Name"
-        android:textColorHint="@color/text_quaternary_light"
-        app:boxStrokeColor="@color/edit_text_stroke_color"
-        app:cursorColor="@color/icon_tertiary"
-        app:hintTextColor="@color/text_quaternary_light">
+        android:textColorHint="@color/text_input_hint"
+        app:boxStrokeColor="@color/text_input_stroke"
+        app:cursorColor="?attr/customColorPrimary"
+        app:hintTextColor="@color/text_input_hint">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_text_name_edit_trip_fragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
-            android:textColor="@color/text_primary"
-            android:textColorHint="@color/text_quaternary_light" />
+            android:textColor="@color/text_input"
+            android:textColorHint="@color/text_input_hint" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -49,12 +49,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:hint="Date Range"
-        android:textColorHint="@color/text_quaternary_light"
-        app:boxStrokeColor="@color/edit_text_stroke_color"
-        app:cursorColor="@color/icon_tertiary"
-        app:hintTextColor="@color/text_quaternary_light"
+        android:textColorHint="@color/text_input_hint"
+        app:boxStrokeColor="@color/text_input_stroke"
+        app:cursorColor="?attr/customColorPrimary"
+        app:hintTextColor="@color/text_input_hint"
         app:startIconDrawable="@drawable/ic_calendar"
-        app:startIconTint="@color/icon_quaternary">
+        app:startIconTint="@color/text_input_hint">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editStartDate"
@@ -63,8 +63,8 @@
             android:clickable="true"
             android:focusable="false"
             android:inputType="none"
-            android:textColor="@color/text_primary"
-            android:textColorHint="@color/text_quaternary_light" />
+            android:textColor="@color/text_input"
+            android:textColorHint="@color/text_input_hint" />
         />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -74,9 +74,9 @@
         android:layout_height="60dp"
         android:layout_marginTop="32dp"
         android:text="Start Journey"
-        android:textColor="@color/text_primary"
+        android:textColor="@color/on_primary"
         android:textSize="16sp"
-        app:backgroundTint="@color/btn_fill_tertiary"
+        app:backgroundTint="?attr/customColorPrimary"
         app:cornerRadius="12dp" />
 
     <com.google.android.material.button.MaterialButton
@@ -86,7 +86,7 @@
         android:layout_height="60dp"
         android:layout_marginTop="8dp"
         android:text="Cancel"
-        android:textColor="@color/text_primary"
+        android:textColor="@color/secondary"
         android:textSize="16sp" />
 
 </LinearLayout>

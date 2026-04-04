@@ -16,8 +16,7 @@ import java.util.Stack
 
 data class NavigationUiState(
     val progress: Int = 0,
-    val galaxyActive: Boolean = false,
-    val bodyActive: Boolean = false,
+    val planetActive: Boolean = false,
     val locationActive: Boolean = false
 )
 
@@ -28,6 +27,9 @@ class DestinationViewModel(
 
     private val _destinations = MutableLiveData<List<Destination>>()
     val destinations: LiveData<List<Destination>> = _destinations
+
+    private val _filteredDestinations = MutableLiveData<List<Destination>>()
+    val filteredDestinations: LiveData<List<Destination>> = _filteredDestinations
 
     private val _subDestinations = MutableLiveData<List<Destination>>()
     val subDestinations: LiveData<List<Destination>> = _subDestinations
@@ -78,6 +80,22 @@ class DestinationViewModel(
         }
     }
 
+    fun filterDestinations(query: String, type: String, difficulties: List<Int>) {
+        val originalList = _filteredDestinations.value ?: return
+
+        val filtered = originalList.filter { dest ->
+            val matchesQuery = query.isEmpty() || dest.title.contains(query, ignoreCase = true)
+            val matchesType =
+                type == "All" || dest.type.trim().equals(type.trim(), ignoreCase = true)
+            val matchesDifficulty =
+                difficulties.isEmpty() || difficulties.contains(dest.difficulty)
+
+            matchesQuery && matchesType && matchesDifficulty
+        }
+
+        _filteredDestinations.value = filtered
+    }
+
     fun fetchSubDestinations(parentId: String) {
         viewModelScope.launch {
             repository.fetchDestinationsByParent(parentId).collectLatest { result ->
@@ -122,14 +140,34 @@ class DestinationViewModel(
         }
     }
 
+
+    fun fetchAllDestinationsForSearch() {
+        viewModelScope.launch {
+            _isLoading.value = true
+            repository.fetchAllDestinations().collectLatest { result ->
+                _isLoading.value = false
+                result.onSuccess { list ->
+                    _filteredDestinations.value = list
+                }.onFailure { e ->
+                    _error.value = e.message
+                }
+            }
+        }
+    }
+
+
     private fun updateNavigationState(parentId: String, parentType: String?) {
         val state = when {
-            parentId == "root" -> NavigationUiState(15, galaxyActive = true)
-            parentType == "GALAXY" -> NavigationUiState(50, galaxyActive = true, bodyActive = true)
+            parentId == "root" -> NavigationUiState(15, planetActive = true)
+            parentType == "PLANET" -> NavigationUiState(
+                50,
+                planetActive = true,
+                locationActive = true
+            )
+
             else -> NavigationUiState(
                 100,
-                galaxyActive = true,
-                bodyActive = true,
+                planetActive = true,
                 locationActive = true
             )
         }

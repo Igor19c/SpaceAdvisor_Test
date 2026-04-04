@@ -9,7 +9,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="6dp"
-        android:backgroundTint="@color/layout_background_primary"
+        android:backgroundTint="@color/background"
         app:layout_constraintBottom_toBottomOf="@id/saved_dest_card_container"
         app:layout_constraintEnd_toEndOf="@id/saved_dest_card_container"
         app:layout_constraintStart_toStartOf="@id/saved_dest_card_container"
@@ -21,7 +21,7 @@
             android:layout_gravity="center_vertical|end"
             android:layout_marginEnd="20dp"
             android:src="@drawable/ic_star_outlined"
-            app:tint="@color/icon_primary" />
+            app:tint="@color/secondary" />
     </FrameLayout>
 
     <com.google.android.material.card.MaterialCardView
@@ -29,7 +29,7 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginStart="10dp"
-        android:backgroundTint="@color/layout_background_transparent"
+        android:backgroundTint="@color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/saved_dest_card_container"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,13 +52,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:backgroundTint="@color/layout_background_primary"
+        android:backgroundTint="@color/background"
         app:cardCornerRadius="18dp"
         app:cardElevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/trip_dest_image_card"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="?attr/customColorPrimaryGlow">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -78,7 +79,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Title"
-                    android:textColor="@color/text_primary"
+                    android:textColor="@color/title"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -88,7 +89,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="4dp"
                     android:text="Subtitle"
-                    android:textColor="@color/text_quaternary_light"
+                    android:textColor="@color/body"
                     android:textSize="12sp" />
 
                 <LinearLayout
@@ -102,14 +103,14 @@
                         android:layout_width="16dp"
                         android:layout_height="16dp"
                         android:src="@drawable/ic_rating_star_filled"
-                        app:tint="@color/icon_tertiary" />
+                        app:tint="?attr/customColorPrimary" />
 
                     <TextView
                         android:id="@+id/saved_destination_rating"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="4.5"
-                        android:textColor="@color/text_quaternary_light"
+                        android:textColor="@color/body"
                         android:textSize="12sp" />
 
                 </LinearLayout>

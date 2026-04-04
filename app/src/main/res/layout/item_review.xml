@@ -3,11 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    android:backgroundTint="@color/layout_background_primary"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginTop="6dp"
+    android:layout_marginBottom="24dp"
+    android:backgroundTint="@color/background"
     app:cardCornerRadius="24dp"
-    app:cardElevation="6dp"
-    app:strokeColor="@color/layout_stroke_primary">
+    app:cardElevation="4dp"
+    app:strokeColor="?attr/customColorPrimaryGlow">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -29,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:text="Mars Colony Alpha"
-                android:textColor="@color/text_primary"
+                android:textColor="@color/title"
                 android:textSize="20sp" />
 
             <LinearLayout
@@ -44,34 +46,43 @@
                     android:layout_height="20dp"
                     android:layout_marginStart="-3dp"
                     android:layout_marginEnd="-3dp"
-                    android:src="@drawable/ic_rating_star_filled" />
+                    android:src="@drawable/ic_rating_star_filled"
+                    android:tint="?attr/customColorPrimary" />
 
                 <ImageView
                     android:id="@+id/star2"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginEnd="-3dp"
-                    android:src="@drawable/ic_rating_star_filled" />
+                    android:src="@drawable/ic_rating_star_filled"
+                    android:tint="?attr/customColorPrimary" />
+
 
                 <ImageView
                     android:id="@+id/star3"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginEnd="-3dp"
-                    android:src="@drawable/ic_rating_star_filled" />
+                    android:src="@drawable/ic_rating_star_filled"
+                    android:tint="?attr/customColorPrimary" />
+
 
                 <ImageView
                     android:id="@+id/star4"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginEnd="-3dp"
-                    android:src="@drawable/ic_rating_star_filled" />
+                    android:src="@drawable/ic_rating_star_filled"
+                    android:tint="?attr/customColorPrimary" />
+
 
                 <ImageView
                     android:id="@+id/star5"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/ic_rating_star_filled" />
+                    android:src="@drawable/ic_rating_star_filled"
+                    android:tint="?attr/customColorPrimary" />
+
 
             </LinearLayout>
 
@@ -83,7 +94,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:text="Incredible experience! The red desert landscape is otherworldly."
-                android:textColor="@color/text_quaternary_light"
+                android:textColor="@color/body"
                 android:textSize="16sp" />
 
             <TextView
@@ -91,7 +102,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="3 days ago"
-                android:textColor="@color/text_quaternary_light"
+                android:textColor="@color/body"
                 android:textSize="14sp" />
 
         </LinearLayout>

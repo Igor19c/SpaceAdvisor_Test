@@ -17,5 +17,7 @@ interface IDestinationRepository {
 
     fun fetchDestinationsByRating(): Flow<Result<List<Destination>>>
 
+    fun fetchAllDestinations(): Flow<Result<List<Destination>>>
+
     fun fetchDestinationsByIds(destinationIds: List<String>): Flow<Result<List<Destination>>>
 }

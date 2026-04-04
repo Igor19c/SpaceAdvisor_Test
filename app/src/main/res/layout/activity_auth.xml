@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/layout_background_primary">
+    android:background="@color/background">
 
     <ImageView
         android:id="@+id/logo_auth_activity"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="220dp"
         android:layout_marginTop="24dp"
         android:src="@drawable/app_logo_pin_new"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,7 +23,7 @@
         android:fontFamily="@font/orbitron_bold"
         android:letterSpacing="0.2"
         android:text="ASTRYX"
-        android:textColor="@color/text_primary"
+        android:textColor="@color/title"
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -48,9 +48,9 @@
             android:layout_marginBottom="12dp"
             android:text="Sign in with Email"
             android:textAllCaps="false"
-            android:textColor="@color/text_secondary"
+            android:textColor="@color/on_secondary_filled_btn"
             android:textSize="16sp"
-            app:backgroundTint="@color/btn_fill_primary"
+            app:backgroundTint="@color/secondary_filled_btn"
             app:cornerRadius="12dp" />
 
         <com.google.android.material.button.MaterialButton
@@ -60,10 +60,10 @@
             android:layout_height="56dp"
             android:text="Sign in with Google"
             android:textAllCaps="false"
-            android:textColor="@color/text_primary"
+            android:textColor="@color/secondary_outlined_btn"
             android:textSize="16sp"
             app:cornerRadius="12dp"
-            app:strokeColor="@color/btn_stroke_primary"
+            app:strokeColor="@color/secondary_outlined_btn"
             app:strokeWidth="1dp" />
     </LinearLayout>
 

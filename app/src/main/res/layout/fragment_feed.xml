@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/layout_background_primary">
+    android:background="@color/background">
 
     <RelativeLayout
         android:id="@+id/feed_container"
@@ -38,8 +38,8 @@
             android:layout_marginBottom="20dp"
             android:contentDescription="Create New Post"
             android:src="@drawable/ic_plus"
-            app:backgroundTint="@color/btn_fill_tertiary"
-            app:tint="@color/icon_primary" />
+            app:backgroundTint="?attr/customColorPrimary"
+            app:tint="@color/on_primary" />
 
     </RelativeLayout>
 

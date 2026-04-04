@@ -1,29 +1,66 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+    <!-- Base application theme -->
     <style name="Base.Theme.SpaceAdvisor" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
+        <item name="colorPrimary">@color/primary</item>
     </style>
 
-    <style name="Theme.SpaceAdvisor" parent="Base.Theme.SpaceAdvisor" />
+    <!-- Purple Theme (Default) -->
+    <style name="Theme.SpaceAdvisor" parent="Base.Theme.SpaceAdvisor">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="customColorPrimary">@color/primary</item>
+        <item name="customColorPrimaryGlow">@color/primary_glow</item>
+        <item name="customColorPrimaryFaded">@color/primary_faded</item>
+        <item name="customColorPrimaryLight">@color/primary_light</item>
+        <item name="customColorPrimaryVariant">@color/primary_variant</item>
+        <item name="customColorPrimaryVariantFaded">@color/primary_variant_faded</item>
+    </style>
 
-    <!-- FullScreen Theme for AuthUI -->
-    <style name="Theme.Auth.FullScreen" parent="FirebaseUI">
+    <!-- Red Theme -->
+    <style name="Theme.SpaceAdvisor.Red" parent="Base.Theme.SpaceAdvisor">
+        <item name="colorPrimary">@color/red_muted</item>
+        <item name="customColorPrimary">@color/red_muted</item>
+        <item name="customColorPrimaryGlow">@color/red_muted_faded</item>
+        <item name="customColorPrimaryFaded">@color/red_muted_faded</item>
+        <item name="customColorPrimaryLight">@color/red_muted_faded</item>
+        <item name="customColorPrimaryVariant">@color/red_muted</item>
+        <item name="customColorPrimaryVariantFaded">@color/red_muted_faded</item>
+    </style>
+
+    <!-- Green Theme -->
+    <style name="Theme.SpaceAdvisor.Green" parent="Base.Theme.SpaceAdvisor">
+        <item name="colorPrimary">@color/green_light</item>
+        <item name="customColorPrimary">@color/green_light</item>
+        <item name="customColorPrimaryGlow">@color/green_light_faded</item>
+        <item name="customColorPrimaryFaded">@color/green_light_faded</item>
+        <item name="customColorPrimaryLight">@color/green_light_faded</item>
+        <item name="customColorPrimaryVariant">@color/green_light</item>
+        <item name="customColorPrimaryVariantFaded">@color/green_light_faded</item>
+    </style>
+
+    <!-- FullScreen Theme (For Splash) -->
+    <style name="Theme.SpaceAdvisor.FullScreen" parent="Theme.SpaceAdvisor">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowActionBar">false</item>
-        <item name="android:windowNoTitle">true</item>
-        <!-- Hide navigation bar on newer versions -->
-        <item name="android:windowTranslucentNavigation">true</item>
-        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="o_mr1">shortEdges
+        </item>
     </style>
 
-    <!-- Style for the Onboarding Dialog -->
+    <!-- Auth Theme (Specifically for FirebaseUI screens) -->
+    <style name="Theme.SpaceAdvisor.Auth" parent="Theme.SpaceAdvisor.FullScreen">
+        <item name="colorPrimary">@color/deep_black</item>
+        <item name="colorSecondary">@color/space_purple</item>
+        <item name="colorAccent">@color/space_purple</item>
+
+        <item name="materialButtonStyle">@style/Widget.Material3.Button.TonalButton</item>
+    </style>
+
     <style name="CustomAlertDialog" parent="Theme.Material3.DayNight.Dialog">
-        <item name="android:background">@color/layout_background_primary</item>
+        <item name="android:background">@color/background</item>
         <item name="shapeAppearanceOverlay">@style/ShapeAppearance.App.MediumComponent</item>
     </style>
 
     <style name="ShapeAppearance.App.MediumComponent" parent="ShapeAppearance.Material3.MediumComponent">
         <item name="cornerSize">24dp</item>
     </style>
+
 </resources>

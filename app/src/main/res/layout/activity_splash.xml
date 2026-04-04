@@ -5,7 +5,7 @@
     android:id="@+id/splashScreen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/layout_background_primary"
+    android:background="@color/background"
     tools:context=".ui.activities.SplashActivity">
 
     <RelativeLayout

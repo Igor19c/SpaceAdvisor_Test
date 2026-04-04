@@ -4,13 +4,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.spaceadvisor.R
 import com.example.spaceadvisor.domain.models.Post
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.card.MaterialCardView
 
 class PostsAdapter(
     private var posts: MutableList<Post>,
@@ -28,11 +28,7 @@ class PostsAdapter(
         val likesCounter: TextView = view.findViewById(R.id.like_counter_post_item)
         val description: TextView = view.findViewById(R.id.description_post_item)
         val settingsBtn: MaterialButton = view.findViewById(R.id.settings_btn_post_item)
-        val postSettingsBtnContainer: MaterialCardView =
-            view.findViewById(R.id.post_settings_btn_container)
-        val deleteBtn: MaterialButton = view.findViewById(R.id.delete_btn_post_item)
-        val editBtn: MaterialButton = view.findViewById(R.id.edit_btn_post_item)
-        val likeBtn: ImageView = view.findViewById(R.id.like_btn_post_item)
+        val likeBtn: MaterialButton = view.findViewById(R.id.like_btn_post_item)
 
         val stars = listOf<ImageView>(
             view.findViewById(R.id.rating_star_01_post_item),
@@ -61,7 +57,7 @@ class PostsAdapter(
         }
 
         val isLiked = currentUserId != null && item.likedBy.contains(currentUserId)
-        holder.likeBtn.setImageResource(if (isLiked) R.drawable.ic_star_filled else R.drawable.ic_star_outlined)
+        holder.likeBtn.setIconResource(if (isLiked) R.drawable.ic_star_filled else R.drawable.ic_star_outlined)
 
         if (item.userProfileImage.isNotEmpty()) {
             Glide.with(holder.itemView.context).load(item.userProfileImage).circleCrop()
@@ -78,20 +74,35 @@ class PostsAdapter(
         val isMyPost = currentUserId != null && item.uid == currentUserId
         holder.settingsBtn.visibility = if (isMyPost) View.VISIBLE else View.GONE
 
-        holder.settingsBtn.setOnClickListener {
-            val isVisible = holder.postSettingsBtnContainer.visibility == View.VISIBLE
-            holder.postSettingsBtnContainer.visibility = if (isVisible) View.GONE else View.VISIBLE
+        holder.settingsBtn.setOnClickListener { view ->
+            showSettingsPopup(view, item)
+        }
+    }
+
+    private fun showSettingsPopup(anchorView: View, post: Post) {
+        val context = anchorView.context
+        val inflater = LayoutInflater.from(context)
+        val popupView = inflater.inflate(R.layout.container_post_setings_btn, null)
+
+        val popupWindow = PopupWindow(
+            popupView,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            true
+        )
+
+        popupView.findViewById<MaterialButton>(R.id.delete_btn_post_item).setOnClickListener {
+            onDeleteClick(post)
+            popupWindow.dismiss()
         }
 
-        holder.deleteBtn.setOnClickListener {
-            onDeleteClick(item)
-            holder.postSettingsBtnContainer.visibility = View.GONE
+        popupView.findViewById<MaterialButton>(R.id.edit_btn_post_item).setOnClickListener {
+            onEditClick(post)
+            popupWindow.dismiss()
         }
 
-        holder.editBtn.setOnClickListener {
-            onEditClick(item)
-            holder.postSettingsBtnContainer.visibility = View.GONE
-        }
+        popupWindow.elevation = 10f
+        popupWindow.showAsDropDown(anchorView, -300, 0)
     }
 
     override fun getItemCount() = posts.size

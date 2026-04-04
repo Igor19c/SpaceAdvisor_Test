@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/layout_background_primary">
+    android:background="@color/background">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -31,10 +31,10 @@
                     android:layout_width="170dp"
                     android:layout_height="170dp"
                     android:layout_gravity="center"
-                    android:background="@color/layout_background_primary"
+                    android:background="@color/background"
                     android:padding="6dp"
                     app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
-                    app:strokeColor="@color/layout_stroke_primary"
+                    app:strokeColor="?attr/customColorPrimaryGlow"
                     app:strokeWidth="3dp" />
 
                 <com.google.android.material.imageview.ShapeableImageView
@@ -42,7 +42,7 @@
                     android:layout_width="140dp"
                     android:layout_height="140dp"
                     android:layout_gravity="center"
-                    android:background="@color/layout_background_transparent"
+                    android:background="@color/transparent"
                     android:padding="10dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/pic_profile" />
@@ -55,7 +55,7 @@
                 android:layout_marginHorizontal="34dp"
                 android:text="John Doe"
                 android:textAlignment="center"
-                android:textColor="@color/text_primary"
+                android:textColor="@color/title"
                 android:textSize="26sp" />
 
             <TextView
@@ -65,7 +65,7 @@
                 android:layout_marginHorizontal="34dp"
                 android:text="Space Explorer"
                 android:textAlignment="center"
-                android:textColor="@color/text_quaternary_light"
+                android:textColor="@color/subtitle"
                 android:textSize="14sp" />
 
             <TextView
@@ -76,14 +76,13 @@
                 android:layout_marginTop="14dp"
                 android:text="Bio here..."
                 android:textAlignment="center"
-                android:textColor="@color/text_quaternary_light"
+                android:textColor="@color/body"
                 android:textSize="14sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginVertical="24dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -99,7 +98,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="12"
-                        android:textColor="@color/text_tertiary"
+                        android:textColor="?attr/customColorPrimary"
                         android:textSize="30sp"
                         android:textStyle="normal" />
 
@@ -108,7 +107,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Trips"
-                        android:textColor="@color/text_quaternary_light"
+                        android:textColor="@color/body"
                         android:textSize="12sp"
                         android:textStyle="normal" />
                 </LinearLayout>
@@ -126,7 +125,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="44"
-                        android:textColor="@color/text_tertiary"
+                        android:textColor="?attr/customColorPrimary"
                         android:textSize="30sp"
                         android:textStyle="normal" />
 
@@ -135,7 +134,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Posts"
-                        android:textColor="@color/text_quaternary_light"
+                        android:textColor="@color/body"
                         android:textSize="12sp"
                         android:textStyle="normal" />
 
@@ -153,7 +152,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="73"
-                        android:textColor="@color/text_tertiary"
+                        android:textColor="?attr/customColorPrimary"
                         android:textSize="30sp"
                         android:textStyle="normal" />
 
@@ -162,7 +161,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Saved"
-                        android:textColor="@color/text_quaternary_light"
+                        android:textColor="@color/body"
                         android:textSize="12sp"
                         android:textStyle="normal" />
                 </LinearLayout>
@@ -181,13 +180,12 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/edit_prof_btn"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:backgroundTint="@color/btn_fill_tertiary"
+                    android:backgroundTint="?attr/customColorPrimary"
                     android:text="Edit Profile"
-                    android:textColor="@color/text_primary"
+                    android:textColor="@color/on_primary"
                     android:textSize="14sp"
                     app:cornerRadius="10dp"
                     app:strokeWidth="0dp" />
@@ -202,12 +200,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:backgroundTint="@color/btn_fill_transparent"
                     android:text="View Saved"
-                    android:textColor="@color/text_primary"
+                    android:textColor="@color/secondary"
                     android:textSize="14sp"
                     app:cornerRadius="10dp"
-                    app:strokeColor="@color/btn_stroke_primary"
+                    app:strokeColor="@color/secondary_outlined_btn"
                     app:strokeWidth="2dp" />
             </LinearLayout>
 
@@ -224,7 +221,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
-                    android:paddingHorizontal="20dp">
+                    android:paddingStart="24dp">
 
                     <TextView
                         android:id="@+id/my_trip_tag"
@@ -232,19 +229,19 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:text="My Trips"
-                        android:textColor="@color/text_quaternary_light"
+                        android:textColor="@color/section_title"
                         android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/my_trips_see_all_btn"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        style="@style/Widget.Material3.Button.TextButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:clickable="true"
                         android:text="See all"
-                        android:textColor="@color/text_tertiary"
+                        android:textColor="?attr/customColorPrimary"
                         android:textSize="14sp" />
                 </RelativeLayout>
 
@@ -252,7 +249,7 @@
                     android:id="@+id/my_newest_trips_recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="6dp"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_newest_trip" />
@@ -272,7 +269,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
-                    android:paddingHorizontal="20dp">
+                    android:paddingStart="24dp">
 
                     <TextView
                         android:id="@+id/reviews_tag"
@@ -280,19 +277,19 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:text="Recent Reviews"
-                        android:textColor="@color/text_quaternary_light"
+                        android:textColor="@color/section_title"
                         android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/reviews_see_all_btn"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        style="@style/Widget.Material3.Button.TextButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:clickable="true"
                         android:text="See all"
-                        android:textColor="@color/text_tertiary"
+                        android:textColor="?attr/customColorPrimary"
                         android:textSize="14sp" />
                 </RelativeLayout>
 
@@ -300,7 +297,7 @@
                     android:id="@+id/recent_reviews_recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="6dp"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_review" />
@@ -321,7 +318,7 @@
                     android:layout_marginTop="32dp"
                     android:paddingHorizontal="20dp"
                     android:text="Badges &amp; Achievements"
-                    android:textColor="@color/text_quaternary_light"
+                    android:textColor="@color/section_title"
                     android:textSize="16sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -349,7 +346,7 @@
                     android:layout_height="wrap_content"
                     android:text="Sign Out"
                     android:textAllCaps="false"
-                    android:textColor="@color/text_alert"
+                    android:textColor="@color/alert"
                     android:textSize="16sp"
                     android:textStyle="bold" />
             </LinearLayout>

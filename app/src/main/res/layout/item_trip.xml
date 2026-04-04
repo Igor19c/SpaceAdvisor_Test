@@ -10,7 +10,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="6dp"
-        android:backgroundTint="@color/layout_background_alert"
+        android:backgroundTint="@color/alert"
         app:cardCornerRadius="18dp"
         app:layout_constraintBottom_toBottomOf="@id/trip_card_item"
         app:layout_constraintEnd_toEndOf="@id/trip_card_item"
@@ -23,7 +23,7 @@
             android:layout_gravity="center_vertical|end"
             android:layout_marginEnd="20dp"
             android:src="@drawable/ic_trash"
-            app:tint="@color/icon_primary" />
+            app:tint="@color/on_alert" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -32,13 +32,14 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:layout_marginVertical="20dp"
-        android:backgroundTint="@color/layout_background_primary"
+        android:backgroundTint="@color/background"
         app:cardCornerRadius="18dp"
-        app:cardElevation="10dp"
+        app:cardElevation="6dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="?attr/customColorPrimaryGlow">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -61,7 +62,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:text="Title"
-                    android:textColor="@color/text_primary"
+                    android:textColor="@color/title"
                     android:textSize="18sp" />
 
                 <TextView
@@ -73,7 +74,7 @@
                     android:paddingHorizontal="15dp"
                     android:paddingVertical="8dp"
                     android:text="Draft"
-                    android:textColor="@color/text_quaternary_light"
+                    android:textColor="@color/chip_tertiary"
                     android:textSize="12sp"
                     android:visibility="gone" />
 
@@ -86,7 +87,7 @@
                     android:paddingHorizontal="15dp"
                     android:paddingVertical="8dp"
                     android:text="Planned"
-                    android:textColor="@color/chip_text_secondary"
+                    android:textColor="?attr/customColorPrimary"
                     android:textSize="12sp" />
 
                 <TextView
@@ -98,7 +99,7 @@
                     android:paddingHorizontal="15dp"
                     android:paddingVertical="8dp"
                     android:text="Completed"
-                    android:textColor="@color/chip_text_primary"
+                    android:textColor="?attr/customColorPrimaryVariant"
                     android:textSize="12sp"
                     android:visibility="gone" />
 
@@ -116,7 +117,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="12/02 - 28/02"
-                    android:textColor="@color/text_quaternary_light"
+                    android:textColor="@color/body"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -133,7 +134,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_marginEnd="8dp"
-                    android:backgroundTint="@color/layout_background_transparent"
+                    android:backgroundTint="@color/transparent"
                     android:scaleType="centerCrop"
                     android:src="@drawable/pic_profile" />
 
@@ -142,7 +143,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_marginEnd="8dp"
-                    android:backgroundTint="@color/layout_background_transparent"
+                    android:backgroundTint="@color/transparent"
                     android:scaleType="centerCrop"
                     android:src="@drawable/pic_profile" />
 
@@ -151,7 +152,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_marginEnd="8dp"
-                    android:backgroundTint="@color/layout_background_transparent"
+                    android:backgroundTint="@color/transparent"
                     android:scaleType="centerCrop"
                     android:src="@drawable/pic_profile" />
 
@@ -161,7 +162,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="+2"
-                    android:textColor="@color/text_quaternary_light"
+                    android:textColor="@color/body"
                     android:textSize="18sp" />
 
             </LinearLayout>
@@ -176,14 +177,14 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@drawable/ic_pin"
-                    app:tint="@color/icon_quaternary" />
+                    app:tint="@color/icon" />
 
                 <TextView
                     android:id="@+id/stop_count_trip_item"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="8 stops"
-                    android:textColor="@color/text_quaternary_light"
+                    android:textColor="@color/subtitle"
                     android:textSize="10sp" />
 
                 <View
@@ -194,7 +195,7 @@
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:src="@drawable/ic_calendar"
-                    app:tint="@color/icon_quaternary" />
+                    app:tint="@color/icon" />
 
                 <TextView
                     android:id="@+id/created_at_trip_item"
@@ -202,7 +203,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:text="1 week ago"
-                    android:textColor="@color/text_quaternary_light"
+                    android:textColor="@color/subtitle"
                     android:textSize="10sp" />
 
 
@@ -221,30 +222,30 @@
                     android:layout_height="50dp"
                     android:layout_marginEnd="10dp"
                     android:layout_weight="1"
-                    android:backgroundTint="@color/btn_fill_primary"
+                    android:backgroundTint="@color/secondary_filled_btn"
                     android:gravity="center"
                     android:text="Open"
-                    android:textColor="@color/text_secondary"
+                    android:textColor="@color/on_secondary_filled_btn"
                     android:textSize="14sp"
                     app:cornerRadius="15dp"
                     app:icon="@drawable/ic_arrow_right"
                     app:iconGravity="textEnd"
                     app:iconPadding="4dp"
                     app:iconSize="14dp"
-                    app:iconTint="@color/icon_secondary" />
+                    app:iconTint="@color/on_secondary_filled_btn" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/confirm_btn_trip_item"
                     style="@style/Widget.Material3.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
-                    android:backgroundTint="@color/chip_fill_primary"
+                    android:backgroundTint="?attr/customColorPrimaryVariantFaded"
                     android:text="Confirm"
-                    android:textColor="@color/chip_text_primary"
+                    android:textColor="?attr/customColorPrimaryVariant"
                     android:textSize="12sp"
                     android:visibility="gone"
                     app:cornerRadius="15dp"
-                    app:strokeColor="@color/chip_stroke_primary"
+                    app:strokeColor="?attr/customColorPrimaryVariant"
                     app:strokeWidth="2dp" />
 
                 <com.google.android.material.button.MaterialButton
@@ -253,7 +254,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     app:icon="@drawable/ic_share"
-                    app:iconTint="@color/icon_primary" />
+                    app:iconTint="@color/icon" />
 
             </LinearLayout>
 

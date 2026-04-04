@@ -2,8 +2,8 @@
 <resources>
 
     <!-- Palette (Base Colors) -->
-    <color name="space_blue">#5F70FD</color>
-    <color name="space_blue_faded">#300B1350</color>
+    <color name="space_blue">#457aff</color>
+    <color name="pink_test">#ab4aff</color>
     <color name="space_pink">#AE52D4</color>
     <color name="space_pink_faded">#20AE52D4</color>
     <color name="space_purple">#575AD3</color>
@@ -21,120 +21,84 @@
     <color name="green_light">#00E676</color>
     <color name="green_light_faded">#5000E676</color>
     <color name="yellow_accent">#FBC02D</color>
-    <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="transparent">#00000000</color>
     <color name="transparent_black_20">#33000000</color>
     <color name="transparent_black_60">#9A000000</color>
     <color name="transparent_black_80">#CD000000</color>
     <color name="transparent_white_20">#33FFFFFF</color>
     <color name="transparent_white_40">#66FFFFFF</color>
+    <color name="transparent_white_80">#CDFFFFFF</color>
 
-    <color name="layout_background_transparent">@color/transparent</color>
-    <color name="layout_background_transparent_black_20">@color/transparent_black_20</color>
-    <color name="layout_background_transparent_black_60">@color/transparent_black_60</color>
-    <color name="layout_background_transparent_black_80">@color/transparent_black_80</color>
-    <color name="layout_background_transparent_white_20">@color/transparent_white_20</color>
-    <color name="layout_background_transparent_white_40">@color/transparent_white_40</color>
+    <color name="transparent">#00000000</color>
+
+    <!-- Accent colors -->
+    <color name="accent_space_purple">@color/space_purple</color>
+    <color name="accent_red_muted">@color/red_muted</color>
+    <color name="accent_green_muted">@color/green_light</color>
 
 
     <!-- Semantic colors (Highlighting) -->
+    <color name="primary">@color/space_purple</color>
+    <color name="on_primary">@color/white</color>
+    <color name="primary_faded">@color/space_purple_faded</color>
+    <color name="primary_light">@color/space_purple_light</color>
+    <color name="primary_glow">@color/space_purple_glow</color>
+    <color name="primary_variant">@color/space_pink</color>
+    <color name="primary_variant_faded">@color/space_pink_faded</color>
+
+    <color name="secondary">@color/deep_black</color>
+
     <color name="alert">@color/red_muted</color>
+    <color name="on_alert">@color/white</color>
     <color name="alert_faded">@color/red_muted_faded</color>
+    <color name="on_alert_faded">@color/white</color>
     <color name="success">@color/green_light</color>
     <color name="achievement">@color/yellow_accent</color>
 
+    <color name="background">@color/white</color>
 
-    <!-- Navigation buttons colors -->
-    <color name="btn_nav_selected">@color/space_purple</color>
-    <color name="btn_nav_unselected">@color/gray_light</color>
-    <color name="btn_home_fill_start">#BEBFFB</color>
-    <color name="btn_home_fill_end">#4413F6</color>
+    <!-- Text colors -->
+    <color name="title">@color/secondary</color>
+    <color name="subtitle">@color/secondary</color>
+    <color name="body">@color/gray_dark</color>
+    <color name="section_title">@color/gray_muted</color>
 
+    <!-- Button colors -->
+    <color name="secondary_filled_btn">@color/secondary</color>
+    <color name="on_secondary_filled_btn">@color/background</color>
+    <color name="secondary_outlined_btn">@color/secondary</color>
+
+    <!-- Icon colors -->
+    <color name="icon">@color/secondary</color>
 
     <!-- Toast message colors -->
     <color name="toast_message_fill">@color/silver_muted</color>
-    <color name="toast_message_stroke">@color/space_purple_faded</color>
-
-
-    <!-- Background colors -->
-    <color name="layout_background_primary">@color/deep_black</color>
-    <color name="layout_background_secondary">@color/white</color>
-    <color name="layout_background_tertiary">@color/space_purple</color>
-    <color name="layout_background_quaternary">@color/space_purple_faded</color>
-    <color name="layout_background_alert">@color/red_muted</color>
-
-    <color name="layout_stroke_primary">@color/space_purple_glow</color>
-    <color name="layout_stroke_secondary">@color/space_purple_faded</color>
-    <color name="layout_stroke_tertiary">@color/transparent_white_20</color>
-
-
-    <!-- Text colors -->
-    <color name="text_primary">@color/white</color>
-    <color name="text_secondary">@color/deep_black</color>
-    <color name="text_tertiary">@color/space_purple</color>
-    <color name="text_tertiary_light">@color/space_purple_light</color>
-    <color name="text_quaternary_light">@color/gray_light</color>
-    <color name="text_quaternary_dark">@color/gray_dark</color>
-    <color name="text_achievement">@color/yellow_accent</color>
-    <color name="text_alert">@color/alert</color>
-    <color name="text_alert_faded">@color/alert_faded</color>
-
-
-    <!-- Button colors -->
-    <color name="btn_stroke_primary">@color/white</color>
-    <color name="btn_stroke_secondary">@color/deep_black</color>
-    <color name="btn_stroke_tertiary">@color/space_purple</color>
-    <color name="btn_stroke_quaternary">@color/gray_light</color>
-
-    <color name="btn_fill_primary">@color/white</color>
-    <color name="btn_fill_secondary">@color/deep_black</color>
-    <color name="btn_fill_tertiary">@color/space_purple</color>
-    <color name="btn_fill_quaternary">@color/gray_light</color>
-    <color name="btn_fill_alert">@color/alert</color>
-    <color name="btn_fill_alert_faded">@color/alert_faded</color>
-    <color name="btn_fill_transparent">@color/transparent</color>
-
-
-    <!-- Icon colors -->
-    <color name="icon_primary">@color/white</color>
-    <color name="icon_secondary">@color/deep_black</color>
-    <color name="icon_tertiary">@color/space_purple</color>
-    <color name="icon_tertiary_faded">@color/space_purple_faded</color>
-    <color name="icon_tertiary_light">@color/space_purple_light</color>
-    <color name="icon_quaternary">@color/gray_light</color>
-    <color name="icon_alert">@color/red_muted</color>
-    <color name="icon_alert_faded">@color/red_muted_faded</color>
-
-
-    <!-- Switch colors -->
-    <color name="switch_fill">@color/transparent</color>
-    <color name="switch_thumb_checked">@color/white</color>
-    <color name="switch_thumb_unchecked">@color/space_purple</color>
-    <color name="switch_track_checked">@color/space_purple_faded</color>
-    <color name="switch_track_unchecked">@color/white</color>
-
 
     <!-- Chip colors -->
-    <color name="chip_text_primary">@color/space_pink</color>
-    <color name="chip_text_secondary">@color/space_blue</color>
-    <color name="chip_text_tertiary">@color/gray_dark</color>
-    <color name="chip_text_quaternary">@color/gray_light</color>
+    <color name="chip_tertiary">@color/gray_muted</color>
+    <color name="chip_quaternary">@color/deep_black</color>
 
-    <color name="chip_stroke_primary">@color/space_pink</color>
-    <color name="chip_stroke_secondary">@color/space_blue</color>
-    <color name="chip_stroke_tertiary">@color/gray_dark</color>
-    <color name="chip_stroke_quaternary">@color/gray_light</color>
+    <color name="chip_fill_tertiary">@color/gray_light</color>
+    <color name="chip_fill_quaternary">@color/transparent_black_20</color>
 
-    <color name="chip_fill_primary">@color/space_pink_faded</color>
-    <color name="chip_fill_secondary">@color/space_blue_faded</color>
-    <color name="chip_fill_tertiary">@color/gray_muted</color>
-    <color name="chip_fill_quaternary">@color/deep_silver</color>
+    <!-- Text Input colors -->
+    <color name="text_input_box_stroke">@color/primary_faded</color>
+    <color name="text_input_hint">@color/gray_dark</color>
+    <color name="text_input">@color/secondary</color>
 
 
     <!-- App Logo colors -->
-    <color name="ic_launcher_background">@color/layout_background_primary</color>
+    <color name="ic_launcher_background">@color/background</color>
 
+    <color name="divider">@color/transparent_black_60</color>
+
+    <color name="btn_nav_unselected">@color/gray_dark</color>
+
+    <color name="explore_header_dot_inactive">@color/transparent_black_20</color>
+
+    <color name="tab_indicator_inactive">@color/transparent_black_60</color>
+
+    <color name="progress_bar_unfilled">@color/transparent_black_20</color>
 </resources>
 

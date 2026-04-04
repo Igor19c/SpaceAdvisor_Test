@@ -4,7 +4,7 @@
     android:layout_width="250dp"
     android:layout_height="300dp"
     android:layout_margin="10dp"
-    android:backgroundTint="@color/layout_background_primary"
+    android:backgroundTint="@color/background"
     android:clickable="true"
     android:focusable="true"
     app:cardCornerRadius="18dp"
@@ -27,7 +27,7 @@
             android:id="@+id/trend_dest_card_item"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/layout_background_transparent_black_20" />
+            android:background="@color/transparent_black_20" />
 
         <LinearLayout
             android:id="@+id/dest_rating_chip_carousel_item"
@@ -47,7 +47,7 @@
                 android:layout_height="15dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_rating_star_filled"
-                app:tint="@color/icon_primary" />
+                app:tint="@color/white" />
 
             <TextView
                 android:id="@+id/trend_dest_rating_item"
@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="4dp"
                 android:text="4.5"
-                android:textColor="@color/text_primary"
+                android:textColor="@color/white"
                 android:textSize="14sp" />
 
         </LinearLayout>
@@ -65,7 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="@color/layout_background_transparent_black_60"
+            android:background="@color/transparent_black_60"
             android:orientation="vertical"
             android:paddingHorizontal="20dp"
             android:paddingVertical="20dp">
@@ -77,7 +77,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
                 android:text="Title"
-                android:textColor="@color/text_primary"
+                android:textColor="@color/white"
                 android:textSize="18sp" />
 
             <TextView
@@ -86,22 +86,22 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="6dp"
                 android:text="Subtitle"
-                android:textColor="@color/text_quaternary_light"
+                android:textColor="@color/gray_light"
                 android:textSize="14sp" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_explore_trend_dest_item"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Explore"
-                android:textColor="@color/text_secondary"
-                android:textSize="16sp"
-                app:backgroundTint="@color/btn_fill_primary"
-                app:cornerRadius="10dp"
-                app:icon="@drawable/ic_arrow_right"
-                app:iconGravity="textEnd"
-                app:iconSize="16sp"
-                app:iconTint="@color/icon_secondary" />
+            <!--            <com.google.android.material.button.MaterialButton-->
+            <!--                android:id="@+id/btn_explore_trend_dest_item"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:text="Explore"-->
+            <!--                android:textColor="@color/deep_black"-->
+            <!--                android:textSize="16sp"-->
+            <!--                app:backgroundTint="@color/white"-->
+            <!--                app:cornerRadius="10dp"-->
+            <!--                app:icon="@drawable/ic_arrow_right"-->
+            <!--                app:iconGravity="textEnd"-->
+            <!--                app:iconSize="16sp"-->
+            <!--                app:iconTint="@color/deep_black" />-->
         </LinearLayout>
 
     </RelativeLayout>

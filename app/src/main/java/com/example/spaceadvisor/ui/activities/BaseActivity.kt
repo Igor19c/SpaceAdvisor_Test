@@ -36,11 +36,12 @@ abstract class BaseActivity : AppCompatActivity() {
             LoadingType.PROGRESS_BAR -> R.layout.layout_loading_progress_bar_overlay
             LoadingType.LOTTIE -> R.layout.layout_loading_lottie_overlay
         }
-        
+
         loadingOverlay = LayoutInflater.from(this).inflate(layoutRes, root, false)
-        
+
         message?.let {
-            loadingOverlay?.findViewById<TextView>(R.id.loading_message)?.text = it
+            loadingOverlay?.findViewById<TextView>(if (type == LoadingType.PROGRESS_BAR) R.id.loading_message_progress_bar else R.id.loading_message_lottie)?.text =
+                it
         }
 
         root.addView(loadingOverlay)

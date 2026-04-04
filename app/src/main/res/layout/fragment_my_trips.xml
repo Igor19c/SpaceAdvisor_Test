@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/layout_background_primary">
+    android:background="@color/background">
 
     <!-- Normal State: Trip List -->
     <RelativeLayout
@@ -30,14 +30,14 @@
                 android:paddingHorizontal="20dp"
                 android:paddingVertical="12dp"
                 android:text="Create Trip"
-                android:textColor="@color/text_primary"
+                android:textColor="@color/on_primary"
                 android:textSize="16sp"
-                app:backgroundTint="@color/btn_fill_tertiary"
+                app:backgroundTint="?attr/customColorPrimary"
                 app:cornerRadius="10dp"
                 app:icon="@drawable/ic_plus"
                 app:iconPadding="5dp"
                 app:iconSize="15dp"
-                app:iconTint="@color/icon_primary" />
+                app:iconTint="@color/on_primary" />
 
         </RelativeLayout>
 
@@ -69,7 +69,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
-                        android:background="@color/layout_background_primary" />
+                        android:background="@color/background" />
 
                 </LinearLayout>
 
@@ -93,7 +93,7 @@
             android:layout_height="120dp"
             android:alpha="0.5"
             android:src="@drawable/ic_explore"
-            app:tint="@color/icon_quaternary" />
+            app:tint="@color/icon" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -101,7 +101,7 @@
             android:layout_marginTop="24dp"
             android:gravity="center"
             android:text="Ready for your next adventure?"
-            android:textColor="@color/text_primary"
+            android:textColor="@color/title"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -111,7 +111,7 @@
             android:layout_marginTop="8dp"
             android:gravity="center"
             android:text="Start planning your dream trip across the galaxy today!"
-            android:textColor="@color/text_quaternary_light"
+            android:textColor="@color/body"
             android:textSize="14sp" />
 
         <com.google.android.material.button.MaterialButton
@@ -124,11 +124,11 @@
             android:paddingVertical="16dp"
             android:text="Plan My First Trip"
             android:textAllCaps="false"
-            android:textColor="@color/text_primary"
-            app:backgroundTint="@color/btn_fill_tertiary"
+            android:textColor="@color/on_primary"
+            app:backgroundTint="?attr/customColorPrimary"
             app:cornerRadius="12dp"
             app:icon="@drawable/ic_plus"
-            app:iconTint="@color/icon_primary" />
+            app:iconTint="@color/on_primary" />
 
     </LinearLayout>
 

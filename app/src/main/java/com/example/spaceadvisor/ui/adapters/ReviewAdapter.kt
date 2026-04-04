@@ -50,7 +50,7 @@ class ReviewAdapter(
                 if (i < review.rating) {
                     stars[i].setImageResource(R.drawable.ic_rating_star_filled)
                 } else {
-                    stars[i].setImageResource(R.drawable.ic_star_outlined)
+                    stars[i].setImageResource(R.drawable.ic_rating_star_outlined)
                 }
             }
         }

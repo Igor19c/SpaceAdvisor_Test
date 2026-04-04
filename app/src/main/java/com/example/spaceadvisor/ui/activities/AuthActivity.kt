@@ -19,7 +19,9 @@ import com.google.firebase.auth.FirebaseAuth
 
 class AuthActivity : BaseActivity() {
 
-    private lateinit var binding: ActivityAuthBinding
+    private var _binding: ActivityAuthBinding? = null
+    private val binding get() = _binding!!
+
     private val userViewModel: UserViewModel by viewModels {
         ViewModelFactory(application as SpaceAdvisorApplication)
     }
@@ -31,6 +33,8 @@ class AuthActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        
+        hideSystemBars(window.decorView)
 
         val forceRelogin = intent.getBooleanExtra("force_relogin", false)
         val currentUser = FirebaseAuth.getInstance().currentUser
@@ -47,9 +51,11 @@ class AuthActivity : BaseActivity() {
     }
 
     private fun initBinding() {
-        binding = ActivityAuthBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        hideSystemBars(binding.root)
+        if (_binding == null) {
+            _binding = ActivityAuthBinding.inflate(layoutInflater)
+            setContentView(binding.root)
+            hideSystemBars(binding.root)
+        }
     }
 
     private fun startLogin() {
@@ -72,7 +78,7 @@ class AuthActivity : BaseActivity() {
                 "https://spaceadvisor.page.link/terms",
                 "https://spaceadvisor.page.link/privacy"
             )
-            .setTheme(R.style.Theme_Auth_FullScreen)
+            .setTheme(R.style.Theme_SpaceAdvisor_Auth)
             .build()
 
         signInLauncher.launch(signInIntent)
@@ -82,20 +88,24 @@ class AuthActivity : BaseActivity() {
         val response = res.idpResponse
 
         if (res.resultCode == RESULT_OK) {
+            initBinding()
+            
             val isNewUser = response?.isNewUser ?: false
+            val loadingMessage = if (isNewUser) "Preparing your space..." else "Welcome back!"
+            showLoading(loadingMessage, LoadingType.LOTTIE)
 
             if (isNewUser) {
-                initBinding()
-
-                showLoading("Preparing your space...", LoadingType.LOTTIE)
                 userViewModel.createNewUserProfile {
                     Handler(Looper.getMainLooper()).postDelayed({
-                        hideLoading()
+                        // Removed hideLoading() to prevent flickering
                         startMainActivity(isNewUser = true)
                     }, 2200)
                 }
             } else {
-                startMainActivity(isNewUser = false)
+                Handler(Looper.getMainLooper()).postDelayed({
+                    // Removed hideLoading() to prevent flickering
+                    startMainActivity(isNewUser = false)
+                }, 1500)
             }
         } else {
             if (response == null) {
@@ -122,5 +132,10 @@ class AuthActivity : BaseActivity() {
             ActivityOptionsCompat.makeCustomAnimation(this, R.anim.fade_in, R.anim.fade_out)
         startActivity(intent, options.toBundle())
         finish()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

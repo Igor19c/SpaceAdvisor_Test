@@ -63,12 +63,12 @@ class ExploreFragment : BaseFragment() {
         headerProgressBar = headerView.findViewById(R.id.trip_progress_bar_header)
         headerDotPlanet = headerView.findViewById(R.id.dot_planet_header)
         headerDotLocation = headerView.findViewById(R.id.dot_location_header)
-        headerLabelPlanet = headerView.findViewById(R.id.dot_label_body_header)
+        headerLabelPlanet = headerView.findViewById(R.id.dot_label_planet_header)
         headerLabelLocation = headerView.findViewById(R.id.dot_label_location_header)
 
         val navState = destinationViewModel.navigationUiState.value
         if (navState != null) {
-            updateProgressUI(navState.bodyActive, navState.locationActive)
+            updateProgressUI(navState.planetActive, navState.locationActive)
         }
 
         val isRoot: Boolean = destinationViewModel.currentExploreParentId == "root"
@@ -238,10 +238,10 @@ class ExploreFragment : BaseFragment() {
                     1 -> ContextCompat.getColor(requireContext(), R.color.green_light)
                     2 -> ContextCompat.getColor(requireContext(), R.color.yellow_accent)
                     3 -> ContextCompat.getColor(requireContext(), R.color.red_muted)
-                    else -> ContextCompat.getColor(requireContext(), R.color.text_quaternary_light)
+                    else -> ContextCompat.getColor(requireContext(), R.color.body)
                 }
             } else {
-                ContextCompat.getColor(requireContext(), R.color.text_quaternary_light)
+                ContextCompat.getColor(requireContext(), R.color.body)
             }
 
             iconView.setColorFilter(tintColor, android.graphics.PorterDuff.Mode.SRC_IN)
@@ -301,7 +301,9 @@ class ExploreFragment : BaseFragment() {
                 mediator = TabLayoutMediator(
                     binding.carouselIndicator,
                     binding.carouselViewPager
-                ) { _, _ -> }
+                ) { tab, _ ->
+                    tab.setIcon(R.drawable.tab_selector)
+                }
                 mediator?.attach()
 
                 var indexToSelect = destinationViewModel.explorePendingSelectedIndex ?: 0
@@ -338,7 +340,7 @@ class ExploreFragment : BaseFragment() {
         }
 
         destinationViewModel.navigationUiState.observe(viewLifecycleOwner) { state ->
-            updateProgressUI(state.bodyActive, state.locationActive)
+            updateProgressUI(state.planetActive, state.locationActive)
         }
 
         destinationViewModel.error.observe(viewLifecycleOwner) { error ->
@@ -432,8 +434,8 @@ class ExploreFragment : BaseFragment() {
         headerDotLocation?.setImageResource(if (locationActive) R.drawable.ic_dot_active else R.drawable.ic_dot_inactive)
 
         val currentContext = context ?: return
-        val activeColor = ContextCompat.getColor(currentContext, R.color.white)
-        val inactiveColor = ContextCompat.getColor(currentContext, R.color.text_quaternary_light)
+        val activeColor = ContextCompat.getColor(currentContext, R.color.subtitle)
+        val inactiveColor = ContextCompat.getColor(currentContext, R.color.body)
 
         headerLabelPlanet?.setTextColor(if (bodyActive || currentParentId == "root") activeColor else inactiveColor)
         headerLabelLocation?.setTextColor(if (locationActive) activeColor else inactiveColor)

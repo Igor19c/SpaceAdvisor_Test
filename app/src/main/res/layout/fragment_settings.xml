@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/layout_background_primary"
+    android:background="@color/background"
     android:orientation="vertical"
-    android:padding="24dp">
+    android:paddingHorizontal="24dp"
+    android:paddingTop="18dp">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -30,14 +30,14 @@
                     android:layout_marginStart="6dp"
                     android:gravity="start"
                     android:text="Account"
-                    android:textColor="@color/text_quaternary_light"
-                    android:textSize="14sp" />
+                    android:textColor="@color/section_title"
+                    android:textSize="16sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:background="@drawable/custom_text_transparent_background"
+                    android:background="@drawable/custom_text_transparent_background_purple_stroke"
                     android:orientation="vertical"
                     android:padding="6dp">
 
@@ -49,15 +49,15 @@
                             android:id="@+id/btn_edit_profile_settings_fragment"
                             style="@style/Widget.Material3.Button.IconButton.Outlined"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:text="Edit Profile"
                             android:textAlignment="textStart"
-                            android:textColor="@color/text_primary"
+                            android:textColor="@color/title"
                             android:textSize="16sp"
                             app:icon="@drawable/ic_profile"
                             app:iconPadding="12dp"
                             app:iconSize="16dp"
-                            app:iconTint="@color/icon_quaternary"
+                            app:iconTint="@color/icon"
                             app:strokeWidth="0dp" />
 
                         <ImageView
@@ -67,7 +67,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="12dp"
                             android:src="@drawable/ic_arrow_right"
-                            app:tint="@color/icon_quaternary" />
+                            app:tint="@color/icon" />
 
                     </RelativeLayout>
 
@@ -82,12 +82,12 @@
                             android:layout_height="wrap_content"
                             android:text="Change Password"
                             android:textAlignment="textStart"
-                            android:textColor="@color/text_primary"
+                            android:textColor="@color/title"
                             android:textSize="16sp"
                             app:icon="@drawable/ic_lock"
                             app:iconPadding="12dp"
                             app:iconSize="16dp"
-                            app:iconTint="@color/icon_quaternary"
+                            app:iconTint="@color/icon"
                             app:strokeWidth="0dp" />
 
                         <ImageView
@@ -97,7 +97,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="12dp"
                             android:src="@drawable/ic_arrow_right"
-                            app:tint="@color/icon_quaternary" />
+                            app:tint="@color/icon" />
 
                     </RelativeLayout>
 
@@ -108,12 +108,12 @@
                         android:layout_height="wrap_content"
                         android:text="Delete Profile"
                         android:textAlignment="textStart"
-                        android:textColor="@color/text_alert"
+                        android:textColor="@color/alert"
                         android:textSize="16sp"
                         app:icon="@drawable/ic_trash"
                         app:iconPadding="12dp"
                         app:iconSize="16dp"
-                        app:iconTint="@color/icon_alert"
+                        app:iconTint="@color/alert"
                         app:strokeWidth="0dp" />
 
                     <com.google.android.material.button.MaterialButton
@@ -124,13 +124,13 @@
                         android:paddingHorizontal="12dp"
                         android:text="Log Out"
                         android:textAlignment="textStart"
-                        android:textColor="@color/text_alert"
+                        android:textColor="@color/alert"
                         android:textSize="16sp"
                         app:cornerRadius="1dp"
                         app:icon="@drawable/ic_logout"
                         app:iconPadding="10dp"
                         app:iconSize="16dp"
-                        app:iconTint="@color/icon_alert"
+                        app:iconTint="@color/alert"
                         app:strokeWidth="0dp" />
 
                 </LinearLayout>
@@ -150,14 +150,14 @@
                     android:layout_marginStart="6dp"
                     android:gravity="start"
                     android:text="Appearance"
-                    android:textColor="@color/text_quaternary_light"
-                    android:textSize="14sp" />
+                    android:textColor="@color/section_title"
+                    android:textSize="16sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:background="@drawable/custom_text_transparent_background"
+                    android:background="@drawable/custom_text_transparent_background_purple_stroke"
                     android:orientation="vertical"
                     android:padding="6dp">
 
@@ -166,28 +166,22 @@
                         android:layout_width="match_parent"
                         android:layout_height="50dp">
 
-                        <ImageView
-                            android:id="@+id/dark_mode_icon_settings_fragment"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_alignParentStart="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="12dp"
-                            android:src="@drawable/ic_moon"
-                            app:tint="@color/icon_quaternary" />
-
-                        <TextView
-                            android:id="@+id/dark_mode_text_settings_fragment"
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_dark_mode_setings_fragment"
+                            style="@style/Widget.Material3.Button.IconButton.Outlined"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="12dp"
-                            android:layout_marginEnd="6dp"
-                            android:layout_toStartOf="@+id/dark_mode_switch_settings_fragment"
-                            android:layout_toEndOf="@+id/dark_mode_icon_settings_fragment"
+                            android:clickable="false"
+                            android:focusable="false"
                             android:text="Dark Mode"
-                            android:textColor="@color/text_primary"
-                            android:textSize="16sp" />
+                            android:textAlignment="textStart"
+                            android:textColor="@color/title"
+                            android:textSize="16sp"
+                            app:icon="@drawable/ic_moon"
+                            app:iconPadding="12dp"
+                            app:iconSize="16dp"
+                            app:iconTint="@color/icon"
+                            app:strokeWidth="0dp" />
 
                         <com.google.android.material.materialswitch.MaterialSwitch
                             android:id="@+id/dark_mode_switch_settings_fragment"
@@ -197,10 +191,10 @@
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="12dp"
                             android:checked="true"
-                            app:thumbIcon="@drawable/ic_sun"
+                            app:thumbIcon="@drawable/ic_moon"
                             app:thumbIconSize="22dp"
                             app:thumbIconTint="@color/switch_thumb"
-                            app:thumbTint="@color/switch_fill"
+                            app:thumbTint="@color/transparent"
                             app:trackDecorationTint="@color/switch_track"
                             app:trackTint="@color/switch_track" />
 
@@ -211,27 +205,20 @@
                         android:layout_width="match_parent"
                         android:layout_height="50dp">
 
-                        <ImageView
-                            android:id="@+id/accent_color_icon_settings_fragment"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_alignParentStart="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="12dp"
-                            android:src="@drawable/ic_pallete"
-                            app:tint="@color/icon_quaternary" />
-
-                        <TextView
-                            android:id="@+id/accent_color_text_settings_fragment"
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_accent_color_settings_fragment"
+                            style="@style/Widget.Material3.Button.IconButton.Outlined"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="12dp"
-                            android:layout_toStartOf="@+id/accent_color_text_tint_settings_fragment"
-                            android:layout_toEndOf="@+id/accent_color_icon_settings_fragment"
                             android:text="Accent Color"
-                            android:textColor="@color/text_primary"
-                            android:textSize="16sp" />
+                            android:textAlignment="textStart"
+                            android:textColor="@color/title"
+                            android:textSize="16sp"
+                            app:icon="@drawable/ic_pallete"
+                            app:iconPadding="12dp"
+                            app:iconSize="16dp"
+                            app:iconTint="@color/icon"
+                            app:strokeWidth="0dp" />
 
                         <TextView
                             android:id="@+id/accent_color_text_tint_settings_fragment"
@@ -241,7 +228,7 @@
                             android:layout_marginHorizontal="6dp"
                             android:layout_toStartOf="@id/accent_color_arrow_settings_fragment"
                             android:text="Indigo"
-                            android:textColor="@color/text_quaternary_light"
+                            android:textColor="@color/body"
                             android:textSize="14sp" />
 
                         <ImageView
@@ -252,7 +239,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="12dp"
                             android:src="@drawable/ic_arrow_right"
-                            app:tint="@color/icon_quaternary" />
+                            app:tint="@color/icon" />
 
                     </RelativeLayout>
 
@@ -274,14 +261,14 @@
                     android:layout_marginStart="6dp"
                     android:gravity="start"
                     android:text="Help and Support"
-                    android:textColor="@color/text_quaternary_light"
-                    android:textSize="14sp" />
+                    android:textColor="@color/section_title"
+                    android:textSize="16sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:background="@drawable/custom_text_transparent_background"
+                    android:background="@drawable/custom_text_transparent_background_purple_stroke"
                     android:orientation="vertical"
                     android:padding="6dp">
 
@@ -297,12 +284,12 @@
                             android:layout_height="wrap_content"
                             android:text="FAQ"
                             android:textAlignment="textStart"
-                            android:textColor="@color/text_primary"
+                            android:textColor="@color/title"
                             android:textSize="16sp"
                             app:icon="@drawable/ic_help"
                             app:iconPadding="12dp"
                             app:iconSize="20dp"
-                            app:iconTint="@color/icon_quaternary"
+                            app:iconTint="@color/icon"
                             app:strokeWidth="0dp" />
 
                         <ImageView
@@ -312,7 +299,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="12dp"
                             android:src="@drawable/ic_arrow_right"
-                            app:tint="@color/icon_quaternary" />
+                            app:tint="@color/icon" />
 
                     </RelativeLayout>
 
@@ -327,12 +314,12 @@
                             android:layout_height="wrap_content"
                             android:text="About"
                             android:textAlignment="textStart"
-                            android:textColor="@color/text_primary"
+                            android:textColor="@color/title"
                             android:textSize="16sp"
                             app:icon="@drawable/ic_info"
                             app:iconPadding="12dp"
                             app:iconSize="20dp"
-                            app:iconTint="@color/icon_quaternary"
+                            app:iconTint="@color/icon"
                             app:strokeWidth="0dp" />
 
                         <ImageView
@@ -342,7 +329,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="12dp"
                             android:src="@drawable/ic_arrow_right"
-                            app:tint="@color/icon_quaternary" />
+                            app:tint="@color/icon" />
 
                     </RelativeLayout>
 
@@ -355,16 +342,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="36dp"
                 android:gravity="center"
-                android:text="SpaceAdvisor v1.0.0"
-                android:textColor="@color/text_quaternary_light"
+                android:text="Astryx v1.0.0"
+                android:textColor="@color/body"
                 android:textSize="12sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="© 2026 SpaceAdvisor. All rights reserved."
-                android:textColor="@color/text_quaternary_light"
+                android:text="© 2026 Astryx. All rights reserved."
+                android:textColor="@color/body"
                 android:textSize="12sp" />
 
             <View

@@ -105,39 +105,8 @@ class ProfileFragment : BaseFragment() {
     }
 
     private fun handleSignOut() {
-//        binding.signOutLoadingOverlay.visibility = View.VISIBLE
-//        binding.signOutLoadingOverlay.alpha = 0f
-//        binding.signOutLoadingOverlay.animate().alpha(1f).setDuration(300).start()
-
-        showLoading("Preparing your space...", LoadingType.LOTTIE)
-        userViewModel.createNewUserProfile {
-            Handler(Looper.getMainLooper()).postDelayed({
-                hideLoading()
-                AuthUI.getInstance().signOut(requireContext())
-                    .addOnCompleteListener {
-                        userViewModel.signOut()
-                    }
-            }, 2200)
-        }
-
-//        AuthUI.getInstance().signOut(requireContext())
-//            .addOnCompleteListener {
-//                userViewModel.signOut()
-//            }
-    }
-
-    private fun navigateTo(fragment: BaseFragment) {
-        parentFragmentManager.beginTransaction()
-            .setCustomAnimations(
-                R.anim.slide_in_bottom_to_top,
-                R.anim.fade_out,
-                R.anim.fade_in,
-                R.anim.slide_out_top_to_bottom
-            )
-            .add(R.id.main_frame, fragment)
-            .hide(this)
-            .addToBackStack(null)
-            .commit()
+        showLoading("See you again!", LoadingType.LOTTIE)
+        userViewModel.handleSignOut(requireContext())
     }
 
     private fun observeUserViewModel() {
@@ -184,21 +153,6 @@ class ProfileFragment : BaseFragment() {
                 navigateToAuth()
             }
         }
-    }
-
-    private fun navigateToAuth() {
-        val intent = Intent(requireContext(), AuthActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            putExtra("force_relogin", false)
-        }
-
-        val options = ActivityOptionsCompat.makeCustomAnimation(
-            requireContext(),
-            android.R.anim.fade_in,
-            android.R.anim.fade_out
-        )
-        startActivity(intent, options.toBundle())
-        requireActivity().finish()
     }
 
     private fun showNextBadgeInQueue() {
