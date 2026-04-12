@@ -156,6 +156,10 @@ class DestinationViewModel(
         _reviewSuccess.value = false
     }
 
+    fun resetSaveStatus() {
+        _saveStatus.value = null
+    }
+
     fun fetchDestinationsByRating() {
         viewModelScope.launch {
             _isLoading.value = true
@@ -169,7 +173,6 @@ class DestinationViewModel(
             }
         }
     }
-
 
     fun fetchAllDestinationsForSearch() {
         viewModelScope.launch {
@@ -185,7 +188,6 @@ class DestinationViewModel(
             }
         }
     }
-
 
     private fun updateNavigationState(parentId: String, parentType: String?) {
         val state = when {

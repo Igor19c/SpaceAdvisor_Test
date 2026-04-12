@@ -225,10 +225,11 @@ class DestinationFragment : BaseFragment() {
         }
 
         destinationViewModel.saveStatus.observe(viewLifecycleOwner) { statusPair ->
-            val (isSaved, message) = statusPair
-            val title = if (isSaved) "Added to Favorites" else "Removed from Favorites"
-
-            showCustomMessage(title, message)
+            statusPair?.let { (isSaved, message) ->
+                val title = if (isSaved) "Added to Favorites" else "Removed from Favorites"
+                showCustomMessage(title, message)
+                destinationViewModel.resetSaveStatus()
+            }
         }
 
         destinationViewModel.reviewSuccess.observe(viewLifecycleOwner) { success ->
@@ -332,7 +333,8 @@ class DestinationFragment : BaseFragment() {
 
     private fun setupButtons(destination: Destination) {
         val canExplore = destination.childCount > 0
-        binding.destAddBtn.text = if (canExplore) "Explore ${destination.title}" else "Add to Trip"
+        binding.destAddBtn.text =
+            if (canExplore) "Explore ${destination.title}" else "Add to Trip"
 
         binding.destAddBtn.setOnClickListener {
             if (canExplore) {
@@ -403,7 +405,11 @@ class DestinationFragment : BaseFragment() {
         binding.destHazardsContainer.removeAllViews()
         safety.hazards.forEach { hazard ->
             val itemBinding =
-                ItemDestHazardBinding.inflate(layoutInflater, binding.destHazardsContainer, false)
+                ItemDestHazardBinding.inflate(
+                    layoutInflater,
+                    binding.destHazardsContainer,
+                    false
+                )
             itemBinding.hazardName.text = hazard.name
             itemBinding.hazardTipText.text = hazard.tip
 
