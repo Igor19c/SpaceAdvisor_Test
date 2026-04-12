@@ -4,6 +4,6 @@
     style="@style/Widget.Material3.Chip.Filter"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    app:chipBackgroundColor="@color/chip_fill"
-    app:chipStrokeColor="@color/chip_stroke"
+    app:chipBackgroundColor="@color/chip_fill_checked"
+    app:chipStrokeColor="@color/chip_stroke_checked"
     app:chipStrokeWidth="1dp" />

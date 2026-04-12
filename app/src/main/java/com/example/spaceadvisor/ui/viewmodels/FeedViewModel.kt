@@ -1,5 +1,6 @@
 package com.example.spaceadvisor.ui.viewmodels
 
+import android.content.res.AssetManager
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,6 +12,7 @@ import com.example.spaceadvisor.domain.repository.IPostRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.io.InputStream
 
 class FeedViewModel(
     private val repository: IPostRepository
@@ -31,6 +33,9 @@ class FeedViewModel(
     private val _postSaved = MutableLiveData<Boolean>(false)
     val postSaved: LiveData<Boolean> = _postSaved
 
+    private val _postDeleted = MutableLiveData<Boolean>(false)
+    val postDeleted: LiveData<Boolean> = _postDeleted
+
     private val _selectedImageUri = MutableLiveData<Uri?>(null)
     val selectedImageUri: LiveData<Uri?> = _selectedImageUri
 
@@ -40,11 +45,6 @@ class FeedViewModel(
         fetchPosts()
     }
 
-    /**
-     * טוען את הפוסטים. 
-     * מכיוון שמדובר ב-SnapshotListener, אנחנו מבטלים את המאזין הקודם (אם היה) 
-     * לפני פתיחת חדש כדי למנוע כפל קריאות ברענון.
-     */
     fun fetchPosts() {
         postsJob?.cancel()
         postsJob = viewModelScope.launch {
@@ -78,6 +78,7 @@ class FeedViewModel(
         title: String,
         description: String,
         rating: Int,
+        assetManager: AssetManager,
         localImageUri: Uri? = null,
         tripImageUrl: String = ""
     ) {
@@ -90,7 +91,22 @@ class FeedViewModel(
 
             if (localImageUri != null) {
                 val tempId = java.util.UUID.randomUUID().toString()
-                val uploadResult = repository.uploadPostImage(tempId, localImageUri)
+                val uriString = localImageUri.toString()
+                val isAsset = uriString.contains("android_asset/") || !uriString.contains("://")
+
+                val uploadResult = if (isAsset) {
+                    try {
+                        val cleanPath = if (uriString.contains("android_asset/"))
+                            uriString.substringAfter("android_asset/") else uriString
+                        val inputStream: InputStream = assetManager.open(cleanPath.trimStart('/'))
+                        repository.uploadPostImageStream(tempId, inputStream)
+                    } catch (e: Exception) {
+                        repository.uploadPostImage(tempId, localImageUri)
+                    }
+                } else {
+                    repository.uploadPostImage(tempId, localImageUri)
+                }
+
                 uploadResult.onSuccess { url ->
                     finalImageUrl = url
                 }.onFailure {
@@ -128,6 +144,7 @@ class FeedViewModel(
         newTitle: String,
         newDescription: String,
         newRating: Int,
+        assetManager: AssetManager,
         localImageUri: Uri? = null
     ) {
         viewModelScope.launch {
@@ -138,7 +155,22 @@ class FeedViewModel(
             var finalImageUrl = existingPost.imageUrl
 
             if (localImageUri != null) {
-                val uploadResult = repository.uploadPostImage(existingPost.id, localImageUri)
+                val uriString = localImageUri.toString()
+                val isAsset = uriString.contains("android_asset/") || !uriString.contains("://")
+
+                val uploadResult = if (isAsset) {
+                    try {
+                        val cleanPath = if (uriString.contains("android_asset/"))
+                            uriString.substringAfter("android_asset/") else uriString
+                        val inputStream: InputStream = assetManager.open(cleanPath.trimStart('/'))
+                        repository.uploadPostImageStream(existingPost.id, inputStream)
+                    } catch (e: Exception) {
+                        repository.uploadPostImage(existingPost.id, localImageUri)
+                    }
+                } else {
+                    repository.uploadPostImage(existingPost.id, localImageUri)
+                }
+
                 uploadResult.onSuccess { url ->
                     finalImageUrl = url
                 }.onFailure {
@@ -184,7 +216,19 @@ class FeedViewModel(
 
     fun deletePost(post: Post) {
         viewModelScope.launch {
-            repository.deletePost(post.id).onFailure { _error.value = it.message }
+            _isLoading.value = true
+            val result = repository.deletePost(post.id)
+            _isLoading.value = true
+            result.onSuccess {
+                _postDeleted.value = true
+            }.onFailure {
+                _error.value = it.message
+            }
         }
     }
+
+    fun resetPostDeletedState() {
+        _postDeleted.value = false
+    }
+
 }

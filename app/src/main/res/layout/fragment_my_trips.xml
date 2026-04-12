@@ -1,82 +1,303 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background">
 
     <!-- Normal State: Trip List -->
-    <RelativeLayout
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/trips_list_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="visible">
-
-        <RelativeLayout
-            android:id="@+id/create_new_trip_btn_container_my_trips"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="6dp"
-            android:layout_marginBottom="6dp">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/create_trip_fab"
-                style="@style/Widget.Material3.Button.IconButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:paddingHorizontal="20dp"
-                android:paddingVertical="12dp"
-                android:text="Create Trip"
-                android:textColor="@color/on_primary"
-                android:textSize="16sp"
-                app:backgroundTint="?attr/customColorPrimary"
-                app:cornerRadius="10dp"
-                app:icon="@drawable/ic_plus"
-                app:iconPadding="5dp"
-                app:iconSize="15dp"
-                app:iconTint="@color/on_primary" />
-
-        </RelativeLayout>
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
-            android:id="@+id/my_trips_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/create_new_trip_btn_container_my_trips"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:orientation="vertical">
 
-            <androidx.core.widget.NestedScrollView
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <LinearLayout
+                    android:id="@+id/my_trips_header_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginVertical="48dp"
+                    android:gravity="center_horizontal"
                     android:orientation="vertical">
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/draft_trips_recycler_view"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_primary_light_stroke"
+                        android:gravity="center"
+                        android:paddingHorizontal="24dp"
+                        android:paddingVertical="10dp">
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@drawable/ic_rocket"
+                            app:tint="?attr/customColorPrimaryLight" />
+
+                        <TextView
+                            android:id="@+id/destination_title_item_review"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
+                            android:text="Your Journey"
+                            android:textColor="?attr/customColorPrimaryLight"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:listitem="@layout/item_trip" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:background="@color/background" />
+                        android:layout_marginTop="24dp"
+                        android:lineSpacingExtra="4dp"
+                        android:paddingHorizontal="24dp"
+                        android:text="Manage your space travel adventures across the cosmos"
+                        android:textAlignment="center"
+                        android:textColor="@color/subtitle"
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 
-            </androidx.core.widget.NestedScrollView>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/my_trips_help_btn"
+                    style="@style/Widget.Material3.Button.IconButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="18dp"
+                    app:icon="@drawable/ic_help"
+                    app:iconSize="28dp"
+                    app:iconTint="@color/icon" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/draft_trips_container_my_trips_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:background="@drawable/bg_primary_light"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_circle"
+                    app:tint="?attr/customColorPrimaryLight" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Draft Trips"
+                        android:textColor="@color/title"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Ideas and itineraries in progress"
+                        android:textColor="@color/body"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/draft_trips_count_my_trips_fragment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/bg_primary_faded"
+                    android:gravity="center"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="3dp"
+                    android:text="2 trips"
+                    android:textColor="@color/title"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/draft_trips_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="84dp"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+            <LinearLayout
+                android:id="@+id/planned_trips_container_my_trips_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:background="@drawable/bg_primary_light"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_circle_dot"
+                    app:tint="?attr/customColorPrimaryLight" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Planned Trips"
+                        android:textColor="@color/title"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Confirmed bookings and upcoming adventures"
+                        android:textColor="@color/body"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/planned_trips_count_my_trips_fragment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/bg_primary_faded"
+                    android:gravity="center"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="3dp"
+                    android:text="2 trips"
+                    android:textColor="@color/title"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/planned_trips_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="84dp"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+            <LinearLayout
+                android:id="@+id/completed_trips_container_my_trips_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:background="@drawable/bg_primary_light"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_check_circle"
+                    app:tint="?attr/customColorPrimaryLight" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Completed Trips"
+                        android:textColor="@color/title"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Your cosmic journey history"
+                        android:textColor="@color/body"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/completed_trips_count_my_trips_fragment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/bg_primary_faded"
+                    android:gravity="center"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="3dp"
+                    android:text="2 trips"
+                    android:textColor="@color/title"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/completed_trips_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="120dp"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         </LinearLayout>
-    </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/create_trip_btn"
+        style="@style/Widget.Material3.Button.IconButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="36dp"
+        android:elevation="2dp"
+        android:padding="18dp"
+        app:backgroundTint="?attr/customColorPrimary"
+        app:cornerRadius="18dp"
+        app:icon="@drawable/ic_plus"
+        app:iconSize="24dp"
+        app:iconTint="@color/on_primary" />
+
 
     <!-- Empty State -->
     <LinearLayout
@@ -89,25 +310,27 @@
         android:visibility="gone">
 
         <ImageView
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:alpha="0.5"
-            android:src="@drawable/ic_explore"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:alpha="0.4"
+            android:src="@drawable/ic_rocket"
             app:tint="@color/icon" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
             android:layout_marginTop="24dp"
             android:gravity="center"
-            android:text="Ready for your next adventure?"
+            android:text="Ready for your first adventure?"
             android:textColor="@color/title"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
             android:layout_marginTop="8dp"
             android:gravity="center"
             android:text="Start planning your dream trip across the galaxy today!"
@@ -116,20 +339,28 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/empty_create_trip_btn"
-            style="@style/Widget.Material3.Button.TonalButton"
+            style="@style/Widget.Material3.Button.IconButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:paddingHorizontal="32dp"
-            android:paddingVertical="16dp"
-            android:text="Plan My First Trip"
-            android:textAllCaps="false"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/bg_gradient"
+            android:elevation="4dp"
+            android:paddingHorizontal="24dp"
+            android:shadowColor="@color/transparent_black_60"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="10"
+            android:text="Explore Destinations"
             android:textColor="@color/on_primary"
-            app:backgroundTint="?attr/customColorPrimary"
-            app:cornerRadius="12dp"
-            app:icon="@drawable/ic_plus"
+            android:textSize="14sp"
+            app:backgroundTint="@null"
+            app:cornerRadius="10dp"
+            app:icon="@drawable/ic_explore"
+            app:iconPadding="12dp"
+            app:iconSize="18dp"
             app:iconTint="@color/on_primary" />
 
-    </LinearLayout>
 
+    </LinearLayout>
 </RelativeLayout>

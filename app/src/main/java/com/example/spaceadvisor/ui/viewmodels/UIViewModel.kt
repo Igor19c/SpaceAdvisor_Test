@@ -3,7 +3,7 @@ package com.example.spaceadvisor.ui.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.spaceadvisor.ui.UIConfig
+import com.example.spaceadvisor.domain.models.UIConfig
 
 class UIViewModel : ViewModel() {
     private val _uiConfig = MutableLiveData<UIConfig>()

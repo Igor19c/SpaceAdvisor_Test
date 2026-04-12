@@ -20,17 +20,16 @@
     <color name="icon">@color/secondary</color>
 
     <!-- Chip colors -->
-    <color name="chip_tertiary">@color/gray_dark</color>
-    <color name="chip_quaternary">@color/gray_light</color>
-
-    <color name="chip_fill_tertiary">@color/gray_muted</color>
-    <color name="chip_fill_quaternary">@color/transparent_white_20</color>
+    <color name="chip_stroke">@color/gray_light</color>
+    <color name="chip_fill">@color/transparent_white_20</color>
 
     <!-- Text Input colors -->
     <color name="text_input_hint">@color/gray_light</color>
     <color name="text_input">@color/secondary</color>
 
-    <color name="divider">@color/transparent_white_40</color>
+    <color name="divider">@color/transparent_white_20</color>
+
+    <color name="btn_nav_unselected">@color/gray_light</color>
 
     <color name="explore_header_dot_inactive">@color/transparent_white_20</color>
 
@@ -38,7 +37,6 @@
 
     <color name="progress_bar_unfilled">@color/transparent_white_20</color>
 
-    <color name="btn_nav_unselected">@color/gray_light</color>
 
     <!-- App Logo colors -->
     <color name="ic_launcher_background">@color/background</color>

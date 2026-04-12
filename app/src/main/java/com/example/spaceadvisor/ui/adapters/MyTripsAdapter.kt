@@ -25,6 +25,7 @@ class MyTripsAdapter(
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val cardContainer: View = view.findViewById(R.id.trip_card_item)
+        val mainImage: ImageView = view.findViewById(R.id.trip_main_image_item_trip)
         val image1: ImageView = view.findViewById(R.id.trip_dest_image_1)
         val image2: ImageView = view.findViewById(R.id.trip_dest_image_2)
         val image3: ImageView = view.findViewById(R.id.trip_dest_image_3)
@@ -40,7 +41,7 @@ class MyTripsAdapter(
         val completedChip: TextView = view.findViewById(R.id.completed_chip_trip_item)
 
         val openBtn: MaterialButton = view.findViewById(R.id.open_btn_trip_item)
-        val confirmBtn: MaterialButton = view.findViewById(R.id.confirm_btn_trip_item)
+        val finalizeBtn: MaterialButton = view.findViewById(R.id.finalize_btn_trip_item)
         val shareBtn: MaterialButton = view.findViewById(R.id.share_btn_trip_item)
     }
 
@@ -86,18 +87,23 @@ class MyTripsAdapter(
         when {
             trip.status == "DRAFT" || trip.destinationIds.isEmpty() -> {
                 holder.openBtn.visibility = View.VISIBLE
-                holder.confirmBtn.visibility = View.VISIBLE
+                holder.finalizeBtn.visibility = View.VISIBLE
                 holder.shareBtn.visibility = View.GONE
             }
 
             else -> {
                 holder.openBtn.visibility = View.VISIBLE
-                holder.confirmBtn.visibility = View.GONE
+                holder.finalizeBtn.visibility = View.GONE
                 holder.shareBtn.visibility = View.VISIBLE
             }
         }
 
         // Images
+        Glide.with(holder.mainImage.context)
+            .load(trip.imageUrl)
+            .placeholder(R.drawable.ic_home_earth)
+            .into(holder.mainImage)
+
         val images = listOf(holder.image1, holder.image2, holder.image3)
         images.forEach { it.visibility = View.GONE }
         holder.additionalCounter.visibility = View.GONE
@@ -114,7 +120,7 @@ class MyTripsAdapter(
         }
 
         holder.openBtn.setOnClickListener { onOpenClick(trip) }
-        holder.confirmBtn.setOnClickListener { onConfirmClick(trip) }
+        holder.finalizeBtn.setOnClickListener { onConfirmClick(trip) }
         holder.shareBtn.setOnClickListener { onShareClick(trip) }
 
         // Reset visual state

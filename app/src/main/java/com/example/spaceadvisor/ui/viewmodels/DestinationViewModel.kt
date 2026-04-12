@@ -31,11 +31,19 @@ class DestinationViewModel(
     private val _filteredDestinations = MutableLiveData<List<Destination>>()
     val filteredDestinations: LiveData<List<Destination>> = _filteredDestinations
 
+    private var allDestinationsList: List<Destination> = emptyList()
+
     private val _subDestinations = MutableLiveData<List<Destination>>()
     val subDestinations: LiveData<List<Destination>> = _subDestinations
 
     private val _trendingDestinations = MutableLiveData<List<Destination>>()
     val trendingDestinations: LiveData<List<Destination>> = _trendingDestinations
+
+    private val _allReviews = MutableLiveData<List<Review>>()
+    val allReviews: LiveData<List<Review>> = _allReviews
+
+    private val _destReviews = MutableLiveData<List<Review>>()
+    val destReviews: LiveData<List<Review>> = _destReviews
 
     private val _savedDestinations = MutableLiveData<List<Destination>>()
     val savedDestinations: LiveData<List<Destination>> = _savedDestinations
@@ -51,6 +59,9 @@ class DestinationViewModel(
 
     private val _reviewSuccess = MutableLiveData<Boolean>()
     val reviewSuccess: LiveData<Boolean> = _reviewSuccess
+
+    private val _saveStatus = MutableLiveData<Pair<Boolean, String>>()
+    val saveStatus: LiveData<Pair<Boolean, String>> = _saveStatus
 
     private val _navigationUiState = MutableLiveData<NavigationUiState>()
     val navigationUiState: LiveData<NavigationUiState> = _navigationUiState
@@ -81,9 +92,7 @@ class DestinationViewModel(
     }
 
     fun filterDestinations(query: String, type: String, difficulties: List<Int>) {
-        val originalList = _filteredDestinations.value ?: return
-
-        val filtered = originalList.filter { dest ->
+        val filtered = allDestinationsList.filter { dest ->
             val matchesQuery = query.isEmpty() || dest.title.contains(query, ignoreCase = true)
             val matchesType =
                 type == "All" || dest.type.trim().equals(type.trim(), ignoreCase = true)
@@ -104,6 +113,27 @@ class DestinationViewModel(
                 }.onFailure { e ->
                     _error.value = e.message
                 }
+            }
+        }
+    }
+
+    fun fetchHomeReviews() {
+        viewModelScope.launch {
+            reviewRepository.fetchAllReviewsOrderedByCreatedAt().collectLatest { result ->
+                result.onSuccess { reviews ->
+                    _allReviews.value = reviews
+                }.onFailure { error -> _error.value = error.message }
+            }
+
+        }
+    }
+
+    fun fetchDestinationReviews(destId: String) {
+        viewModelScope.launch {
+            reviewRepository.fetchDestinationReviews(destId).collectLatest { result ->
+                result.onSuccess { reviews ->
+                    _destReviews.value = reviews
+                }.onFailure { error -> _error.value = error.message }
             }
         }
     }
@@ -147,6 +177,7 @@ class DestinationViewModel(
             repository.fetchAllDestinations().collectLatest { result ->
                 _isLoading.value = false
                 result.onSuccess { list ->
+                    allDestinationsList = list
                     _filteredDestinations.value = list
                 }.onFailure { e ->
                     _error.value = e.message
@@ -201,9 +232,13 @@ class DestinationViewModel(
         viewModelScope.launch {
             val isCurrentlySaved = _savedDestinations.value?.any { it.id == destination.id } == true
             if (isCurrentlySaved) {
-                repository.unsaveDestination(userId, destination.id)
+                repository.unsaveDestination(userId, destination.id).onSuccess {
+                    _saveStatus.postValue(false to "${destination.title} removed from favorites")
+                }
             } else {
-                repository.saveDestination(userId, destination)
+                repository.saveDestination(userId, destination).onSuccess {
+                    _saveStatus.postValue(true to "${destination.title} saved to favorites")
+                }
             }
         }
     }

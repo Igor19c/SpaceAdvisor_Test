@@ -1,16 +1,12 @@
 package com.example.spaceadvisor.ui.fragments
 
 import android.app.Dialog
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,10 +15,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.signature.ObjectKey
 import com.example.spaceadvisor.R
 import com.example.spaceadvisor.SpaceAdvisorApplication
-import com.example.spaceadvisor.ui.UIConfig
-import com.example.spaceadvisor.ui.activities.AuthActivity
+import com.example.spaceadvisor.domain.models.UIConfig
 import com.example.spaceadvisor.ui.adapters.BadgeAdapter
-import com.example.spaceadvisor.ui.adapters.NewestTripsAdapter
+import com.example.spaceadvisor.ui.adapters.TripsNewestAdapter
 import com.example.spaceadvisor.ui.adapters.ReviewAdapter
 import com.example.spaceadvisor.databinding.DialogBadgeUnlockedBinding
 import com.example.spaceadvisor.databinding.FragmentProfileBinding
@@ -34,7 +29,6 @@ import com.example.spaceadvisor.ui.viewmodels.TripViewModel
 import com.example.spaceadvisor.ui.viewmodels.UserViewModel
 import com.example.spaceadvisor.ui.viewmodels.ViewModelFactory
 import java.util.LinkedList
-import com.firebase.ui.auth.AuthUI
 import java.util.Queue
 
 class ProfileFragment : BaseFragment() {
@@ -52,7 +46,7 @@ class ProfileFragment : BaseFragment() {
         ViewModelFactory(requireActivity().application as SpaceAdvisorApplication)
     }
 
-    private lateinit var newestTripsAdapter: NewestTripsAdapter
+    private lateinit var newestTripsAdapter: TripsNewestAdapter
     private lateinit var badgesAdapter: BadgeAdapter
     private lateinit var reviewAdapter: ReviewAdapter
 
@@ -86,12 +80,12 @@ class ProfileFragment : BaseFragment() {
         }
 
         binding.signOutBtn.setOnClickListener { handleSignOut() }
-        binding.savedBtn.setOnClickListener { navigateTo(SavedDestinationsFragment()) }
+        binding.savedBtn.setOnClickListener { navigateTo(DestinationsSavedFragment()) }
         binding.myTripsSeeAllBtn.setOnClickListener { navigateTo(MyTripsFragment()) }
         binding.reviewsSeeAllBtn.setOnClickListener { navigateTo(MyReviewsFragment()) }
         binding.editProfBtn.setOnClickListener {
             navigateTo(
-                EditProfileFragment.newInstance(
+                ProfileEditFragment.newInstance(
                     isFirstTime = false
                 )
             )
@@ -100,7 +94,7 @@ class ProfileFragment : BaseFragment() {
         val isNewUser = requireActivity().intent.getBooleanExtra("IS_NEW_USER", false)
         if (isNewUser) {
             requireActivity().intent.removeExtra("IS_NEW_USER")
-            navigateTo(EditProfileFragment.newInstance(isFirstTime = true))
+            navigateTo(ProfileEditFragment.newInstance(isFirstTime = true))
         }
     }
 
@@ -117,8 +111,8 @@ class ProfileFragment : BaseFragment() {
                 binding.userBio.text = it.bio
                 binding.savedCounter.text = it.favoriteDestinations.size.toString()
 
-                val fullBadges = BadgeRepository.getBadgesByIds(it.badges)
-                badgesAdapter.updateBadges(fullBadges)
+                val allAvailableBadges = BadgeRepository.getAllBadges()
+                badgesAdapter.updateData(allAvailableBadges, it.badges)
 
                 if (!it.profileImageUrl.isNullOrEmpty()) {
                     Glide.with(this).load(it.profileImageUrl)
@@ -165,10 +159,17 @@ class ProfileFragment : BaseFragment() {
         isBadgeDialogShowing = true
         val dialog = Dialog(requireContext())
         val dialogBinding = DialogBadgeUnlockedBinding.inflate(layoutInflater)
+
         dialog.setContentView(dialogBinding.root)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+
         dialogBinding.dialogBadgeName.text = badge.name
         dialogBinding.dialogBadgeDescription.text = badge.description
+
         val assetPath = "file:///android_asset/${badge.assetPath}"
         Glide.with(this).load(assetPath).into(dialogBinding.dialogBadgeImage)
         dialogBinding.dialogCloseBtn.setOnClickListener { dialog.dismiss() }
@@ -187,7 +188,8 @@ class ProfileFragment : BaseFragment() {
             binding.myNewestTripsRecyclerView.visibility =
                 if (recentTrips.isEmpty()) View.GONE else View.VISIBLE
             val posts = feedViewModel.userPosts.value ?: emptyList()
-            userViewModel.checkForBadges(trips, posts)
+            val reviews = userViewModel.userReviews.value ?: emptyList()
+            userViewModel.checkForBadges(trips, posts, reviews)
         }
     }
 
@@ -195,13 +197,30 @@ class ProfileFragment : BaseFragment() {
         feedViewModel.userPosts.observe(viewLifecycleOwner) { posts ->
             binding.postsCounter.text = posts.size.toString()
             val trips = tripViewModel.userTrips.value ?: emptyList()
-            userViewModel.checkForBadges(trips, posts)
+            val reviews = userViewModel.userReviews.value ?: emptyList()
+            userViewModel.checkForBadges(trips, posts, reviews)
+        }
+    }
+
+    private fun observeUserReviews() {
+        userViewModel.userReviews.observe(viewLifecycleOwner) { reviews ->
+            val recentReviews = reviews.take(5)
+            reviewAdapter.updateData(recentReviews)
+
+            binding.recentReviewsRecyclerView.visibility =
+                if (recentReviews.isEmpty()) View.GONE else View.VISIBLE
+
+            // בדיקת באדג'ים כשביקורות מתעדכנות
+            val trips = tripViewModel.userTrips.value ?: emptyList()
+            val posts = feedViewModel.userPosts.value ?: emptyList()
+            userViewModel.checkForBadges(trips, posts, reviews)
         }
     }
 
     private fun observeViewModel() {
         observeUserViewModel()
         observeTripViewModel()
+        observeUserReviews()
         observeFeedViewModel()
         userViewModel.error.observe(viewLifecycleOwner) { errorMessage ->
             errorMessage?.let { showError(it) }
@@ -217,7 +236,7 @@ class ProfileFragment : BaseFragment() {
 
 
     private fun setupTripsRecyclerView() {
-        newestTripsAdapter = NewestTripsAdapter(mutableListOf()) { trip ->
+        newestTripsAdapter = TripsNewestAdapter(mutableListOf()) { trip ->
             tripViewModel.setCurrentTrip(trip)
             navigateTo(TripFragment())
         }

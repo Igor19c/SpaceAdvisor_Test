@@ -7,7 +7,7 @@ object BadgeRepository {
         Badge(
             id = "first_trip",
             name = "First Trip",
-            description = "Completed your first space journey!",
+            description = "Completed your first trip!",
             assetPath = "badges/first_trip.webp"
         ),
         Badge(
@@ -15,12 +15,6 @@ object BadgeRepository {
             name = "Explorer",
             description = "Visited 5 different planets",
             assetPath = "badges/explorer.webp"
-        ),
-        Badge(
-            id = "moon_walker",
-            name = "Moon Walker",
-            description = "Set foot on the Moon",
-            assetPath = "badges/moon_walker.webp"
         ),
         Badge(
             id = "first_review",
@@ -31,7 +25,7 @@ object BadgeRepository {
         Badge(
             id = "top_reviewer",
             name = "Top Reviewer",
-            description = "Wrote 10 helpful reviews",
+            description = "Wrote 5 helpful reviews",
             assetPath = "badges/top_reviewer.webp"
         ),
         Badge(
@@ -43,23 +37,13 @@ object BadgeRepository {
         Badge(
             id = "top_content_creator",
             name = "Top Content Creator",
-            description = "Posted 5 trip with 5 stars",
+            description = "Posted 5 trip",
             assetPath = "badges/top_content_creator.webp"
-        ),
-        Badge(
-            id = "first_post_get_liked",
-            name = "First Like",
-            description = "Get first like on any post",
-            assetPath = "badges/first_post_get_liked.webp"
         )
-
     )
 
     fun getAllBadges(): List<Badge> = allBadges
 
     fun getBadgeById(id: String): Badge? = allBadges.find { it.id == id }
 
-    fun getBadgesByIds(ids: List<String>): List<Badge> {
-        return allBadges.filter { it.id in ids }
-    }
 }

@@ -32,7 +32,7 @@
             android:layout_marginHorizontal="40dp"
             android:max="100"
             android:progress="0"
-            android:progressDrawable="@drawable/custom_progress_bar" />
+            android:progressDrawable="@drawable/bg_progress_bar" />
 
     </RelativeLayout>
 

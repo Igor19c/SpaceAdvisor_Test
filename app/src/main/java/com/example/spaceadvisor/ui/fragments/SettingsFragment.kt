@@ -6,19 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.TransitionManager
 import com.example.spaceadvisor.R
 import com.example.spaceadvisor.SpaceAdvisorApplication
-import com.example.spaceadvisor.databinding.DialogChooseImageSourceBinding
 import com.example.spaceadvisor.databinding.FragmentSettingsBinding
-import com.example.spaceadvisor.ui.UIConfig
+import com.example.spaceadvisor.domain.models.UIConfig
 import com.example.spaceadvisor.ui.activities.LoadingType
-import com.example.spaceadvisor.ui.adapters.ColorAdapter
+import com.example.spaceadvisor.ui.dialogs.SelectDialogAccentColor
 import com.example.spaceadvisor.ui.viewmodels.UserViewModel
 import com.example.spaceadvisor.ui.viewmodels.ViewModelFactory
 import com.example.spaceadvisor.utils.SettingsManager
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class SettingsFragment : BaseFragment() {
@@ -59,16 +56,15 @@ class SettingsFragment : BaseFragment() {
         binding.darkModeSwitchSettingsFragment.isChecked = isDarkMode
         updateDarkModeIcon(isDarkMode)
 
+        updateAccentColorText()
+
         binding.darkModeSwitchSettingsFragment.setOnCheckedChangeListener { _, isChecked ->
-            // מציגים Loading כדי להסתיר את המעבר
             showLoading("Applying theme...", LoadingType.LOTTIE)
-            
-            // דיליי קטן כדי שהאנימציה תתחיל לפני ה-Recreate
+
             binding.root.postDelayed({
                 TransitionManager.beginDelayedTransition(binding.darkModeContainerSettingsFragment)
                 updateDarkModeIcon(isChecked)
                 settingsManager.isDarkMode = isChecked
-                // הערה: settingsManager.isDarkMode מפעיל Recreate אוטומטי דרך AppCompatDelegate
             }, 400)
         }
 
@@ -76,12 +72,27 @@ class SettingsFragment : BaseFragment() {
             showColorPickerDialog()
         }
 
-        userViewModel.isLoading.observe(viewLifecycleOwner) { loading ->
-            if (loading) {
-                showLoading("Signing out...", LoadingType.LOTTIE)
+        userViewModel.loadingState.observe(viewLifecycleOwner) { state ->
+            if (state.isLoading) {
+                showLoading(state.message, LoadingType.LOTTIE)
             } else {
                 hideLoading()
             }
+        }
+
+        userViewModel.passwordResetSent.observe(viewLifecycleOwner) { sent ->
+            if (sent) {
+                showCustomMessage(
+                    "Email Sent!",
+                    "A reset link has been sent to your email address.",
+                    5000
+                )
+                userViewModel.resetPasswordStatus()
+            }
+        }
+
+        userViewModel.error.observe(viewLifecycleOwner) { error ->
+            error?.let { showError(it) }
         }
 
         userViewModel.isLoggedOut.observe(viewLifecycleOwner) { loggedOut ->
@@ -94,20 +105,34 @@ class SettingsFragment : BaseFragment() {
             handleLogout()
         }
 
+
         binding.btnEditProfileSettingsFragment.setOnClickListener {
             navigateTo(
-                EditProfileFragment.newInstance(
+                ProfileEditFragment.newInstance(
                     isFirstTime = false
                 )
             )
         }
 
-        binding.btnChangePassSettingsFragment.setOnClickListener { }
-        binding.btnDeleteProfileSettingsFragment.setOnClickListener { }
-        
+        binding.btnChangePassSettingsFragment.setOnClickListener { showChangePasswordConfirmation() }
+
         binding.btnFaqSettingsFragment.setOnClickListener { navigateTo(FAQFragment()) }
 
         binding.btnAboutSettingsFragment.setOnClickListener { navigateTo(AboutFragment()) }
+    }
+
+    private fun showChangePasswordConfirmation() {
+        val email = userViewModel.userData.value?.email ?: "your email"
+
+        MaterialAlertDialogBuilder(requireContext(), R.style.CustomAlertDialog)
+            .setTitle("Reset Password")
+            .setMessage("We will send a password reset link to:\n$email\n\nYou will remain logged in to Astryx during this process.")
+            .setPositiveButton("Send Email") { _, _ ->
+                settingsManager.needsReAuthAfterPasswordReset = true
+                userViewModel.sendPasswordResetEmail()
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
     }
 
     private fun updateDarkModeIcon(isDark: Boolean) {
@@ -117,35 +142,29 @@ class SettingsFragment : BaseFragment() {
             ContextCompat.getDrawable(requireContext(), iconRes)
     }
 
+    private fun updateAccentColorText() {
+        val currentThemeId = settingsManager.selectedThemeResId
+        val themeName = when (currentThemeId) {
+            R.style.Theme_SpaceAdvisor -> getString(R.string.ac_indigo)
+            R.style.Theme_SpaceAdvisor_Blue -> getString(R.string.ac_blue)
+            R.style.Theme_SpaceAdvisor_Red -> getString(R.string.ac_crimson)
+            R.style.Theme_SpaceAdvisor_Green -> getString(R.string.ac_green)
+            else -> "Space Color"
+        }
+        binding.accentColorTextTintSettingsFragment.text = themeName
+    }
+
     private fun showColorPickerDialog() {
-        val dialog = BottomSheetDialog(requireContext())
-        val dialogBinding = DialogChooseImageSourceBinding.inflate(layoutInflater)
-        dialog.setContentView(dialogBinding.root)
+        val dialog = SelectDialogAccentColor.newInstance()
 
-        dialogBinding.dialogSelectTitle.text = "Select Accent Color"
-
-        val themeOptions = listOf(
-            Triple("Space Blue", R.color.accent_space_purple, R.style.Theme_SpaceAdvisor),
-            Triple("Muted Red", R.color.accent_red_muted, R.style.Theme_SpaceAdvisor_Red),
-            Triple("Muted Green", R.color.accent_green_muted, R.style.Theme_SpaceAdvisor_Green)
-        )
-
-        dialogBinding.itemRecyclerView.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = ColorAdapter(themeOptions.map { Pair(it.first, it.second) }) { index ->
-                val selectedTheme = themeOptions[index].third
-                
-                showLoading("Updating accent color...", LoadingType.LOTTIE)
-                dialog.dismiss()
-
-                binding.root.postDelayed({
-                    settingsManager.selectedThemeResId = selectedTheme
-                    requireActivity().recreate()
-                }, 400)
-            }
+        dialog.setOnColorSelectedListener { selectedTheme ->
+            settingsManager.selectedThemeResId = selectedTheme
+            binding.root.postDelayed({
+                requireActivity().recreate()
+            }, 600)
         }
 
-        dialog.show()
+        dialog.show(parentFragmentManager, SelectDialogAccentColor.TAG)
     }
 
     fun handleLogout(

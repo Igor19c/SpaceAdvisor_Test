@@ -65,7 +65,6 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -76,11 +75,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="24dp">
+            android:paddingVertical="24dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -101,7 +101,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="top"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/custom_text_gray_background"
+                    android:background="@drawable/bg_primary_light_stroke"
                     android:gravity="center"
                     android:paddingHorizontal="12dp"
                     android:paddingVertical="6dp">
@@ -111,7 +111,7 @@
                         android:layout_height="15dp"
                         android:scaleType="centerCrop"
                         android:src="@drawable/ic_rating_star_filled"
-                        app:tint="@color/white" />
+                        app:tint="?attr/customColorPrimaryLight" />
 
                     <TextView
                         android:id="@+id/dest_rating_text"
@@ -119,7 +119,7 @@
                         android:layout_height="wrap_content"
                         android:paddingHorizontal="4dp"
                         android:text="4.5"
-                        android:textColor="@color/white"
+                        android:textColor="?attr/customColorPrimaryLight"
                         android:textSize="14sp" />
 
                 </LinearLayout>
@@ -129,6 +129,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
                 android:layout_marginTop="5dp">
 
                 <TextView
@@ -138,7 +139,7 @@
                     android:layout_marginEnd="12dp"
                     android:layout_weight="1"
                     android:text="The Red Planet"
-                    android:textColor="?attr/customColorPrimary"
+                    android:textColor="?attr/customColorPrimaryLight"
                     android:textSize="16sp" />
 
                 <LinearLayout
@@ -169,6 +170,7 @@
                 android:id="@+id/dest_short_description_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
                 android:layout_marginTop="12dp"
                 android:lineSpacingExtra="6dp"
                 android:text="Short description here..."
@@ -179,6 +181,7 @@
                 android:id="@+id/dest_tags_chip_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
                 android:layout_marginTop="12dp"
                 app:chipSpacingHorizontal="8dp"
                 app:chipSpacingVertical="4dp">
@@ -210,6 +213,7 @@
                 android:id="@+id/dest_long_description_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
                 android:layout_marginTop="24dp"
                 android:lineSpacingExtra="6dp"
                 android:text="Long description here..."
@@ -221,6 +225,7 @@
                 android:id="@+id/dest_best_time_to_visit_section"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
                 android:layout_marginTop="24dp"
                 android:orientation="vertical">
 
@@ -249,13 +254,14 @@
                 android:id="@+id/dest_children_section"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="60dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/dest_children_title_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="24dp"
                     android:text="Mars destination"
                     android:textColor="@color/title"
                     android:textSize="18sp"
@@ -267,8 +273,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_destination_picker" />
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
             </LinearLayout>
 
             <!-- Tab Section -->
@@ -276,7 +281,7 @@
                 android:id="@+id/dest_tab_section"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="60dp"
                 android:orientation="vertical">
 
                 <com.google.android.material.tabs.TabLayout
@@ -286,7 +291,7 @@
                     android:layout_marginTop="20dp"
                     android:background="@color/transparent"
                     app:tabIndicatorColor="?attr/customColorPrimary"
-                    app:tabMode="scrollable"
+                    app:tabMode="fixed"
                     app:tabSelectedTextColor="@color/title"
                     app:tabTextColor="@color/body">
 
@@ -312,6 +317,7 @@
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="24dp"
                     android:layout_marginTop="10dp">
 
                     <LinearLayout
@@ -347,7 +353,7 @@
                             <!-- Row 1: Atmosphere -->
                             <TableRow
                                 android:layout_marginBottom="8dp"
-                                android:background="@drawable/custom_text_transparent_background_purple_stroke"
+                                android:background="@drawable/bg_transparent_stroke_primary"
                                 android:paddingVertical="12dp">
 
                                 <TextView
@@ -373,7 +379,7 @@
                             <!-- Row 2: Gravity -->
                             <TableRow
                                 android:layout_marginBottom="8dp"
-                                android:background="@drawable/custom_text_transparent_background_purple_stroke"
+                                android:background="@drawable/bg_transparent_stroke_primary"
                                 android:paddingVertical="12dp">
 
                                 <TextView
@@ -399,7 +405,7 @@
                             <!-- Row 3: Temperature -->
                             <TableRow
                                 android:layout_marginBottom="8dp"
-                                android:background="@drawable/custom_text_transparent_background_purple_stroke"
+                                android:background="@drawable/bg_transparent_stroke_primary"
                                 android:paddingVertical="12dp">
 
                                 <TextView
@@ -425,7 +431,7 @@
                             <!-- Row 4: Radiation -->
                             <TableRow
                                 android:layout_marginBottom="8dp"
-                                android:background="@drawable/custom_text_transparent_background_purple_stroke"
+                                android:background="@drawable/bg_transparent_stroke_primary"
                                 android:paddingVertical="12dp">
 
                                 <TextView
@@ -451,7 +457,7 @@
                             <!-- Row 5: Day Length -->
                             <TableRow
                                 android:layout_marginBottom="8dp"
-                                android:background="@drawable/custom_text_transparent_background_purple_stroke"
+                                android:background="@drawable/bg_transparent_stroke_primary"
                                 android:paddingVertical="12dp">
 
                                 <TextView
@@ -476,7 +482,7 @@
 
                             <!-- Row 6: Visibility -->
                             <TableRow
-                                android:background="@drawable/custom_text_transparent_background_purple_stroke"
+                                android:background="@drawable/bg_transparent_stroke_primary"
                                 android:paddingVertical="12dp">
 
                                 <TextView
@@ -539,19 +545,19 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="12dp"
-                android:layout_marginVertical="36dp"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="120dp"
                 android:backgroundTint="@color/background"
                 app:cardCornerRadius="28dp"
-                app:cardElevation="8dp"
+                app:cardElevation="0dp"
                 app:strokeColor="?attr/customColorPrimaryFaded"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="12dp">
+                    android:layout_marginVertical="12dp"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -578,7 +584,7 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="20dp"
                         android:numStars="5"
-                        android:progressBackgroundTint="?attr/customColorPrimaryFaded"
+                        android:progressBackgroundTint="?attr/customColorPrimaryLightFaded"
                         android:progressTint="?attr/customColorPrimary"
                         android:rating="4"
                         android:stepSize="1" />
@@ -587,6 +593,7 @@
                         android:id="@+id/dest_edit_review_field"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="18dp"
                         android:layout_marginTop="20dp"
                         android:hint="Tell us more (optional)"
                         android:textColorHint="@color/body"
@@ -612,6 +619,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="12dp"
                         android:layout_marginTop="24dp"
                         android:orientation="horizontal">
 
@@ -631,9 +639,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="12dp"
                             android:layout_weight="1"
-                            android:backgroundTint="@color/secondary_filled_btn"
+                            android:backgroundTint="?attr/customColorPrimary"
                             android:text="Submit"
-                            android:textColor="@color/on_secondary_filled_btn"
+                            android:textColor="@color/on_primary"
                             app:cornerRadius="12dp" />
 
                     </LinearLayout>
@@ -641,6 +649,107 @@
                 </LinearLayout>
 
             </com.google.android.material.card.MaterialCardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="24dp"
+                    android:text="Traveler Experiences"
+                    android:textAlignment="center"
+                    android:textColor="@color/title"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/dest_rating_star_container_dest_fragment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/rating_star_01_dest_fragment"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:layout_marginEnd="-2dp"
+                            android:src="@drawable/ic_rating_star_filled" />
+
+                        <ImageView
+                            android:id="@+id/rating_star_02_dest_fragment"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:layout_marginEnd="-2dp"
+                            android:src="@drawable/ic_rating_star_filled" />
+
+                        <ImageView
+                            android:id="@+id/rating_star_03_dest_fragment"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:layout_marginEnd="-2dp"
+                            android:src="@drawable/ic_rating_star_filled" />
+
+                        <ImageView
+                            android:id="@+id/rating_star_04_dest_fragment"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:layout_marginEnd="-2dp"
+                            android:src="@drawable/ic_rating_star_filled" />
+
+                        <ImageView
+                            android:id="@+id/rating_star_05_dest_fragment"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:src="@drawable/ic_rating_star_filled" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/dest_avg_rating_dest_fragment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginHorizontal="12dp"
+                        android:text="4.7"
+                        android:textColor="@color/title"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/dest_review_count_dest_fragment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginBottom="2dp"
+                        android:text="10,643 reviews"
+                        android:textColor="@color/body"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/reviews_recycler_view_dest_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="12dp"
+                    android:layout_marginTop="24dp"
+                    android:orientation="vertical"
+                    tools:listitem="@layout/item_review" />
+
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
@@ -658,7 +767,7 @@
         android:layout_gravity="bottom"
         android:background="@color/background"
         android:gravity="center_vertical"
-        android:paddingHorizontal="20dp"
+        android:paddingHorizontal="24dp"
         android:paddingVertical="20dp">
 
         <com.google.android.material.button.MaterialButton

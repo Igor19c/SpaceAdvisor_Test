@@ -7,22 +7,18 @@
     android:orientation="horizontal"
     android:padding="12dp">
 
-    <!-- עיגול הצבע -->
     <View
         android:id="@+id/color_circle"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:background="@drawable/bg_oval_white" />
 
-        android:background="@drawable/tab_selector" />
-
-    <!-- שם הצבע -->
     <TextView
         android:id="@+id/color_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:fontFamily="@font/orbitron"
-        android:textColor="@color/white"
-        android:textSize="18sp" /> <!-- השתמש בפונט שהגדרנו קודם! -->
+        android:textColor="@color/title"
+        android:textSize="18sp" />
 
 </LinearLayout>

@@ -10,6 +10,7 @@ import com.example.spaceadvisor.domain.models.Trip
 import com.example.spaceadvisor.domain.repository.IDestinationRepository
 import com.example.spaceadvisor.domain.repository.ITripRepository
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class TripViewModel(
@@ -92,15 +93,52 @@ class TripViewModel(
 
     private fun updateTripObject(destinations: List<Destination>) {
         val trip = _currentTrip.value ?: Trip()
+
+        val oldFirstId = if (trip.destinationIds.isNotEmpty()) trip.destinationIds[0] else null
+        val newFirstId = if (destinations.isNotEmpty()) destinations[0].id else null
+
         val updatedTrip = trip.copy(
             destinationIds = destinations.map { it.id },
-            destinationImages = destinations.map { it.imageUrl }.filter { it.isNotEmpty() },
-            imageUrl = if (destinations.isNotEmpty() && (trip.imageUrl.isEmpty() || trip.imageUrl.startsWith(
-                    "avatars/"
-                ))
-            ) destinations[0].imageUrl else trip.imageUrl
+            destinationImages = destinations.map { it.imageUrl }.filter { it.isNotEmpty() }
         )
-        _currentTrip.value = updatedTrip
+        when {
+            newFirstId == null -> {
+                _currentTrip.value = updatedTrip.copy(imageUrl = "")
+            }
+
+            newFirstId != oldFirstId || updatedTrip.imageUrl.startsWith("avatars/") || updatedTrip.imageUrl.isEmpty() -> {
+                val firstDest = destinations[0]
+
+                val tripWithInitialImage = updatedTrip.copy(imageUrl = firstDest.imageUrl)
+                _currentTrip.value = tripWithInitialImage
+
+                if (firstDest.parentId != "root") {
+                    viewModelScope.launch {
+                        try {
+                            val parentResult =
+                                destinationRepository.fetchDestinationsByIds(listOf(firstDest.parentId))
+                                    .first()
+                            parentResult.onSuccess { parents ->
+                                if (parents.isNotEmpty()) {
+                                    val current = _currentTrip.value ?: return@onSuccess
+                                    if (current.destinationIds.isNotEmpty() && current.destinationIds[0] == newFirstId) {
+                                        _currentTrip.value =
+                                            current.copy(imageUrl = parents[0].imageUrl)
+                                        syncTripWithFirebase()
+                                    }
+                                }
+                            }
+                        } catch (e: Exception) {
+                            Log.e("TripViewModel", "Error refining trip image", e)
+                        }
+                    }
+                }
+            }
+
+            else -> {
+                _currentTrip.value = updatedTrip
+            }
+        }
     }
 
     fun finalizeTrip() {
@@ -109,7 +147,13 @@ class TripViewModel(
         syncTripWithFirebase()
     }
 
-    fun saveTrip(uid: String, title: String, subtitle: String, startDate: Long?, endDate: Long?) {
+    fun saveTrip(
+        uid: String,
+        title: String,
+        subtitle: String,
+        startDate: Long?,
+        endDate: Long?
+    ) {
         val trip = _currentTrip.value?.copy(
             uid = uid,
             title = title,

@@ -18,8 +18,9 @@ import com.example.spaceadvisor.databinding.FragmentTripBinding
 import com.example.spaceadvisor.ui.viewmodels.TripViewModel
 import com.example.spaceadvisor.ui.viewmodels.UserViewModel
 import com.example.spaceadvisor.ui.viewmodels.ViewModelFactory
-import com.example.spaceadvisor.ui.UIConfig
-import com.example.spaceadvisor.ui.utils.TripSelectionHelper
+import com.example.spaceadvisor.domain.models.UIConfig
+import com.example.spaceadvisor.ui.dialogs.EditDialogTrip
+import com.example.spaceadvisor.utils.TripSelectionHelper
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -67,7 +68,7 @@ class TripFragment : BaseFragment() {
 
         val currentTrip = tripViewModel.currentTrip.value
         if ((currentTrip == null || currentTrip.status.isEmpty()) && !isSubmitting) {
-            EditTripDialogFragment.newInstance().show(parentFragmentManager, "ADD_TRIP_DIALOG")
+            EditDialogTrip.newInstance().show(parentFragmentManager, "ADD_TRIP_DIALOG")
         }
 
         if (savedInstanceState == null && tripViewModel.isEditMode.value != true) {
@@ -90,14 +91,14 @@ class TripFragment : BaseFragment() {
         }
 
         binding.editBtn.setOnClickListener {
-            EditTripDialogFragment.newInstance(isEdit = true)
+            EditDialogTrip.newInstance(isEdit = true)
                 .show(parentFragmentManager, "EDIT_TRIP_DIALOG")
             tripViewModel.setEditMode(true)
         }
 
-        binding.confirmTripBtn.setOnClickListener {
+        binding.finalizeBtnTripItem.setOnClickListener {
             tripViewModel.currentTrip.value?.let { trip ->
-                tripSelectionHelper.handleConfirmTrip(trip)
+                tripSelectionHelper.handleFinalizeTrip(trip)
             }
         }
 
@@ -166,7 +167,7 @@ class TripFragment : BaseFragment() {
 
         binding.editBtn.visibility = View.GONE
         binding.addDestinationBtn.visibility = View.GONE
-        binding.confirmTripBtn.visibility = View.GONE
+        binding.finalizeBtnTripItem.visibility = View.GONE
         tripAdapter.setEditMode(false)
 
         if (isCompleted) {
@@ -178,7 +179,7 @@ class TripFragment : BaseFragment() {
             binding.addDestinationBtn.visibility = View.VISIBLE
 
             if (trip.status == "DRAFT" || isEditing) {
-                binding.confirmTripBtn.visibility = View.VISIBLE
+                binding.finalizeBtnTripItem.visibility = View.VISIBLE
                 tripAdapter.setEditMode(true)
             }
         }

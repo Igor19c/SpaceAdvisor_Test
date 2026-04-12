@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="220dp"
         android:layout_marginTop="24dp"
-        android:src="@drawable/app_logo_pin_new"
+        android:src="@drawable/pic_app_logo_pin_new"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

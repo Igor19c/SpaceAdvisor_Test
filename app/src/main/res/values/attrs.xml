@@ -4,8 +4,10 @@
     <attr name="customColorPrimary" format="color" />
     <attr name="customColorPrimaryFaded" format="color" />
     <attr name="customColorPrimaryLight" format="color" />
-    <attr name="customColorPrimaryGlow" format="color" />
+    <attr name="customColorPrimaryLightFaded" format="color" />
     <attr name="customColorPrimaryVariant" format="color" />
     <attr name="customColorPrimaryVariantFaded" format="color" />
+
+    <attr name="onCustomColorPrimary" format="color" />
 
 </resources>

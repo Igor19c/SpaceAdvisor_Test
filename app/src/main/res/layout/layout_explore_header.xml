@@ -25,7 +25,7 @@
             android:layout_centerVertical="true"
             android:layout_marginHorizontal="31dp"
             android:progress="5"
-            android:progressDrawable="@drawable/custom_progress_bar" />
+            android:progressDrawable="@drawable/bg_progress_bar" />
 
         <LinearLayout
             android:id="@+id/dots_container"

@@ -25,7 +25,10 @@ class SplashActivity : BaseActivity() {
     private var isTransitionStarted = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val settingsManager = (application as SpaceAdvisorApplication).appContainer.settingsManager
+        settingsManager.applyTheme(this)
         super.onCreate(savedInstanceState)
+
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
         hideSystemBars(binding.root)
@@ -52,8 +55,13 @@ class SplashActivity : BaseActivity() {
     }
 
     private fun checkUser() {
+        val settingsManager = (application as SpaceAdvisorApplication).appContainer.settingsManager
         val uid = userViewModel.getCurrentUid()
-        if (uid != null) {
+
+        if (settingsManager.needsReAuthAfterPasswordReset) {
+            settingsManager.needsReAuthAfterPasswordReset = false
+            startAuthActivity(forceRelogin = true)
+        } else if (uid != null) {
             startMainActivity()
         } else {
             startAuthActivity()
@@ -64,16 +72,19 @@ class SplashActivity : BaseActivity() {
         val intent = Intent(this, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
-        val options = ActivityOptionsCompat.makeCustomAnimation(this, R.anim.fade_in, R.anim.fade_out)
+        val options =
+            ActivityOptionsCompat.makeCustomAnimation(this, R.anim.fade_in, R.anim.fade_out)
         startActivity(intent, options.toBundle())
         finish()
     }
 
-    private fun startAuthActivity() {
+    private fun startAuthActivity(forceRelogin: Boolean = false) {
         val intent = Intent(this, AuthActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            putExtra("force_relogin", forceRelogin)
         }
-        val options = ActivityOptionsCompat.makeCustomAnimation(this, R.anim.fade_in, R.anim.fade_out)
+        val options =
+            ActivityOptionsCompat.makeCustomAnimation(this, R.anim.fade_in, R.anim.fade_out)
         startActivity(intent, options.toBundle())
         finish()
     }

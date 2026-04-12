@@ -62,9 +62,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
         messageView.findViewById<TextView>(R.id.message_title).text = title
         messageView.findViewById<TextView>(R.id.message_body).text = body
-        messageView.findViewById<View>(R.id.close_message).setOnClickListener {
-            root.removeView(messageView)
-        }
+
 
         root.addView(messageView)
         messageView.alpha = 0f

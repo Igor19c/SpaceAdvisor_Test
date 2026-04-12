@@ -22,5 +22,6 @@ interface IUserRepository {
     suspend fun updateUserBadges(uid: String, badgeIds: List<String>): Result<Unit>
     suspend fun uploadProfileImage(uid: String, imageUri: Uri): Result<String>
     suspend fun uploadProfileImageStream(uid: String, inputStream: InputStream): Result<String>
+    suspend fun sendPasswordResetEmail(email: String): Result<Unit>
     fun signOut()
 }

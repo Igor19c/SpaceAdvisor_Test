@@ -7,7 +7,7 @@
     android:layout_marginBottom="12dp"
     android:backgroundTint="@color/background"
     app:cardCornerRadius="12dp"
-    app:strokeColor="?attr/customColorPrimaryGlow"
+    app:strokeColor="?attr/customColorPrimaryFaded"
     app:strokeWidth="1dp">
 
     <LinearLayout

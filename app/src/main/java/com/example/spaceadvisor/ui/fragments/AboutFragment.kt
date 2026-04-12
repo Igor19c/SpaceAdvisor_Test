@@ -4,13 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import com.example.spaceadvisor.R
-import com.example.spaceadvisor.databinding.FragmentAbout1Binding
-import com.example.spaceadvisor.ui.UIConfig
+import com.example.spaceadvisor.databinding.FragmentAboutBinding
+import com.example.spaceadvisor.domain.models.UIConfig
+import com.example.spaceadvisor.utils.applyGradientText
+import com.example.spaceadvisor.utils.applyGradientTint
 
 class AboutFragment : BaseFragment() {
-    private var _binding: FragmentAbout1Binding? = null
+    private var _binding: FragmentAboutBinding? = null
     private val binding get() = _binding!!
 
     override fun getUIConfig(): UIConfig {
@@ -29,7 +30,7 @@ class AboutFragment : BaseFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentAbout1Binding.inflate(inflater, container, false)
+        _binding = FragmentAboutBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -41,14 +42,10 @@ class AboutFragment : BaseFragment() {
         binding.tvHappyTravelersCounter.applyGradientText()
         binding.tvYearsInOperationCounter.applyGradientText()
         binding.tvPlanetsVisitedCounter.applyGradientText()
-        binding.footerIconAboutFragment.applyGradientTint(
-            ContextCompat.getColor(requireContext(), R.color.space_blue),
-            ContextCompat.getColor(requireContext(), R.color.space_pink),
-            GradientDirection.HORIZONTAL
-        )
+        binding.footerIconAboutFragment.applyGradientTint()
+        binding.btnBookJourneyAboutFragment.setOnClickListener { navigateTo(ExploreFragment()) }
 
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

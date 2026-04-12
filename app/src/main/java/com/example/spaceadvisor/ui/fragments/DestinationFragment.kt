@@ -18,10 +18,10 @@ import com.example.spaceadvisor.domain.models.Review
 import com.example.spaceadvisor.domain.models.Safety
 import com.example.spaceadvisor.databinding.FragmentDestinationBinding
 import com.example.spaceadvisor.databinding.ItemDestHazardBinding
-import com.example.spaceadvisor.ui.UIConfig
-import com.example.spaceadvisor.ui.adapters.DestinationPickerAdapter
-import com.example.spaceadvisor.ui.adapters.TrendingDestinationsAdapter
-import com.example.spaceadvisor.ui.utils.TripSelectionHelper
+import com.example.spaceadvisor.domain.models.UIConfig
+import com.example.spaceadvisor.ui.adapters.ReviewAdapter
+import com.example.spaceadvisor.ui.adapters.DestinationsAdapter
+import com.example.spaceadvisor.utils.TripSelectionHelper
 import com.example.spaceadvisor.ui.viewmodels.DestinationViewModel
 import com.example.spaceadvisor.ui.viewmodels.TripViewModel
 import com.example.spaceadvisor.ui.viewmodels.UserViewModel
@@ -44,8 +44,8 @@ class DestinationFragment : BaseFragment() {
         ViewModelFactory(requireActivity().application as SpaceAdvisorApplication)
     }
 
-    private lateinit var childrenAdapter: DestinationPickerAdapter
-    private lateinit var trendingChildrenAdapter: TrendingDestinationsAdapter
+    private lateinit var childrenAdapter: DestinationsAdapter
+    private lateinit var reviewAdapter: ReviewAdapter
     private lateinit var tripSelectionHelper: TripSelectionHelper
     private var pendingDestinationToAdd: Destination? = null
 
@@ -80,6 +80,7 @@ class DestinationFragment : BaseFragment() {
             destinationViewModel.fetchFullDetails(dest.id)
             setupButtons(dest)
             setupReviewSection(dest)
+            destinationViewModel.fetchDestinationReviews(destination.id)
 
             userViewModel.getCurrentUid()?.let { uid ->
                 destinationViewModel.fetchSavedDestinations(uid)
@@ -92,6 +93,7 @@ class DestinationFragment : BaseFragment() {
                 } ?: showError("Please login to save")
             }
         }
+
 
         binding.destBackBtn.setOnClickListener { parentFragmentManager.popBackStack() }
     }
@@ -110,9 +112,9 @@ class DestinationFragment : BaseFragment() {
             icon.setImageResource(iconRes)
 
             val tintColor = if (i <= level) {
-                resources.getColor(R.color.green_light, null)
+                resources.getColor(R.color.space_green_light, null)
             } else {
-                resources.getColor(R.color.green_light_faded, null)
+                resources.getColor(R.color.space_green_light_faded, null)
             }
             icon.setColorFilter(tintColor, android.graphics.PorterDuff.Mode.SRC_IN)
             container.addView(icon)
@@ -143,7 +145,7 @@ class DestinationFragment : BaseFragment() {
     }
 
     private fun setupAdapters() {
-        childrenAdapter = DestinationPickerAdapter(mutableListOf()) { destination ->
+        childrenAdapter = DestinationsAdapter(mutableListOf()) { destination ->
             navigateToDestination(destination)
         }
         binding.destChildrenRecycleView.apply {
@@ -152,9 +154,10 @@ class DestinationFragment : BaseFragment() {
             adapter = childrenAdapter
         }
 
-        trendingChildrenAdapter = TrendingDestinationsAdapter(mutableListOf()) { destination ->
-            navigateToDestination(destination)
-        }
+        reviewAdapter = ReviewAdapter(listOf())
+        binding.reviewsRecyclerViewDestFragment.layoutManager =
+            LinearLayoutManager(requireContext())
+        binding.reviewsRecyclerViewDestFragment.adapter = reviewAdapter
     }
 
     private fun setupInitialUI(destination: Destination) {
@@ -214,12 +217,18 @@ class DestinationFragment : BaseFragment() {
 
         destinationViewModel.subDestinations.observe(viewLifecycleOwner) { list ->
             childrenAdapter.updateData(list)
-            trendingChildrenAdapter.updateData(list.sortedByDescending { it.ratingAvg })
         }
 
         destinationViewModel.savedDestinations.observe(viewLifecycleOwner) { savedList ->
             val isSaved = savedList.any { it.id == destinationId }
             updateSaveButtonIcon(isSaved)
+        }
+
+        destinationViewModel.saveStatus.observe(viewLifecycleOwner) { statusPair ->
+            val (isSaved, message) = statusPair
+            val title = if (isSaved) "Added to Favorites" else "Removed from Favorites"
+
+            showCustomMessage(title, message)
         }
 
         destinationViewModel.reviewSuccess.observe(viewLifecycleOwner) { success ->
@@ -235,6 +244,47 @@ class DestinationFragment : BaseFragment() {
             if (trip != null && trip.id.isNotEmpty() && pendingDestinationToAdd != null) {
                 tripViewModel.addDestination(pendingDestinationToAdd!!)
                 pendingDestinationToAdd = null
+            }
+        }
+
+        destinationViewModel.destReviews.observe(viewLifecycleOwner) { reviews ->
+            if (reviews != null) {
+                val count = reviews.size
+                val avg = if (count > 0) reviews.sumOf { it.rating.toDouble() } / count else 0.0
+
+                binding.destReviewCountDestFragment.text = "${count} reviews"
+                binding.destAvgRatingDestFragment.text = String.format("%.1f", avg)
+                updateGlobalStars(avg)
+
+                val limitedReviews = reviews.take(5)
+                reviewAdapter.updateData(limitedReviews)
+            }
+        }
+    }
+
+    private fun updateGlobalStars(rating: Double) {
+        val stars = listOf(
+            binding.ratingStar01DestFragment,
+            binding.ratingStar02DestFragment,
+            binding.ratingStar03DestFragment,
+            binding.ratingStar04DestFragment,
+            binding.ratingStar05DestFragment
+        )
+
+        for (i in stars.indices) {
+            val starLevel = i + 1
+            when {
+                rating >= starLevel -> {
+                    stars[i].setImageResource(R.drawable.ic_rating_star_filled)
+                }
+
+                rating >= starLevel - 0.5 -> {
+                    stars[i].setImageResource(R.drawable.ic_rating_star_half_filled)
+                }
+
+                else -> {
+                    stars[i].setImageResource(R.drawable.ic_rating_star_outlined)
+                }
             }
         }
     }
@@ -384,9 +434,9 @@ class DestinationFragment : BaseFragment() {
             star.setImageResource(iconRes)
 
             val tintColor = if (i <= level) {
-                resources.getColor(R.color.red_muted, null)
+                resources.getColor(R.color.space_red, null)
             } else {
-                resources.getColor(R.color.red_muted_faded, null)
+                resources.getColor(R.color.space_red_faded, null)
             }
             star.setColorFilter(tintColor, android.graphics.PorterDuff.Mode.SRC_IN)
             container.addView(star)

@@ -3,38 +3,17 @@ package com.example.spaceadvisor.domain.repository
 import android.net.Uri
 import com.example.spaceadvisor.domain.models.Post
 import kotlinx.coroutines.flow.Flow
+import java.io.InputStream
 
 interface IPostRepository {
-    fun fetchUserPosts(uid: String): Flow<Result<List<Post>>>
-
     fun fetchPosts(): Flow<Result<List<Post>>>
-
-    /**
-     * Saves a new post and returns its ID.
-     */
+    fun fetchUserPosts(uid: String): Flow<Result<List<Post>>>
     suspend fun savePost(post: Post): Result<String>
-
-    /**
-     * Updates an existing post.
-     */
     suspend fun updatePost(post: Post): Result<Unit>
-
-    suspend fun likePost(userId: String, post: Post): Result<Unit>
-
-    suspend fun unlikePost(userId: String, postId: String): Result<Unit>
-
-    /**
-     * Deletes a post by ID.
-     */
     suspend fun deletePost(postId: String): Result<Unit>
-
-    /**
-     * Uploads a post image and returns its URL.
-     */
+    suspend fun likePost(userId: String, post: Post): Result<Unit>
+    suspend fun unlikePost(userId: String, postId: String): Result<Unit>
     suspend fun uploadPostImage(postId: String, imageUri: Uri): Result<String>
-
-    /**
-     * Synchronizes user details across all their posts.
-     */
+    suspend fun uploadPostImageStream(postId: String, inputStream: InputStream): Result<String>
     suspend fun syncUserPosts(uid: String, newUsername: String, newUserImage: String): Result<Unit>
 }

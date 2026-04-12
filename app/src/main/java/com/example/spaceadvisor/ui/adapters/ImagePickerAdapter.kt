@@ -9,7 +9,7 @@ import com.example.spaceadvisor.R
 import com.example.spaceadvisor.databinding.ItemAvatarBinding
 
 class ImagePickerAdapter(
-    private val images: List<String>,
+    private var images: List<String>,
     private val onPlusClick: () -> Unit,
     private val onImageSelected: (String) -> Unit
 ) : RecyclerView.Adapter<ImagePickerAdapter.ViewHolder>() {
@@ -41,4 +41,9 @@ class ImagePickerAdapter(
     }
 
     override fun getItemCount(): Int = images.size + 1
+
+    fun updateData(newImages: List<String>) {
+        this.images = newImages
+        notifyDataSetChanged()
+    }
 }

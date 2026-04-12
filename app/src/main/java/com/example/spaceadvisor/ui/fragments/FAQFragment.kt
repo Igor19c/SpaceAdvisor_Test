@@ -4,18 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.spaceadvisor.R
 import com.example.spaceadvisor.databinding.FragmentFaqBinding
-import com.example.spaceadvisor.databinding.ItemDestHazardBinding
-import com.example.spaceadvisor.databinding.ItemFaqBinding
-import com.example.spaceadvisor.domain.models.FAQ
-import com.example.spaceadvisor.domain.models.Safety
 import com.example.spaceadvisor.domain.repository.FAQRepository
-import com.example.spaceadvisor.ui.UIConfig
+import com.example.spaceadvisor.domain.models.UIConfig
 import com.example.spaceadvisor.ui.adapters.FAQAdapter
+import com.example.spaceadvisor.utils.applyGradientTint
 
 class FAQFragment : BaseFragment() {
     override fun getUIConfig(): UIConfig {

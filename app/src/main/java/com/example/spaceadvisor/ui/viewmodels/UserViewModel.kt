@@ -7,7 +7,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.spaceadvisor.domain.managers.BadgeManager
+import com.example.spaceadvisor.SpaceAdvisorApplication
+import com.example.spaceadvisor.utils.BadgeManager
 import com.example.spaceadvisor.domain.models.Post
 import com.example.spaceadvisor.domain.models.Review
 import com.example.spaceadvisor.domain.models.Trip
@@ -26,6 +27,8 @@ class UserViewModel(
     private val postRepository: IPostRepository
 ) : ViewModel() {
 
+    data class LoadingState(val isLoading: Boolean, val message: String? = null)
+
     private val _userData = MutableLiveData<User?>()
     val userData: LiveData<User?> = _userData
 
@@ -38,11 +41,15 @@ class UserViewModel(
     private val _uploadProgress = MutableLiveData<Boolean>()
     val uploadProgress: LiveData<Boolean> = _uploadProgress
 
-    private val _isLoading = MutableLiveData<Boolean>(false)
-    val isLoading: LiveData<Boolean> = _isLoading
+    private val _loadingState = MutableLiveData<LoadingState>(LoadingState(false))
+    val loadingState: LiveData<LoadingState> = _loadingState
+
 
     private val _error = MutableLiveData<String?>()
     val error: LiveData<String?> = _error
+
+    private val _passwordResetSent = MutableLiveData<Boolean>()
+    val passwordResetSent: LiveData<Boolean> = _passwordResetSent
 
     private val _avatarPaths = MutableLiveData<List<String>>()
     val avatarPaths: LiveData<List<String>> = _avatarPaths
@@ -88,13 +95,13 @@ class UserViewModel(
         }
     }
 
-    fun checkForBadges(trips: List<Trip>, posts: List<Post>) {
+    fun checkForBadges(trips: List<Trip>, posts: List<Post>, reviews: List<Review>) {
         if (isUpdatingBadges) return
         val currentUser = _userData.value ?: return
         val uid = getCurrentUid() ?: return
 
         grantedBadgesIds.addAll(currentUser.badges)
-        val newBadgeIds = BadgeManager.checkNewBadges(currentUser, trips, posts)
+        val newBadgeIds = BadgeManager.checkNewBadges(currentUser, trips, posts, reviews)
             .filter { it !in grantedBadgesIds }
 
         if (newBadgeIds.isNotEmpty()) {
@@ -133,21 +140,24 @@ class UserViewModel(
     }
 
     fun handleSignOut(context: Context) {
-        _isLoading.value = true
+        _loadingState.value = LoadingState(true, "Signing out...")
+        val settingsManager =
+            (context.applicationContext as SpaceAdvisorApplication).appContainer.settingsManager
 
         AuthUI.getInstance()
             .signOut(context)
             .addOnCompleteListener {
+                settingsManager.resetToDefaults()
                 _userData.value = null
+                grantedBadgesIds.clear()
                 _isLoggedOut.value = true
-                _isLoading.value = false
+                _loadingState.value = LoadingState(false)
             }
     }
 
     fun updateProfile(newName: String, newUsername: String, newBio: String) {
         val uid = getCurrentUid() ?: return
 
-        // Optimistic Update: Update UI immediately
         val currentUser = _userData.value
         if (currentUser != null) {
             _userData.value = currentUser.copy(name = newName, username = newUsername, bio = newBio)
@@ -176,21 +186,24 @@ class UserViewModel(
 
         viewModelScope.launch {
             val uriString = imageUri.toString()
-            val result =
-                if (!uriString.contains("://") || uriString.startsWith("file:///android_asset/")) {
-                    try {
-                        val cleanPath =
-                            if (uriString.startsWith("file:///android_asset/")) uriString.substringAfter(
-                                "android_asset/"
-                            ) else (if (uriString.startsWith("avatars/")) uriString else "avatars/$uriString")
-                        val inputStream: InputStream = assetManager.open(cleanPath)
-                        repository.uploadProfileImageStream(uid, inputStream)
-                    } catch (e: Exception) {
-                        repository.uploadProfileImage(uid, imageUri)
-                    }
-                } else {
+            val isAsset = uriString.contains("android_asset/") || !uriString.contains("://")
+
+            val result = if (isAsset) {
+                try {
+                    val cleanPath = when {
+                        uriString.contains("android_asset/") -> uriString.substringAfter("android_asset/")
+                        uriString.startsWith("avatars/") -> uriString
+                        else -> "avatars/$uriString"
+                    }.trimStart('/')
+
+                    val inputStream: InputStream = assetManager.open(cleanPath)
+                    repository.uploadProfileImageStream(uid, inputStream)
+                } catch (e: Exception) {
                     repository.uploadProfileImage(uid, imageUri)
                 }
+            } else {
+                repository.uploadProfileImage(uid, imageUri)
+            }
 
             result.onSuccess { imageUrl ->
                 val freshName = _userData.value?.name ?: ""
@@ -201,6 +214,25 @@ class UserViewModel(
                 _uploadProgress.value = false
             }
         }
+    }
+
+
+    fun sendPasswordResetEmail() {
+        val email = _userData.value?.email ?: return
+        _loadingState.value = LoadingState(true, "Sending reset link...")
+        viewModelScope.launch {
+            val result = repository.sendPasswordResetEmail(email)
+            _loadingState.value = LoadingState(false)
+            result.onSuccess {
+                _passwordResetSent.value = true
+            }.onFailure {
+                _error.value = it.message
+            }
+        }
+    }
+
+    fun resetPasswordStatus() {
+        _passwordResetSent.value = false
     }
 
     fun loadAvatars(assetManager: AssetManager) {
@@ -233,10 +265,4 @@ class UserViewModel(
         }
     }
 
-    fun signOut() {
-        repository.signOut()
-        _userData.value = null
-        grantedBadgesIds.clear()
-        _isLoggedOut.value = true
-    }
 }

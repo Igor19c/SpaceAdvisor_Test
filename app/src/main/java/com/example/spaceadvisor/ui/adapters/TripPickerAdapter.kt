@@ -15,6 +15,8 @@ class TripPickerAdapter(
     private val onTripSelected: (Trip) -> Unit
 ) : RecyclerView.Adapter<TripPickerAdapter.ViewHolder>() {
 
+    private var selectedPosition = RecyclerView.NO_POSITION
+
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val image: ImageView = view.findViewById(R.id.image_trip_picker_item)
         val title: TextView = view.findViewById(R.id.title_trip_picker_item)
@@ -29,16 +31,23 @@ class TripPickerAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val trip = trips[position]
+        val isSelected = position == selectedPosition
         holder.title.text = trip.title
-        
+        holder.image.isSelected = isSelected
+
         Glide.with(holder.itemView.context)
             .load(trip.imageUrl)
             .placeholder(R.drawable.ic_home_earth)
             .circleCrop()
             .into(holder.image)
 
-        holder.container.setOnClickListener { onTripSelected(trip) }
-        holder.itemView.setOnClickListener { onTripSelected(trip) }
+        holder.image.setOnClickListener {
+            val previousPosition = selectedPosition
+            selectedPosition = holder.adapterPosition
+            notifyItemChanged(previousPosition)
+            notifyItemChanged(selectedPosition)
+            onTripSelected(trip)
+        }
     }
 
     override fun getItemCount() = trips.size

@@ -6,36 +6,22 @@
     android:layout_height="wrap_content"
     android:padding="8dp">
 
-
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/image_trip_picker_item"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_centerInParent="true"
-        android:background="@color/background"
-        android:backgroundTint="@color/transparent"
+        android:clickable="true"
+        android:focusable="true"
         android:padding="6dp"
         android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
-        app:strokeColor="?attr/customColorPrimaryGlow"
-        app:strokeWidth="3dp" />
-
-    <TextView
-        android:id="@+id/title_trip_picker_item"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Title"
-        android:textColor="@color/title"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@id/image_trip_picker_item"
-        app:layout_constraintEnd_toEndOf="@id/image_trip_picker_item"
-        app:layout_constraintStart_toStartOf="@id/image_trip_picker_item"
-        app:layout_constraintTop_toTopOf="@id/image_trip_picker_item" />
+        app:strokeColor="@color/trip_picker_stroke"
+        app:strokeWidth="2dp" />
 
     <ImageView
         android:id="@+id/plus_btn_trip_picker_item"
@@ -48,5 +34,17 @@
         app:layout_constraintStart_toStartOf="@id/image_trip_picker_item"
         app:layout_constraintTop_toTopOf="@id/image_trip_picker_item"
         app:tint="@color/on_primary" />
+
+    <TextView
+        android:id="@+id/title_trip_picker_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Title"
+        android:textColor="@color/title"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_trip_picker_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

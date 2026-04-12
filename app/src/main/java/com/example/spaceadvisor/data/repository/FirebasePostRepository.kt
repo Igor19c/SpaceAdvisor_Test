@@ -7,10 +7,12 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageMetadata
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
+import java.io.InputStream
 
 class FirebasePostRepository(
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance(),
@@ -116,6 +118,24 @@ class FirebasePostRepository(
         return try {
             val storageRef = storage.reference.child("post_images/$postId.jpg")
             storageRef.putFile(imageUri).await()
+            val downloadUrl = storageRef.downloadUrl.await().toString()
+            Result.success(downloadUrl)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    override suspend fun uploadPostImageStream(
+        postId: String,
+        inputStream: InputStream
+    ): Result<String> {
+        return try {
+            val storageRef = storage.reference.child("post_images/$postId.jpg")
+            val bytes = inputStream.use { it.readBytes() }
+            val metadata = StorageMetadata.Builder()
+                .setContentType("image/webp")
+                .build()
+            storageRef.putBytes(bytes, metadata).await()
             val downloadUrl = storageRef.downloadUrl.await().toString()
             Result.success(downloadUrl)
         } catch (e: Exception) {

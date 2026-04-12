@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.spaceadvisor.R
 import com.example.spaceadvisor.SpaceAdvisorApplication
 import com.example.spaceadvisor.databinding.FragmentMyReviewsBinding
-import com.example.spaceadvisor.ui.UIConfig
+import com.example.spaceadvisor.domain.models.UIConfig
 import com.example.spaceadvisor.ui.adapters.ReviewAdapter
 import com.example.spaceadvisor.ui.viewmodels.DestinationViewModel
 import com.example.spaceadvisor.ui.viewmodels.UserViewModel

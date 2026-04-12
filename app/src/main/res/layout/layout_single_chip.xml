@@ -4,9 +4,9 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:textAllCaps="false"
-    android:textColor="@color/chip_quaternary"
+    android:textColor="@color/chip_stroke"
     android:textSize="14sp"
-    app:chipBackgroundColor="@color/chip_fill_quaternary"
+    app:chipBackgroundColor="@color/chip_fill"
     app:chipCornerRadius="15dp"
-    app:chipStrokeColor="@color/chip_quaternary" />
+    app:chipStrokeColor="@color/chip_stroke" />
 

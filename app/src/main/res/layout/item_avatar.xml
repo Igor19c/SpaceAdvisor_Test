@@ -34,5 +34,4 @@
         app:layout_constraintTop_toTopOf="@id/avatarImage"
         app:tint="@color/icon" />
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>

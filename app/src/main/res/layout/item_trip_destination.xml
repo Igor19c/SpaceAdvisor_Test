@@ -81,7 +81,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/trip_dest_image_card"
         app:layout_constraintTop_toTopOf="parent"
-        app:strokeColor="?attr/customColorPrimaryGlow">
+        app:strokeColor="?attr/customColorPrimaryFaded">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"

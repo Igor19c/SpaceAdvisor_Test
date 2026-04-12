@@ -4,17 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginVertical="24dp"
     android:background="@color/background"
-    android:orientation="vertical"
-    android:paddingHorizontal="20dp"
-    android:paddingTop="6dp"
-    android:paddingBottom="20dp">
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="6dp"
-        android:background="@drawable/custom_text_transparent_background_purple_stroke">
+        android:layout_marginHorizontal="24dp"
+        android:background="@drawable/bg_transparent_stroke_primary">
 
         <LinearLayout
             android:id="@+id/departure_date_container"
@@ -84,6 +82,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginHorizontal="12dp"
         android:layout_weight="1">
 
         <!-- Normal State: Destinations List -->
@@ -92,6 +91,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="12dp"
+            android:visibility="visible"
             tools:listitem="@layout/item_trip_destination" />
 
         <!-- Empty State -->
@@ -109,7 +109,7 @@
                 android:layout_height="100dp"
                 android:layout_marginTop="-60dp"
                 android:alpha="0.4"
-                android:src="@drawable/ic_galaxy"
+                android:src="@drawable/ic_rocket"
                 app:tint="@color/icon" />
 
             <TextView
@@ -133,17 +133,25 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/empty_add_destination_btn"
-                style="@style/Widget.Material3.Button.TonalButton"
+                style="@style/Widget.Material3.Button.IconButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
                 android:layout_marginTop="24dp"
+                android:background="@drawable/bg_gradient"
+                android:elevation="4dp"
                 android:paddingHorizontal="24dp"
-                android:text="Explore Destinations"
-                android:textColor="@color/title"
+                android:shadowColor="@color/transparent_black_60"
+                android:shadowDx="2"
+                android:shadowDy="2"
+                android:shadowRadius="10"
+                android:text="Plan My First Trip"
+                android:textColor="@color/on_primary"
                 android:textSize="14sp"
-                app:backgroundTint="?attr/customColorPrimary"
-                app:cornerRadius="10dp"
+                app:backgroundTint="@null"
+                app:cornerRadius="12dp"
                 app:icon="@drawable/ic_explore"
+                app:iconPadding="12dp"
                 app:iconSize="18dp"
                 app:iconTint="@color/on_primary" />
 
@@ -155,33 +163,52 @@
         android:id="@+id/btn_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"
-        android:orientation="vertical">
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginTop="24dp"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/finalize_btn_trip_item"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginVertical="18dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_gradient"
+            android:elevation="4dp"
+            android:shadowColor="@color/transparent_black_60"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="10"
+            android:text="Finalize"
+            android:textColor="@color/on_primary"
+            android:textSize="14sp"
+            app:backgroundTint="@null"
+            app:cornerRadius="16dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/add_destination_btn"
-            android:layout_width="match_parent"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="@color/secondary_filled_btn"
-            android:paddingVertical="12dp"
-            android:text="Add Destination"
-            android:textColor="@color/on_secondary_filled_btn"
-            android:textSize="16sp"
-            app:cornerRadius="10dp" />
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginVertical="18dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/background"
+            android:elevation="3dp"
+            android:paddingVertical="14dp"
+            android:shadowColor="@color/transparent_black_20"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="12"
+            android:text="Add"
+            android:textColor="@color/secondary_outlined_btn"
+            android:textSize="14sp"
+            app:cornerRadius="16dp"
+            app:strokeColor="@color/secondary_outlined_btn"
+            app:strokeWidth="0.8dp" />
 
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/confirm_trip_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="?attr/customColorPrimary"
-            android:paddingVertical="12dp"
-            android:text="Confirm Journey"
-            android:textColor="@color/on_primary"
-            android:textSize="16sp"
-            app:cornerRadius="10dp" />
     </LinearLayout>
 
 </LinearLayout>

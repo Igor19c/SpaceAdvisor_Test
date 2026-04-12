@@ -1,5 +1,6 @@
 package com.example.spaceadvisor.ui.fragments
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,9 +19,9 @@ import com.example.spaceadvisor.R
 import com.example.spaceadvisor.SpaceAdvisorApplication
 import com.example.spaceadvisor.databinding.FragmentExploreBinding
 import com.example.spaceadvisor.domain.models.Destination
-import com.example.spaceadvisor.ui.UIConfig
+import com.example.spaceadvisor.domain.models.UIConfig
 import com.example.spaceadvisor.ui.adapters.CarouselAdapter
-import com.example.spaceadvisor.ui.utils.TripSelectionHelper
+import com.example.spaceadvisor.utils.TripSelectionHelper
 import com.example.spaceadvisor.ui.viewmodels.DestinationViewModel
 import com.example.spaceadvisor.ui.viewmodels.TripViewModel
 import com.example.spaceadvisor.ui.viewmodels.ViewModelFactory
@@ -176,7 +177,7 @@ class ExploreFragment : BaseFragment() {
     }
 
     private fun applyDestinationData(destination: Destination) {
-        binding.destRatingTextCarouselItem.text = destination.ratingAvg.toString()
+        binding.destRatingTextCarouselItem.text = String.format("%.1f", destination.ratingAvg)
         binding.destTitleCarouselItem.text = destination.title
         binding.destSubtitleCarouselItem.text = destination.subtitle
 
@@ -235,9 +236,9 @@ class ExploreFragment : BaseFragment() {
 
             val tintColor = if (i == level) {
                 when (level) {
-                    1 -> ContextCompat.getColor(requireContext(), R.color.green_light)
-                    2 -> ContextCompat.getColor(requireContext(), R.color.yellow_accent)
-                    3 -> ContextCompat.getColor(requireContext(), R.color.red_muted)
+                    1 -> ContextCompat.getColor(requireContext(), R.color.success)
+                    2 -> ContextCompat.getColor(requireContext(), R.color.achievement)
+                    3 -> ContextCompat.getColor(requireContext(), R.color.alert)
                     else -> ContextCompat.getColor(requireContext(), R.color.body)
                 }
             } else {
@@ -263,9 +264,9 @@ class ExploreFragment : BaseFragment() {
             icon.setImageResource(iconRes)
 
             val tintColor = if (i <= level) {
-                resources.getColor(R.color.green_light, null)
+                resources.getColor(R.color.space_green_light, null)
             } else {
-                resources.getColor(R.color.green_light_faded, null)
+                resources.getColor(R.color.space_green_light_faded, null)
             }
             icon.setColorFilter(tintColor, android.graphics.PorterDuff.Mode.SRC_IN)
             container.addView(icon)
@@ -283,9 +284,9 @@ class ExploreFragment : BaseFragment() {
             star.setImageResource(iconRes)
 
             val tintColor = if (i <= level) {
-                resources.getColor(R.color.red_muted, null)
+                resources.getColor(R.color.space_red, null)
             } else {
-                resources.getColor(R.color.red_muted_faded, null)
+                resources.getColor(R.color.space_red_faded, null)
             }
             star.setColorFilter(tintColor, android.graphics.PorterDuff.Mode.SRC_IN)
             container.addView(star)
@@ -432,6 +433,13 @@ class ExploreFragment : BaseFragment() {
         headerProgressBar?.progress = progress
         headerDotPlanet?.setImageResource(if (bodyActive || currentParentId == "root") R.drawable.ic_dot_active else R.drawable.ic_dot_inactive)
         headerDotLocation?.setImageResource(if (locationActive) R.drawable.ic_dot_active else R.drawable.ic_dot_inactive)
+        headerDotLocation?.backgroundTintList =
+            (if (locationActive) null else ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.explore_header_dot_inactive
+                )
+            ))
 
         val currentContext = context ?: return
         val activeColor = ContextCompat.getColor(currentContext, R.color.subtitle)
@@ -440,8 +448,6 @@ class ExploreFragment : BaseFragment() {
         headerLabelPlanet?.setTextColor(if (bodyActive || currentParentId == "root") activeColor else inactiveColor)
         headerLabelLocation?.setTextColor(if (locationActive) activeColor else inactiveColor)
     }
-
-    private fun openSettings() {}
 
     private fun handleBackNavigation() {
         if (destinationViewModel.exploreNavigationStack.isNotEmpty()) {
@@ -464,10 +470,14 @@ class ExploreFragment : BaseFragment() {
     private fun showWelcomeDialog() {
         val currentContext = context ?: return
         val dialogView =
-            LayoutInflater.from(currentContext).inflate(R.layout.dialog_trip_explanation, null)
-        MaterialAlertDialogBuilder(currentContext, R.style.CustomAlertDialog).setView(
-            dialogView
-        ).setPositiveButton("Let's Go!") { d, _ -> d.dismiss() }.show()
+            LayoutInflater.from(currentContext).inflate(R.layout.dialog_explore_explanation, null)
+        val dialog = MaterialAlertDialogBuilder(currentContext, R.style.CustomAlertDialog)
+            .setView(dialogView)
+            .show()
+
+        dialogView.findViewById<View>(R.id.lets_go_btn_explore_dialog).setOnClickListener {
+            dialog.dismiss()
+        }
     }
 
     override fun onDestroyView() {

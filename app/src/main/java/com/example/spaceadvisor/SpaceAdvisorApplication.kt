@@ -24,14 +24,10 @@ class SpaceAdvisorApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         appContainer = AppContainer(this)
-        
-        // Apply dark mode on application start
+
         appContainer.settingsManager.applyDarkMode(appContainer.settingsManager.isDarkMode)
     }
 
-    /**
-     * Manual Dependency Injection container
-     */
     class AppContainer(context: Context) {
         // Firebase Instances
         private val db: FirebaseFirestore by lazy { FirebaseFirestore.getInstance() }

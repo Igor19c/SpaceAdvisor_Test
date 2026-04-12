@@ -1,13 +1,11 @@
 package com.example.spaceadvisor.ui.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.spaceadvisor.R
 import com.example.spaceadvisor.databinding.ItemReviewBinding
-import com.example.spaceadvisor.domain.models.Destination
 import com.example.spaceadvisor.domain.models.Review
 import java.text.SimpleDateFormat
 import java.util.*
@@ -36,16 +34,36 @@ class ReviewAdapter(
     class ReviewViewHolder(private val binding: ItemReviewBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(review: Review) {
-            // Update to show the actual destination title
-            binding.reviewTitle.text = review.destinationTitle.ifEmpty { "Destination Review" }
-            binding.reviewContent.text = review.comment
+
+            Glide.with(binding.userPicItemReview.context)
+                .load(review.userProfileImage)
+                .placeholder(R.drawable.pic_profile)
+                .circleCrop()
+                .into(binding.userPicItemReview)
+
+            binding.reviewerNameItemReview.text = review.username
+            val reviewContent: String
+            if (review.comment.isNotEmpty())
+                reviewContent = "\"${review.comment}\""
+            else
+                reviewContent = review.comment
+
+            binding.reviewContentItemReview.text = reviewContent
+
+            binding.destinationTitleItemReview.text = review.destinationTitle
 
             val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
-            binding.reviewDate.text =
+            binding.reviewDateItemReview.text =
                 if (review.createdAt != null) sdf.format(Date(review.createdAt)) else ""
 
             val stars =
-                listOf(binding.star1, binding.star2, binding.star3, binding.star4, binding.star5)
+                listOf(
+                    binding.star1,
+                    binding.star2,
+                    binding.star3,
+                    binding.star4,
+                    binding.star5
+                )
             for (i in stars.indices) {
                 if (i < review.rating) {
                     stars[i].setImageResource(R.drawable.ic_rating_star_filled)
@@ -54,10 +72,6 @@ class ReviewAdapter(
                 }
             }
         }
-    }
-
-    fun getReviewAt(position: Int): Review {
-        return reviews[position]
     }
 
 }

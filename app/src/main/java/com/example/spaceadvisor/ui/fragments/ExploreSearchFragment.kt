@@ -1,6 +1,5 @@
 package com.example.spaceadvisor.ui.fragments
 
-import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
@@ -9,21 +8,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
-import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.TransitionManager
 import com.example.spaceadvisor.R
 import com.example.spaceadvisor.SpaceAdvisorApplication
 import com.example.spaceadvisor.databinding.FragmentExploreSearchBinding
-import com.example.spaceadvisor.ui.UIConfig
-import com.example.spaceadvisor.ui.adapters.TrendingDestinationsAdapter
+import com.example.spaceadvisor.domain.models.UIConfig
 import com.example.spaceadvisor.ui.viewmodels.DestinationViewModel
 import com.example.spaceadvisor.ui.viewmodels.ViewModelFactory
 import com.google.android.material.chip.Chip
 import com.google.android.material.transition.MaterialContainerTransform
 import androidx.core.view.isNotEmpty
-import com.example.spaceadvisor.ui.adapters.SearchDestinationsAdapter
+import com.example.spaceadvisor.ui.adapters.DestinationsSearchAdapter
 
 enum class DestinationTypes {
     PLANET,
@@ -40,7 +37,7 @@ class ExploreSearchFragment : BaseFragment() {
     private val binding get() = _binding!!
     private val expandedCardBinding get() = binding.filterExpandedCard
 
-    private lateinit var resultsAdapter: SearchDestinationsAdapter
+    private lateinit var resultsAdapter: DestinationsSearchAdapter
 
     override fun getUIConfig(): UIConfig {
         return UIConfig(
@@ -75,7 +72,7 @@ class ExploreSearchFragment : BaseFragment() {
     }
 
     private fun setupRecyclerView() {
-        resultsAdapter = SearchDestinationsAdapter(mutableListOf()) { destination ->
+        resultsAdapter = DestinationsSearchAdapter(mutableListOf()) { destination ->
             openDestinationDetails(destination)
         }
         binding.searchResultsRecyclerView.apply {
@@ -130,16 +127,6 @@ class ExploreSearchFragment : BaseFragment() {
         }
         expandedCardBinding.clearFilterBtn.setOnClickListener { clearFilters() }
 
-//        binding.searchIconTrigger.setOnClickListener { expandSearch() }
-//        binding.closeIconTrigger.setOnClickListener { collapseSearch() }
-
-//        expandedCardBinding.difficultyToggleGroup.addOnButtonCheckedListener { _, _, _ ->
-//            triggerFilter()
-//        }
-//
-//        expandedCardBinding.destTypeChipGroup.setOnCheckedStateChangeListener { _, _ ->
-//            triggerFilter()
-//        }
     }
 
     private fun triggerFilter() {
@@ -202,28 +189,6 @@ class ExploreSearchFragment : BaseFragment() {
             binding.searchContainer.visibility = View.VISIBLE
             binding.filterCollapsedTrigger.visibility = View.VISIBLE
         }
-    }
-
-    private fun expandSearch() {
-        TransitionManager.beginDelayedTransition(binding.searchContainer)
-        binding.closeIconTrigger.visibility = View.VISIBLE
-        binding.searchContainer.layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
-        binding.searchInputEditText.visibility = View.VISIBLE
-        binding.searchInputEditText.requestFocus()
-        val imm =
-            requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.showSoftInput(binding.searchInputEditText, InputMethodManager.SHOW_IMPLICIT)
-    }
-
-    private fun collapseSearch() {
-        TransitionManager.beginDelayedTransition(binding.searchContainer)
-        binding.closeIconTrigger.visibility = View.GONE
-        binding.searchContainer.layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT
-        binding.searchInputEditText.visibility = View.GONE
-        binding.searchInputEditText.text.clear()
-        val imm =
-            requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(binding.searchInputEditText.windowToken, 0)
     }
 
     override fun onDestroyView() {

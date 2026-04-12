@@ -5,21 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.spaceadvisor.R
 import com.example.spaceadvisor.SpaceAdvisorApplication
-import com.example.spaceadvisor.databinding.DialogSelectTripBinding
 import com.example.spaceadvisor.databinding.FragmentFeedBinding
-import com.example.spaceadvisor.domain.models.Trip
-import com.example.spaceadvisor.ui.UIConfig
+import com.example.spaceadvisor.domain.models.UIConfig
 import com.example.spaceadvisor.ui.adapters.PostsAdapter
-import com.example.spaceadvisor.ui.adapters.TripPickerAdapter
+import com.example.spaceadvisor.ui.dialogs.SelectDialogTrip
 import com.example.spaceadvisor.ui.viewmodels.FeedViewModel
 import com.example.spaceadvisor.ui.viewmodels.TripViewModel
 import com.example.spaceadvisor.ui.viewmodels.UserViewModel
 import com.example.spaceadvisor.ui.viewmodels.ViewModelFactory
-import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class FeedFragment : BaseFragment() {
 
@@ -38,7 +35,8 @@ class FeedFragment : BaseFragment() {
 
     override fun getUIConfig() = UIConfig(
         title = "Feed",
-        selectedTabId = R.id.nav_feed
+        selectedTabId = R.id.nav_feed,
+        isRightBtnVisible = false
     )
 
     private lateinit var adapter: PostsAdapter
@@ -71,8 +69,8 @@ class FeedFragment : BaseFragment() {
         }
 
         binding.swipeRefreshLayout.setColorSchemeResources(
-            R.color.primary,
-            R.color.primary,
+            R.color.space_purple,
+            R.color.space_purple,
             R.color.success
         )
     }
@@ -89,38 +87,10 @@ class FeedFragment : BaseFragment() {
             return
         }
 
-        val dialog = BottomSheetDialog(requireContext())
-        val dialogBinding = DialogSelectTripBinding.inflate(layoutInflater)
-        dialog.setContentView(dialogBinding.root)
-
-        var selectedTrip: Trip? = null
-
-        val pickerAdapter = TripPickerAdapter(trips) { trip ->
-            selectedTrip = trip
-            dialogBinding.continueBtn.isEnabled = true
-        }
-
-        dialogBinding.tripRecyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
-        dialogBinding.tripRecyclerView.adapter = pickerAdapter
-
-        dialogBinding.continueBtn.setOnClickListener {
-            selectedTrip?.let { trip ->
-                val createFragment = CreatePostFragment()
-                val bundle = Bundle()
-                bundle.putSerializable("selectedTrip", trip)
-                createFragment.arguments = bundle
-
-                parentFragmentManager.beginTransaction()
-                    .replace(R.id.main_frame, createFragment)
-                    .addToBackStack(null)
-                    .commit()
-
-                dialog.dismiss()
-            }
-        }
-
-        dialogBinding.cancelBtnEditProfileFragment.setOnClickListener { dialog.dismiss() }
-        dialog.show()
+        SelectDialogTrip.newInstance().show(
+            parentFragmentManager,
+            SelectDialogTrip.TAG
+        )
     }
 
     private fun setupRecyclerView() {
@@ -128,7 +98,7 @@ class FeedFragment : BaseFragment() {
             posts = mutableListOf(),
             currentUserId = userViewModel.getCurrentUid(),
             onEditClick = { post ->
-                val editFragment = CreatePostFragment()
+                val editFragment = PostCreateFragment()
                 val bundle = Bundle()
                 bundle.putSerializable("editingPost", post)
                 editFragment.arguments = bundle
@@ -139,7 +109,16 @@ class FeedFragment : BaseFragment() {
                     .commit()
             },
             onDeleteClick = { post ->
-                feedViewModel.deletePost(post)
+                MaterialAlertDialogBuilder(
+                    requireContext(),
+                    R.style.CustomAlertDialog
+                ).setTitle("Delete Post")
+                    .setMessage("Are you sure you want to remove this post from the feed?")
+                    .setPositiveButton("Delete") { _, _ ->
+                        feedViewModel.deletePost(post)
+                    }
+                    .setNegativeButton("Cancel", null)
+                    .show()
             },
             onLikeClick = { post ->
                 val uid = userViewModel.getCurrentUid()
@@ -163,12 +142,6 @@ class FeedFragment : BaseFragment() {
             if (binding.swipeRefreshLayout.isRefreshing && !isLoading) {
                 binding.swipeRefreshLayout.isRefreshing = false
             }
-
-
-//            if (!binding.swipeRefreshLayout.isRefreshing) {
-//                showLoading("Sharing your post...")
-//                binding.loadingLayout.visibility = if (isLoading) View.VISIBLE else View.GONE
-//            }
         }
 
         feedViewModel.postSaved.observe(viewLifecycleOwner) { saved ->
@@ -179,6 +152,13 @@ class FeedFragment : BaseFragment() {
                     body = "Your space adventure is now live.",
                     duration = 3000
                 )
+            }
+        }
+
+        feedViewModel.postDeleted.observe(viewLifecycleOwner) { deleted ->
+            if (deleted) {
+                showCustomMessage("Post Removed", "Your post has been deleted successfully.")
+                feedViewModel.resetPostDeletedState() // חשוב: אי
             }
         }
 

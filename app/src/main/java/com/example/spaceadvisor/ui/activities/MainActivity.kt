@@ -1,14 +1,17 @@
 package com.example.spaceadvisor.ui.activities
 
 import android.os.Bundle
+import android.util.Log
 import android.util.TypedValue
 import android.view.View
+import androidx.activity.result.launch
 import androidx.activity.viewModels
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.lifecycleScope
 import com.example.spaceadvisor.R
 import com.example.spaceadvisor.SpaceAdvisorApplication
 import com.example.spaceadvisor.databinding.ActivityMainBinding
@@ -20,16 +23,21 @@ import com.example.spaceadvisor.ui.fragments.HomeFragment
 import com.example.spaceadvisor.ui.fragments.MyTripsFragment
 import com.example.spaceadvisor.ui.fragments.ProfileFragment
 import com.example.spaceadvisor.ui.fragments.SettingsFragment
+import com.example.spaceadvisor.ui.viewmodels.TripViewModel
 import com.example.spaceadvisor.ui.viewmodels.UIViewModel
 import com.example.spaceadvisor.ui.viewmodels.UserViewModel
 import com.example.spaceadvisor.ui.viewmodels.ViewModelFactory
 import com.example.spaceadvisor.utils.SettingsManager
+import kotlinx.coroutines.launch
 
 class MainActivity : BaseActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val userViewModel: UserViewModel by viewModels { ViewModelFactory(application as SpaceAdvisorApplication) }
     private val uiViewModel: UIViewModel by viewModels()
+
+    private val tripViewModel: TripViewModel by viewModels { ViewModelFactory(application as SpaceAdvisorApplication) }
+
     private lateinit var settingsManager: SettingsManager
 
     private val homeFragment by lazy {
@@ -49,11 +57,16 @@ class MainActivity : BaseActivity() {
         supportFragmentManager.findFragmentByTag("FeedFragment") ?: FeedFragment()
     }
 
+    private val reviewRepository by lazy {
+        (application as SpaceAdvisorApplication).appContainer.reviewRepository
+    }
+
     private var activeFragment: Fragment? = null
     private var isProgrammaticChange = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         settingsManager = (application as SpaceAdvisorApplication).appContainer.settingsManager
+        settingsManager.switchUser(userViewModel.getCurrentUid())
         settingsManager.applyTheme(this)
 
         super.onCreate(savedInstanceState)
@@ -66,7 +79,9 @@ class MainActivity : BaseActivity() {
             showLoading(type = LoadingType.LOTTIE)
             binding.root.postDelayed({ hideLoading() }, 400)
         }
-
+        userViewModel.getCurrentUid()?.let { uid ->
+            tripViewModel.fetchUserTrips(uid)
+        }
         setupUserObserver()
         setupUIObserver()
         setupNavigation()
@@ -104,6 +119,7 @@ class MainActivity : BaseActivity() {
                 binding.customHeaderContainer.visibility = View.GONE
             }
 
+
             binding.mainHeaderLeftBtn.apply {
                 visibility = if (config.isLeftBtnVisible) View.VISIBLE else View.GONE
                 setIconResource(config.leftIconRes)
@@ -140,7 +156,11 @@ class MainActivity : BaseActivity() {
 
     private fun setupNavigation() {
         binding.homeBtn.setOnClickListener {
-            if (activeFragment !== homeFragment) loadHomeFragment()
+            if (activeFragment?.javaClass?.simpleName == "HomeFragment") {
+                handleNavigation(R.id.place_holder, forceRefresh = true)
+            } else {
+                loadHomeFragment()
+            }
         }
 
         binding.btnNavigation.setOnItemSelectedListener { item ->
@@ -153,20 +173,17 @@ class MainActivity : BaseActivity() {
         }
 
         binding.btnNavigation.setOnItemReselectedListener { item ->
-            if (activeFragment === homeFragment) {
-                handleNavigation(item.itemId)
+            if (supportFragmentManager.backStackEntryCount > 0) {
+                // אם המשתמש נמצא במסך פנימי (כמו חיפוש), לחיצה כפולה תחזיר אותו למסך הראשי
+                supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
             } else {
-                if (supportFragmentManager.backStackEntryCount > 0) {
-                    supportFragmentManager.popBackStack(
-                        null,
-                        FragmentManager.POP_BACK_STACK_INCLUSIVE
-                    )
-                }
+                // אם הוא כבר במסך הראשי, לחיצה כפולה תרענן אותו
+                handleNavigation(item.itemId, forceRefresh = true)
             }
         }
     }
 
-    private fun handleNavigation(itemId: Int) {
+    private fun handleNavigation(itemId: Int, forceRefresh: Boolean = false) {
         if (supportFragmentManager.backStackEntryCount > 0) {
             supportFragmentManager.popBackStackImmediate(
                 null,
@@ -174,24 +191,38 @@ class MainActivity : BaseActivity() {
             )
         }
 
-        val target = when (itemId) {
-            R.id.nav_trips -> tripsFragment
-            R.id.nav_profile -> profileFragment
-            R.id.nav_explore -> exploreFragment
-            R.id.nav_feed -> feedFragment
-            else -> return
+        val tag = getTagForId(itemId)
+
+        if (forceRefresh) {
+            supportFragmentManager.findFragmentByTag(tag)?.let {
+                supportFragmentManager.beginTransaction().remove(it).commitNow()
+            }
         }
+
+        val target = getFragmentInstance(itemId, tag)
         loadFragment(target)
     }
 
-    private fun loadHomeFragment() {
-        if (supportFragmentManager.backStackEntryCount > 0) {
-            supportFragmentManager.popBackStackImmediate(
-                null,
-                FragmentManager.POP_BACK_STACK_INCLUSIVE
-            )
+    private fun getFragmentInstance(itemId: Int, tag: String): Fragment {
+        return supportFragmentManager.findFragmentByTag(tag) ?: when (itemId) {
+            R.id.nav_trips -> MyTripsFragment()
+            R.id.nav_profile -> ProfileFragment()
+            R.id.nav_explore -> ExploreFragment()
+            R.id.nav_feed -> FeedFragment()
+            else -> HomeFragment()
         }
-        loadFragment(homeFragment)
+    }
+
+    private fun getTagForId(itemId: Int): String = when (itemId) {
+        R.id.nav_trips -> "MyTripsFragment"
+        R.id.nav_profile -> "ProfileFragment"
+        R.id.nav_explore -> "ExploreFragment"
+        R.id.nav_feed -> "FeedFragment"
+        else -> "HomeFragment"
+    }
+
+    private fun loadHomeFragment() {
+        handleNavigation(R.id.place_holder)
     }
 
     private fun loadFragment(fragment: Fragment, addToBackStack: Boolean = false) {
@@ -257,6 +288,7 @@ class MainActivity : BaseActivity() {
                 typedValue.data
             }
         }
-        return ContextCompat.getColor(this, R.color.primary)
+        theme.resolveAttribute(android.R.attr.colorPrimary, typedValue, true)
+        return typedValue.data
     }
 }

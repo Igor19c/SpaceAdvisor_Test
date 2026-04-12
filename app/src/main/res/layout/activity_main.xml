@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="10dp">
+        android:paddingTop="10dp">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/main_header_left_btn"
@@ -133,7 +133,7 @@
                 style="@style/Widget.Material3.Button.IconButton"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:background="@drawable/gradient_home_btn"
+                android:background="@drawable/bg_home_btn_gradient"
                 app:backgroundTint="@null"
                 app:icon="@drawable/ic_home_earth"
                 app:iconGravity="top"

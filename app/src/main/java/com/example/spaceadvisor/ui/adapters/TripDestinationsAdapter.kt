@@ -42,7 +42,7 @@ class TripDestinationsAdapter(
         holder.subtitle.text = item.subtitle
         setupDifficultyIcons(holder.difficultyIconContainer, item.difficulty)
 
-        holder.ratings.text = "${item.ratingAvg}"
+        holder.ratings.text = String.format("%.1f", item.ratingAvg)
 
         if (item.imageUrl.isNotEmpty()) {
             Glide.with(holder.itemView.context)
@@ -80,9 +80,9 @@ class TripDestinationsAdapter(
 
             val tintColorRes = if (i == difficulty) {
                 when (difficulty) {
-                    1 -> R.color.green_light
-                    2 -> R.color.yellow_accent
-                    3 -> R.color.red_muted
+                    1 -> R.color.success
+                    2 -> R.color.achievement
+                    3 -> R.color.alert
                     else -> R.color.body
                 }
             } else {

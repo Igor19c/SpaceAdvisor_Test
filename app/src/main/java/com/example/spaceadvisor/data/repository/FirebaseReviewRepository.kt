@@ -24,7 +24,8 @@ class FirebaseReviewRepository(
                 val currentDestination = destinationSnapshot.toObject(Destination::class.java)
                     ?: throw Exception("Destination not found")
 
-                val currentRatingTotal = currentDestination.ratingAvg * currentDestination.ratingCount
+                val currentRatingTotal =
+                    currentDestination.ratingAvg * currentDestination.ratingCount
                 val newRatingCount = currentDestination.ratingCount + 1
                 val newRatingAvg = (currentRatingTotal + review.rating) / newRatingCount
 
@@ -51,8 +52,10 @@ class FirebaseReviewRepository(
                 .await()
 
             val reviews = reviewsSnapshot.toObjects(Review::class.java)
-            
+
             if (reviews.isEmpty()) {
+                db.collection("destinations").document(destinationId)
+                    .update("ratingCount", 0, "ratingAvg", 0.0).await()
                 return Result.success(Unit)
             }
 
@@ -75,11 +78,11 @@ class FirebaseReviewRepository(
         return try {
             val destinationsSnapshot = db.collection("destinations").get().await()
             val destinations = destinationsSnapshot.documents
-            
+
             for (doc in destinations) {
                 syncDestinationRating(doc.id)
             }
-            
+
             Result.success(Unit)
         } catch (e: Exception) {
             Result.failure(e)
@@ -100,4 +103,35 @@ class FirebaseReviewRepository(
             }
         awaitClose { subscription.remove() }
     }
+
+    override fun fetchDestinationReviews(destinationId: String): Flow<Result<List<Review>>> =
+        callbackFlow {
+            val subscription = db.collection("reviews")
+                .whereEqualTo("destinationId", destinationId)
+                .orderBy("createdAt", Query.Direction.DESCENDING)
+                .addSnapshotListener { snapshot, error ->
+                    if (error != null) {
+                        trySend(Result.failure(error))
+                        return@addSnapshotListener
+                    }
+                    val reviews = snapshot?.toObjects(Review::class.java) ?: emptyList()
+                    trySend(Result.success(reviews))
+                }
+            awaitClose { subscription.remove() }
+        }
+
+    override fun fetchAllReviewsOrderedByCreatedAt(): Flow<Result<List<Review>>> = callbackFlow {
+        val subscription = db.collection("reviews")
+            .orderBy("createdAt", Query.Direction.DESCENDING)
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    trySend(Result.failure(error))
+                    return@addSnapshotListener
+                }
+                val reviews = snapshot?.toObjects(Review::class.java) ?: emptyList()
+                trySend(Result.success(reviews))
+            }
+        awaitClose { subscription.remove() }
+    }
+
 }

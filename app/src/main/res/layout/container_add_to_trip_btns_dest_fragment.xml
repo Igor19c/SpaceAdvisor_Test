@@ -6,9 +6,10 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/add_to_trip_btn_option_container"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/transparent_black_80"
+        android:layout_marginHorizontal="36dp"
+        app:cardBackgroundColor="@color/deep_black"
         app:cardCornerRadius="16dp"
         app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -16,42 +17,82 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:strokeColor="?attr/customColorPrimaryFaded"
-        app:strokeWidth="2dp">
+        app:strokeWidth="0dp">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="36dp"
             android:orientation="vertical"
-            android:paddingHorizontal="12dp"
             android:paddingVertical="24dp">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/add__to_current_trip_btn_container"
-                style="@style/Widget.Material3.Button.TextButton"
-                android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Add to Current:"
+                android:text="Destination Addition"
+                android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/select_exist_trip_btn_container"
-                style="@style/Widget.Material3.Button.TextButton"
-                android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Select from Existing Trips"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
+                android:text="Choose one way to add the destination to your trips."
+                android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/create_new_trip_btn_container"
-                style="@style/Widget.Material3.Button.TextButton"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Create New Trip"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:layout_marginTop="12dp"
+                android:orientation="vertical">
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/add__to_current_trip_btn_container"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/transparent_white_80"
+                    android:text="Add to Current:"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/deep_black"
+                    android:textSize="16sp"
+                    app:cornerRadius="12dp"
+                    app:strokeColor="@color/white"
+                    app:strokeWidth="0dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/select_exist_trip_btn_container"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="?attr/customColorPrimaryLightFaded"
+                    android:text="Select from Existing Trips"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    app:cornerRadius="12dp"
+                    app:strokeColor="@color/white"
+                    app:strokeWidth="0dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/create_new_trip_btn_container"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="?attr/customColorPrimaryFaded"
+                    android:text="Create New Trip"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    app:cornerRadius="12dp"
+                    app:strokeColor="@color/white"
+                    app:strokeWidth="0dp" />
+            </LinearLayout>
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>

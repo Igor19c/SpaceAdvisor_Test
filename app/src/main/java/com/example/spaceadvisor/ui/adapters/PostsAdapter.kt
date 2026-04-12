@@ -60,8 +60,14 @@ class PostsAdapter(
         holder.likeBtn.setIconResource(if (isLiked) R.drawable.ic_star_filled else R.drawable.ic_star_outlined)
 
         if (item.userProfileImage.isNotEmpty()) {
-            Glide.with(holder.itemView.context).load(item.userProfileImage).circleCrop()
+            Glide.with(holder.itemView.context)
+                .load(item.userProfileImage)
+                .placeholder(R.drawable.pic_profile)
+                .circleCrop()
                 .into(holder.userProfileImage)
+        }
+        else {
+            holder.userProfileImage.setImageResource(R.drawable.pic_profile)
         }
 
         if (item.imageUrl.isNotEmpty()) {
